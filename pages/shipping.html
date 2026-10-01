@@ -1,0 +1,69 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Delivery Information</div>
+    <h1 style="margin-bottom:6px;">Delivery Information</h1>
+    <p style="margin-bottom:0; max-width:60ch;">Fast US dispatch and reliable worldwide shipping options</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:980px;">
+    <p style="font-size:1.05rem; max-width:70ch;" id="d-intro"></p>
+    <div class="info-grid" id="d-cards"></div>
+
+    <h2 style="margin-top:56px;" id="d-notes-heading"></h2>
+    <ul class="check-list" id="d-notes"></ul>
+
+    <h2 style="margin-top:44px;" id="d-costs-heading"></h2>
+    <p id="d-costs-text"></p>
+
+    <div class="help-card">
+      <h2 style="margin-top:0;" id="d-help-heading"></h2>
+      <p id="d-help-text"></p>
+      <table class="spec-table stack-sm">
+        <tr><td>Email</td><td><a href="mailto:contact@elementlabpeptides.com" class="js-contact-email">contact@elementlabpeptides.com</a></td></tr>
+        <tr class="js-contact-phone-row" style="display:none;"><td>Phone</td><td class="js-contact-phone"></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="compliance-band">
+  <div class="container two-col">
+    <div>
+      <h3 id="d-ruo-title"></h3>
+      <p id="d-ruo-text"></p>
+    </div>
+    <div>
+      <h3 id="d-disclaimer-title"></h3>
+      <p id="d-disclaimer-text"></p>
+    </div>
+  </div>
+</section>
+
+<section class="container policy-body" id="d-supplements-note">
+  <h3>Supplements</h3>
+  <p>Creatine and other supplements ship with the same tracked delivery options as the rest of your order. Supplements are food supplements for adults 18+ and are not covered by the research-use-only notice that applies to our peptides and laboratory supplies.</p>
+</section>
+
+<script>
+function renderDeliveryPage() {
+  const c = mergeContent("delivery", DEFAULT_DELIVERY);
+  document.getElementById("d-intro").textContent = c.intro;
+  document.getElementById("d-cards").innerHTML = c.cards.map((card) => `
+    <div class="info-card reveal in"><h3>${escapeHtml(card.title)}</h3><p>${escapeHtml(card.text)}</p></div>
+  `).join("");
+  document.getElementById("d-notes-heading").textContent = c.notesHeading;
+  document.getElementById("d-notes").innerHTML = c.notes.map((n) => `<li>${escapeHtml(n)}</li>`).join("");
+  document.getElementById("d-costs-heading").textContent = c.costsHeading;
+  document.getElementById("d-costs-text").textContent = c.costsText;
+  document.getElementById("d-help-heading").textContent = c.helpHeading;
+  document.getElementById("d-help-text").textContent = c.helpText;
+  document.getElementById("d-ruo-title").textContent = c.ruoTitle;
+  document.getElementById("d-ruo-text").textContent = c.ruoText;
+  document.getElementById("d-disclaimer-title").textContent = c.disclaimerTitle;
+  document.getElementById("d-disclaimer-text").textContent = c.disclaimerText;
+}
+renderDeliveryPage();
+window.catalogReadyPromise.then(renderDeliveryPage);
+</script>

@@ -1,0 +1,271 @@
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow" id="h-hero-eyebrow"></span>
+      <h1 id="h-hero-heading"></h1>
+      <p class="hero-tagline" id="h-hero-tagline"></p>
+      <p class="lead" id="h-hero-lead"></p>
+      <div class="hero-cta">
+        <button type="button" class="btn btn-outline" id="hero-search-btn">Search peptides</button>
+        <a href="shop.html" class="btn btn-primary">Shop peptides</a>
+        <a href="about.html" class="btn btn-outline">About ElementLab Peptides</a>
+      </div>
+      <div class="hero-stats" id="h-hero-stats"></div>
+    </div>
+    <div class="hero-visual">
+      <img src="assets/img/hero/hero-vials.jpg" alt="ElementLab Peptides research vial" />
+      <div class="hero-visual-badge"><span class="dot"></span> <span id="h-hero-badge"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" id="h-why-eyebrow"></span>
+      <h2 id="h-why-heading"></h2>
+      <p style="max-width:60ch; margin:0 auto;" id="h-why-subtext"></p>
+    </div>
+    <div class="value-grid value-grid-3" id="h-why-cards"></div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head left" style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px;">
+      <div>
+        <span class="eyebrow" id="h-featured-eyebrow"></span>
+        <h2 style="margin-bottom:8px;" id="h-featured-heading"></h2>
+        <p style="margin-bottom:0; max-width:60ch;" id="h-featured-subtext"></p>
+      </div>
+      <a href="shop.html" class="btn btn-outline btn-sm">View all products →</a>
+    </div>
+    <div class="product-grid" id="home-featured-grid"></div>
+  </div>
+</section>
+
+<section class="section" id="creatine-section">
+  <div class="container">
+    <div class="section-head left" style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px;">
+      <div>
+        <span class="eyebrow" id="h-creatine-eyebrow"></span>
+        <h2 id="h-creatine-heading" style="margin-bottom:8px;"></h2>
+        <p id="h-creatine-subtext" style="margin-bottom:0; max-width:60ch;"></p>
+      </div>
+    </div>
+    <div class="product-grid" id="home-creatine-grid"></div>
+    <p style="text-align:center; margin-top:28px;"><a href="shop.html?cat=supplements" class="btn btn-outline" id="h-creatine-btn"></a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" id="h-process-eyebrow"></span>
+      <h2 id="h-process-heading"></h2>
+    </div>
+    <div class="steps" id="h-process-steps"></div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" id="h-care-eyebrow"></span>
+      <h2 id="h-care-heading"></h2>
+    </div>
+    <div class="value-grid" id="h-care-cards"></div>
+  </div>
+</section>
+
+<section class="bulk-band">
+  <div class="container">
+    <div class="bulk-copy">
+      <span class="eyebrow" id="h-bulk-eyebrow"></span>
+      <h2 id="h-bulk-heading"></h2>
+      <p id="h-bulk-text1"></p>
+      <p id="h-bulk-text2"></p>
+    </div>
+    <div class="bulk-actions">
+      <a class="btn btn-primary" href="mailto:contact@elementlabpeptides.com?subject=Bulk%20order%20quote">Email for a quote</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:860px;">
+    <div class="section-head">
+      <span class="eyebrow" id="h-faq-eyebrow"></span>
+      <h2 id="h-faq-heading"></h2>
+    </div>
+    <div class="faq-list" id="home-faq-list"></div>
+    <p style="text-align:center; margin-top:28px;"><a href="faq.html" class="btn btn-outline btn-sm">More questions →</a></p>
+  </div>
+</section>
+
+<section class="compliance-band">
+  <div class="container">
+    <div>
+      <h3 id="h-compliance-heading"></h3>
+      <p id="h-compliance-text"></p>
+      <a href="about.html" class="btn btn-light btn-sm" style="margin-top:14px;">Learn More About Us</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container" style="max-width:820px; text-align:center;">
+    <span class="eyebrow" style="justify-content:center;" id="h-payments-eyebrow"></span>
+    <h2 id="h-payments-heading"></h2>
+    <p style="max-width:52ch; margin:0 auto 22px;" id="h-payments-subtext"></p>
+    <div class="pay-grid" id="home-payment-chips"></div>
+    <p style="max-width:56ch; margin:22px auto 0;">Payment details are confirmed after you place your order via email.</p>
+    <p style="margin-top:18px;"><a href="payments.html" class="btn btn-outline btn-sm">View payment methods</a></p>
+  </div>
+</section>
+
+<script>
+document.getElementById("hero-search-btn").addEventListener("click", () => {
+  const t = document.getElementById("search-toggle-btn");
+  if (t) t.click();
+});
+
+function renderHome() {
+  // Each section is independent - if one throws (bad live-catalog row,
+  // missing field, etc) the rest of the homepage still renders.
+  try { renderHomeContent(); } catch (err) { console.error("Home content failed:", err); }
+  try { renderFeaturedProducts(); } catch (err) { console.error("Featured products failed:", err); }
+  try { renderCreatine(); } catch (err) { console.error("Creatine section failed:", err); }
+  try { renderPayments(); } catch (err) { console.error("Payments failed:", err); }
+  try { renderHomeFaqs(); } catch (err) { console.error("Home FAQs failed:", err); }
+}
+// Render immediately from the static defaults, then again once live data has loaded.
+renderHome();
+window.catalogReadyPromise.then(renderHome);
+
+function renderHomeContent() {
+  const c = mergeContent("home", DEFAULT_HOME);
+  document.getElementById("h-hero-eyebrow").textContent = c.heroEyebrow;
+  document.getElementById("h-hero-heading").textContent = c.heroHeading;
+  document.getElementById("h-hero-tagline").textContent = c.heroTagline;
+  document.getElementById("h-hero-lead").textContent = c.heroLead;
+  document.getElementById("h-hero-badge").textContent = c.heroBadge;
+  document.getElementById("h-hero-stats").innerHTML = `
+    <div class="hero-stat"><span class="num">${escapeHtml(c.stat1Num)}</span><span class="label">${escapeHtml(c.stat1Label)}</span></div>
+    <div class="hero-stat"><span class="num">${escapeHtml(c.stat2Num)}</span><span class="label">${escapeHtml(c.stat2Label)}</span></div>`;
+
+  document.getElementById("h-why-eyebrow").textContent = c.whyEyebrow;
+  document.getElementById("h-why-heading").textContent = c.whyHeading;
+  document.getElementById("h-why-subtext").textContent = c.whySubtext;
+  document.getElementById("h-why-cards").innerHTML = c.whyCards.map((card) => `
+    <div class="value-card reveal in ${card.image ? "has-image" : ""}">
+      ${card.image ? `<div class="value-card-img"><img src="${card.image}" alt="${escapeHtml(card.title)}" loading="lazy" /></div>` : ""}
+      <h3>${escapeHtml(card.title)}</h3>
+      <p>${escapeHtml(card.text)}</p>
+    </div>
+  `).join("");
+
+  document.getElementById("h-featured-eyebrow").textContent = c.featuredEyebrow;
+  document.getElementById("h-featured-heading").textContent = c.featuredHeading;
+  document.getElementById("h-featured-subtext").textContent = c.featuredSubtext;
+
+  document.getElementById("h-process-eyebrow").textContent = c.processEyebrow;
+  document.getElementById("h-process-heading").textContent = c.processHeading;
+  document.getElementById("h-process-steps").innerHTML = c.processSteps.map((s, i) => `
+    <div class="step-card reveal in"><span class="step-num">0${i + 1}</span><h3>${escapeHtml(s.title)}</h3><p>${escapeHtml(s.text)}</p></div>
+  `).join("");
+
+  document.getElementById("h-care-eyebrow").textContent = c.careEyebrow;
+  document.getElementById("h-care-heading").textContent = c.careHeading;
+  document.getElementById("h-care-cards").innerHTML = c.careCards.map((card) => `
+    <div class="value-card reveal in"><h3>${escapeHtml(card.title)}</h3><p>${escapeHtml(card.text)}</p></div>
+  `).join("");
+
+  document.getElementById("h-bulk-eyebrow").textContent = c.bulkEyebrow;
+  document.getElementById("h-bulk-heading").textContent = c.bulkHeading;
+  document.getElementById("h-bulk-text1").textContent = c.bulkText1;
+  document.getElementById("h-bulk-text2").textContent = `Contact us by email for a quote. Minimum order $${c.minOrderUsd}.`;
+
+  document.getElementById("h-faq-eyebrow").textContent = c.faqEyebrow;
+  document.getElementById("h-faq-heading").textContent = c.faqHeading;
+
+  document.getElementById("h-compliance-heading").textContent = c.complianceHeading;
+  document.getElementById("h-compliance-text").textContent = c.complianceText;
+
+  document.getElementById("h-payments-eyebrow").textContent = c.paymentsEyebrow;
+  document.getElementById("h-payments-heading").textContent = c.paymentsHeading;
+  document.getElementById("h-payments-subtext").textContent = c.paymentsSubtext;
+}
+
+function renderHomeFaqs() {
+  const c = mergeContent("home", DEFAULT_HOME);
+  const all = liveFaqs();
+  const picked = c.faqIds.map((id) => all.find((f) => f.id === id)).filter(Boolean);
+  const list = picked.length ? picked : all.slice(0, 6);
+  document.getElementById("home-faq-list").innerHTML = list.map((f, i) => faqItemHtml(f, false)).join("");
+}
+
+function renderPayments() {
+  renderPaymentTiles(document.getElementById("home-payment-chips"));
+}
+
+function renderCreatine() {
+  const c = mergeContent("home", DEFAULT_HOME);
+  document.getElementById("h-creatine-eyebrow").textContent = c.creatineEyebrow;
+  document.getElementById("h-creatine-heading").textContent = c.creatineHeading;
+  document.getElementById("h-creatine-subtext").textContent = c.creatineSubtext;
+  document.getElementById("h-creatine-btn").textContent = c.creatineButton + " →";
+  const grid = document.getElementById("home-creatine-grid");
+  const all = PRODUCTS.filter((p) => isSupplement(p));
+  // Teaser only: the products picked in Admin > Homepage, or the first 4 supplements.
+  let list = (c.creatineSlugs || []).map((slug) => all.find((p) => p.slug === slug)).filter(Boolean);
+  if (!list.length) list = all.slice(0, 4);
+  document.getElementById("creatine-section").style.display = all.length ? "" : "none";
+  grid.innerHTML = list.map((p) => `
+    <a class="product-card reveal in" href="product.html?slug=${p.slug}">
+      <div class="thumb">
+        <span class="purity-chip">SUPPLEMENT</span>
+        ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" />` : ""}
+      </div>
+      <div class="body">
+        <span class="cat-tag">${escapeHtml(getCategory(p.categories[0]).name)}</span>
+        <h3>${escapeHtml(p.name)}</h3>
+        <p class="sub">${doseRange(p)}</p>
+        <div class="row">
+          <span class="price-tag">${formatPrice(p)}</span>
+          ${doseCountBadgeHtml(p)}
+        </div>
+        <button class="btn btn-outline btn-sm btn-block" style="margin-top:10px;" data-add-to-cart="${p.slug}" data-dose="${p.coverDose || p.doses[0].label}">Add to Cart</button>
+      </div>
+    </a>
+  `).join("");
+}
+
+function renderFeaturedProducts() {
+  const c = mergeContent("home", DEFAULT_HOME);
+  const featGrid = document.getElementById("home-featured-grid");
+  featGrid.innerHTML = "";
+  c.featuredSlugs.forEach((slug) => {
+    const p = getProduct(slug);
+    if (!p) return;
+    featGrid.insertAdjacentHTML("beforeend", `
+      <a class="product-card reveal in" href="product.html?slug=${p.slug}">
+        <div class="thumb">
+          <span class="purity-chip">RESEARCH USE</span>
+          ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" />` : ""}
+        </div>
+        <div class="body">
+          <span class="cat-tag">${getCategory(p.categories[0]).name}</span>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="sub">${doseRange(p)}</p>
+          <div class="row">
+            <span class="price-tag">${formatPrice(p)}</span>
+            ${doseCountBadgeHtml(p)}
+          </div>
+          <button class="btn btn-outline btn-sm btn-block" style="margin-top:10px;" data-add-to-cart="${p.slug}" data-dose="${p.coverDose || p.doses[0].label}">Add to Cart</button>
+        </div>
+      </a>
+    `);
+  });
+}
+</script>

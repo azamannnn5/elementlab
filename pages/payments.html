@@ -1,0 +1,24 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Payment Methods</div>
+    <h1 style="margin-bottom:6px;">Payment Methods</h1>
+    <p style="margin-bottom:0; max-width:60ch;">Choose a method that works for you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:1000px;">
+    <div class="pay-grid pay-grid-lg" id="payments-page-grid"></div>
+    <div class="help-card" style="margin-top:44px;">
+      <h2 style="margin-top:0;">How payment works</h2>
+      <p>Payment details are confirmed after you place your order via email. Submit your order from the cart, choose your preferred method, and our team will send you the details to complete payment.</p>
+      <p style="margin-bottom:0;">Paying with Bitcoin earns an automatic 5% discount at checkout. Questions about a method? <a href="contact.html">Contact us</a>.</p>
+    </div>
+    <p style="text-align:center; margin-top:34px;"><a href="shop.html" class="btn btn-primary">Shop peptides</a></p>
+  </div>
+</section>
+
+<script>
+renderPaymentTiles(document.getElementById("payments-page-grid"));
+window.catalogReadyPromise.then(() => renderPaymentTiles(document.getElementById("payments-page-grid")));
+</script>

@@ -1,0 +1,2326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin | ElementLab Peptides</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=b8fdb58910" />
+<style>
+  body { background: var(--paper-tint); }
+
+  /* ---------- Shell: sidebar + main ---------- */
+  .admin-shell { max-width: 1360px; margin: 0 auto; padding: 26px 20px 80px; }
+  .admin-shell-row { display: flex; align-items: flex-start; gap: 28px; }
+  .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .admin-header-brand { display: flex; align-items: center; gap: 12px; }
+  .admin-header img { height: 34px; }
+
+  .admin-sidebar {
+    width: 268px; flex-shrink: 0; position: sticky; top: 26px;
+    background: var(--card-bg); border: 1px solid var(--line); border-radius: var(--radius-md);
+    padding: 18px; max-height: calc(100vh - 52px); overflow-y: auto;
+  }
+  .admin-search { position: relative; margin-bottom: 16px; }
+  .admin-search input {
+    width: 100%; padding: 10px 12px 10px 34px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+    font-family: inherit; font-size: 0.85rem; background: var(--paper-soft); color: var(--ink);
+  }
+  .admin-search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); pointer-events: none; }
+  .admin-nav-group { margin-bottom: 16px; }
+  .admin-nav-group-title { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); font-weight: 700; padding: 0 10px 6px; }
+  .admin-nav-btn {
+    display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none;
+    padding: 10px 10px; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.87rem; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer; margin-bottom: 2px;
+  }
+  .admin-nav-btn:hover { background: var(--paper-soft); color: var(--text-heading); }
+  .admin-nav-btn.active { background: var(--paper-tint); color: var(--teal-500); }
+  .admin-nav-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+  .admin-nav-btn.active .dot { background: var(--teal-500); }
+  .admin-nav-btn.unused { opacity: 0.6; }
+  .admin-nav-empty { padding: 14px 10px; font-size: 0.82rem; color: var(--ink-soft); }
+
+  .admin-main { flex: 1; min-width: 0; }
+  .admin-mobile-nav { display: none; }
+
+  /* ---------- Panels ---------- */
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+  .admin-panel-head { margin-bottom: 24px; }
+  .admin-panel-head h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .admin-panel-head p { color: var(--ink-soft); font-size: 0.92rem; max-width: 62ch; margin-bottom: 0; }
+
+  .admin-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 30px; margin-bottom: 26px; }
+  .admin-card h3 { margin-bottom: 6px; font-size: 1.05rem; }
+  .admin-card > .admin-note:first-of-type { margin-top: 0; }
+  .admin-section-divider { border: none; border-top: 1px solid var(--line); margin: 30px 0 24px; }
+  .admin-table-scroll { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .admin-table { width: 100%; border-collapse: collapse; min-width: 480px; }
+  .admin-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .admin-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); font-size: 0.88rem; vertical-align: top; }
+  .admin-table tr:last-child td { border-bottom: none; }
+
+  .admin-field { margin-bottom: 20px; }
+  .admin-field label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-heading); margin-bottom: 5px; }
+  .admin-field .field-help { display: block; font-size: 0.76rem; color: var(--ink-soft); margin-bottom: 7px; line-height: 1.45; }
+  .admin-field input, .admin-field select, .admin-field textarea {
+    width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+    font-family: inherit; font-size: 0.88rem; background: var(--paper-soft); color: var(--ink);
+  }
+  .admin-field textarea { min-height: 70px; resize: vertical; }
+  .admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+  .repeat-item {
+    background: var(--paper-soft); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 16px; margin-bottom: 12px;
+  }
+  .repeat-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .repeat-item-head span { font-size: 0.74rem; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+  .dose-row, .tier-row, .msg-row, .payment-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; }
+  .dose-row input, .msg-row input, .payment-row input { flex: 1; min-width: 120px; }
+  .btn-tiny { padding: 7px 14px; font-size: 0.78rem; }
+  .stock-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; cursor: pointer; border: none; }
+  .stock-pill.in { color: var(--green-600); background: rgba(53,179,106,0.15); }
+  .stock-pill.out { color: #8a8a8a; background: rgba(120,120,120,0.15); text-decoration: line-through; }
+
+  /* ---------- Toggle switch (payment methods, promo active) ---------- */
+  .toggle-switch { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-track { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background 0.15s ease; }
+  .toggle-track::before { content: ""; position: absolute; height: 18px; width: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform 0.15s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+  .toggle-switch input:checked + .toggle-track { background: var(--teal-500); }
+  .toggle-switch input:checked + .toggle-track::before { transform: translateX(18px); }
+
+  .method-row, .promo-card, .faq-item-row, .link-row {
+    background: var(--paper-soft); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin-bottom: 10px;
+  }
+  .method-row { display: flex; align-items: center; gap: 14px; }
+  .method-row .method-logo { width: 34px; height: 34px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .method-row .method-logo img { max-width: 22px; max-height: 22px; }
+  .method-row input.method-name { flex: 1; min-width: 100px; background: #fff; }
+  .method-row .method-status { font-size: 0.76rem; font-weight: 700; width: 60px; flex-shrink: 0; }
+  .method-row .method-status.on { color: var(--green-600); }
+  .method-row .method-status.off { color: var(--ink-soft); }
+
+  .promo-card .admin-grid-2 { margin-bottom: 0; }
+  .promo-placements { display: flex; gap: 18px; flex-wrap: wrap; margin: 4px 0 14px; }
+  .promo-placements label { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; font-weight: 600; color: var(--text-heading); cursor: pointer; }
+  .promo-placements input { width: auto; }
+  .promo-popup-fields { display: none; background: #fff; border: 1px dashed var(--teal-500); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; }
+  .promo-popup-fields.show { display: grid; grid-template-columns: 1fr 2fr; gap: 14px; }
+  .promo-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 6px; }
+  .promo-status-chip { font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+  .promo-status-chip.active { color: var(--green-600); background: rgba(53,179,106,0.15); }
+  .promo-status-chip.scheduled { color: #a67c00; background: rgba(230,180,0,0.15); }
+  .promo-status-chip.expired { color: var(--ink-soft); background: rgba(120,120,120,0.15); }
+  .promo-status-chip.paused { color: var(--ink-soft); background: rgba(120,120,120,0.15); }
+
+  .faq-item-row .faq-item-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .faq-item-row .faq-move-btns { display: flex; flex-direction: column; gap: 3px; }
+  .faq-move-btns button { border: 1px solid var(--line); background: #fff; border-radius: 5px; width: 24px; height: 20px; font-size: 0.7rem; cursor: pointer; line-height: 1; }
+  .link-row { display: flex; gap: 8px; align-items: center; }
+  .link-row input { background: #fff; }
+
+  .upload-field { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .upload-preview {
+    width: 56px; height: 56px; border-radius: var(--radius-sm); border: 1px solid var(--line);
+    background: var(--paper-soft); display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0; font-size: 0.65rem; color: var(--ink-soft); text-align: center;
+  }
+  .upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .upload-controls { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 6px; }
+  .upload-controls input[type="file"] { display: none; }
+  .upload-status { font-size: 0.75rem; color: var(--ink-soft); word-break: break-all; }
+  .upload-status.uploading { color: var(--teal-500); font-weight: 600; }
+  .upload-status.error { color: var(--danger); font-weight: 600; }
+
+  #login-screen { max-width: 380px; margin: 90px auto; text-align: center; padding: 0 16px; }
+  #login-screen .admin-card { text-align: left; }
+  .admin-msg { font-size: 0.85rem; margin-top: 12px; padding: 10px 12px; border-radius: var(--radius-sm); display: none; }
+  .admin-msg.show { display: block; }
+  .admin-msg.ok { background: rgba(53,179,106,0.14); color: var(--green-600); }
+  .admin-msg.err { background: rgba(194,69,47,0.14); color: var(--danger); }
+  .admin-note { font-size: 0.78rem; color: var(--ink-soft); margin: -6px 0 18px; line-height: 1.5; }
+  .save-bar { position: sticky; bottom: 0; background: var(--paper-tint); padding: 14px 0 4px; margin-top: -6px; display: flex; align-items: center; gap: 14px; }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 900px) {
+    .admin-shell { padding: 18px 14px 60px; }
+    .admin-shell-row { flex-direction: column; gap: 16px; width: 100%; }
+    .admin-main { width: 100%; }
+    .admin-sidebar { display: none; }
+    .admin-mobile-nav {
+      display: block; width: 100%; background: var(--card-bg); border: 1px solid var(--line);
+      border-radius: var(--radius-md); padding: 14px; position: sticky; top: 10px; z-index: 20;
+    }
+    .admin-mobile-nav .admin-search { margin-bottom: 10px; }
+    .admin-mobile-nav select {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+      font-family: inherit; font-size: 0.9rem; background: var(--paper-soft); color: var(--ink); font-weight: 700;
+    }
+    .admin-header { margin-bottom: 4px; }
+    .admin-header h1 { font-size: 1.05rem; }
+    .admin-card { padding: 18px; margin-bottom: 18px; }
+    .admin-grid-2 { grid-template-columns: 1fr; gap: 0; }
+    .dose-row, .tier-row, .msg-row, .payment-row {
+      flex-direction: column; align-items: stretch; background: #fff;
+      padding: 10px; border-radius: var(--radius-sm); margin-bottom: 10px;
+    }
+    .dose-row input, .msg-row input, .payment-row input { width: 100%; }
+    .tier-row { font-size: 0.85rem; }
+    .admin-table th, .admin-table td { padding: 8px; font-size: 0.82rem; }
+    .upload-field { flex-direction: row; }
+    .method-row { flex-wrap: wrap; }
+    .promo-popup-fields.show { grid-template-columns: 1fr; }
+    .link-row { flex-wrap: wrap; }
+  }
+  /* ---------- Inbox ---------- */
+  .admin-nav-btn .nav-badge { margin-left: auto; min-width: 20px; padding: 1px 7px; border-radius: 999px; background: #d63b3b; color: #fff; font-size: 0.7rem; font-weight: 800; text-align: center; }
+  .ib-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .ib-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ib-tabs button { padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--text-heading); }
+  .ib-tabs button.active { background: var(--teal-500); border-color: var(--teal-500); color: #fff; }
+  .ib-count { display: inline-block; min-width: 18px; padding: 0 6px; margin-left: 4px; border-radius: 999px; background: #d63b3b; color: #fff; font-size: 0.7rem; }
+  .ib-count:empty { display: none; }
+  .ib-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ib-item { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; background: #fff; }
+  .ib-item.unread { border-left: 5px solid var(--teal-500); background: #f4f9ff; }
+  .ib-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .ib-sub { display: block; font-size: 0.82rem; color: var(--ink-soft); overflow-wrap: anywhere; }
+  .ib-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; color: var(--ink-soft); }
+  .ib-chip { padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+  .ib-chip.new { background: #e3efff; color: #0F63D6; }
+  .ib-chip.ok { background: #e6f6ea; color: #23803c; }
+  .ib-chip.bad { background: #fdeaea; color: #b42323; }
+  .ib-body { margin: 6px 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: 0.9rem; color: var(--text-heading); }
+  .ib-details { font-size: 0.82rem; color: var(--ink-soft); overflow-wrap: anywhere; }
+  .ib-details b { color: var(--text-heading); }
+  .ib-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .ib-empty { text-align: center; color: var(--ink-soft); padding: 26px 0; }
+
+  /* ---------- Payment Methods editor: labelled columns ---------- */
+  .method-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: 14px; align-items: end; }
+  .method-row .mlabel { display: block; margin-bottom: 4px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+  .method-row .method-logo { margin-bottom: 4px; }
+  .method-row .method-status { width: auto; min-width: 84px; }
+  .method-toggle-inner { display: flex; align-items: center; gap: 10px; min-height: 42px; }
+  .method-head { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: 14px; margin-bottom: 8px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+  @media (max-width: 640px) {
+    .method-head { display: none; }
+    .method-row { grid-template-columns: 44px minmax(0, 1fr); }
+    .method-row .method-toggle, .method-row [data-remove-method] { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <img src="assets/img/logo.png" alt="ElementLab Peptides" style="height:84px; width:auto; margin-bottom:20px;" />
+  <div class="admin-card">
+    <h2 style="margin-bottom:6px;">Admin Login</h2>
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:18px;">Enter the site admin password to manage the ElementLab Peptides catalog and every editable page.</p>
+    <div class="admin-field">
+      <label>Password</label>
+      <input type="password" id="login-password" autocomplete="current-password" />
+    </div>
+    <button class="btn btn-primary btn-block" id="login-btn">Log In</button>
+    <div class="admin-msg" id="login-msg"></div>
+  </div>
+</div>
+
+<div class="admin-shell" id="admin-shell" style="display:none;">
+  <div class="admin-header">
+    <div class="admin-header-brand">
+      <img src="assets/img/logo.png" alt="ElementLab Peptides" />
+      <h1 style="font-size:1.2rem; margin:0;">Admin</h1>
+    </div>
+    <button class="btn btn-outline btn-sm" id="logout-btn">Log Out</button>
+  </div>
+  <div class="admin-shell-row">
+  <aside class="admin-sidebar">
+    <div class="admin-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="admin-nav-search" placeholder="Search settings..." autocomplete="off" />
+    </div>
+    <nav id="admin-nav">
+<div class="admin-nav-group" data-group="Inbox">
+  <div class="admin-nav-group-title">Inbox</div>
+  <button class="admin-nav-btn" data-target="inbox" data-search="inbox Inbox notifications orders messages contact signups unread"><span class="dot"></span>Inbox <span class="nav-badge" id="inbox-badge" hidden>0</span></button>
+</div>
+<div class="admin-nav-group" data-group="Catalog">
+  <div class="admin-nav-group-title">Catalog</div>
+  <button class="admin-nav-btn" data-target="products" data-search="products Products"><span class="dot"></span>Products</button>
+  <button class="admin-nav-btn" data-target="categories" data-search="categories Category name blurb image"><span class="dot"></span>Categories</button>
+  <button class="admin-nav-btn unused" data-target="bundles" data-search="bundle deals (unused) Bundle deals combo discontinued"><span class="dot"></span>Bundle Deals (unused)</button>
+</div>
+<div class="admin-nav-group" data-group="Marketing">
+  <div class="admin-nav-group-title">Marketing</div>
+  <button class="admin-nav-btn" data-target="promotions" data-search="promotions Promo code discount percent time frame banner popup"><span class="dot"></span>Promotions</button>
+  <button class="admin-nav-btn" data-target="payment-methods" data-search="payment methods Payment methods toggle bitcoin paypal zelle"><span class="dot"></span>Payment Methods</button>
+  <button class="admin-nav-btn" data-target="announcement" data-search="announcement banner Announcement banner top rotating messages"><span class="dot"></span>Announcement Banner</button>
+</div>
+<div class="admin-nav-group" data-group="Pages">
+  <div class="admin-nav-group-title">Pages</div>
+  <button class="admin-nav-btn" data-target="homepage" data-search="homepage Homepage hero why choose featured process bulk faq"><span class="dot"></span>Homepage</button>
+  <button class="admin-nav-btn" data-target="about" data-search="about page About page who we are why choose approach service"><span class="dot"></span>About Page</button>
+  <button class="admin-nav-btn" data-target="delivery" data-search="delivery info page Delivery info shipping cards notes insulated packaging"><span class="dot"></span>Delivery Info Page</button>
+  <button class="admin-nav-btn" data-target="faq" data-search="faq page FAQ frequently asked questions"><span class="dot"></span>FAQ Page</button>
+</div>
+<div class="admin-nav-group" data-group="Site">
+  <div class="admin-nav-group-title">Site</div>
+  <button class="admin-nav-btn" data-target="footer" data-search="footer Footer shop company links"><span class="dot"></span>Footer</button>
+  <button class="admin-nav-btn" data-target="contact" data-search="contact Contact email phone"><span class="dot"></span>Contact</button>
+  <button class="admin-nav-btn" data-target="shipping-discounts" data-search="shipping & discounts Shipping discounts mix match welcome crypto free shipping"><span class="dot"></span>Shipping & Discounts</button>
+</div>
+      <p class="admin-nav-empty" id="admin-nav-empty" hidden>No sections match that search.</p>
+    </nav>
+  </aside>
+
+  <div class="admin-mobile-nav">
+    <div class="admin-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="admin-nav-search-mobile" placeholder="Search settings..." autocomplete="off" />
+    </div>
+    <select id="admin-nav-select">
+<optgroup label="Inbox">
+  <option value="inbox">Inbox</option>
+</optgroup>
+<optgroup label="Catalog">
+  <option value="products">Products</option>
+  <option value="categories">Categories</option>
+  <option value="bundles">Bundle Deals (unused)</option>
+</optgroup>
+<optgroup label="Marketing">
+  <option value="promotions">Promotions</option>
+  <option value="payment-methods">Payment Methods</option>
+  <option value="announcement">Announcement Banner</option>
+</optgroup>
+<optgroup label="Pages">
+  <option value="homepage">Homepage</option>
+  <option value="about">About Page</option>
+  <option value="delivery">Delivery Info Page</option>
+  <option value="faq">FAQ Page</option>
+</optgroup>
+<optgroup label="Site">
+  <option value="footer">Footer</option>
+  <option value="contact">Contact</option>
+  <option value="shipping-discounts">Shipping & Discounts</option>
+</optgroup>
+    </select>
+  </div>
+
+  <main class="admin-main">
+    <!-- ---------- Products ---------- -->
+    <!-- ---------- Inbox ---------- -->
+    <div class="admin-panel" id="panel-inbox">
+      <div class="admin-panel-head">
+        <h2>Inbox</h2>
+        <p>Every order request, contact message and signup is saved here, even if the notification email never reaches your mailbox. A red "Email failed" tag means the notification didn't send - the order or message is still safe in this list.</p>
+      </div>
+      <div class="admin-card">
+        <div class="ib-toolbar">
+          <div class="ib-tabs">
+            <button type="button" class="active" data-ib-tab="orders">Orders <span class="ib-count" id="ib-count-orders"></span></button>
+            <button type="button" data-ib-tab="messages">Messages <span class="ib-count" id="ib-count-messages"></span></button>
+            <button type="button" data-ib-tab="subscribers">Signups</button>
+          </div>
+          <div class="ib-tools">
+            <button type="button" class="btn btn-outline btn-tiny" id="ib-refresh">Refresh</button>
+            <button type="button" class="btn btn-outline btn-tiny" id="ib-markall">Mark all as read</button>
+          </div>
+        </div>
+        <div id="ib-list"><p class="admin-note">Loading...</p></div>
+        <div class="admin-msg" id="ib-msg"></div>
+      </div>
+    </div>
+
+    <div class="admin-panel active" id="panel-products">
+      <div class="admin-panel-head">
+        <h2>Products</h2>
+        <p>Every product listed on the Shop page. Each product can have several doses/sizes, each with its own price and photo.</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Products</h3>
+        <p class="admin-note">Scroll sideways on mobile to see all columns.</p>
+        <div class="admin-table-scroll">
+          <table class="admin-table" id="products-table">
+            <thead><tr><th>Name</th><th>Slug</th><th>Cover Dose</th><th>Stock</th><th></th></tr></thead>
+            <tbody id="products-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3 style="margin-bottom:4px;" id="product-form-title">Add a Product</h3>
+        <p class="admin-note">Editing an existing product? Click "Edit" in the table above - it loads into this form.</p>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Name</label><input id="pf-name" placeholder="e.g. BPC-157" /></div>
+          <div class="admin-field"><label>Slug (unique ID, lowercase-with-dashes)</label><input id="pf-slug" placeholder="e.g. bpc-157" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Categories (comma-separated slugs)</label><input id="pf-categories" placeholder="bpc-thymosin" /></div>
+          <div class="admin-field"><label>Cover Dose (which size shows by default)</label><input id="pf-cover-dose" placeholder="10mg" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Appearance</label><input id="pf-appearance" placeholder="White Lyophilized Powder" /></div>
+          <div class="admin-field">
+            <label>Product Photo</label>
+            <div class="upload-field">
+              <div class="upload-preview" id="pf-image-preview">No photo</div>
+              <div class="upload-controls">
+                <input type="text" id="pf-image" placeholder="assets/img/products/bpc-157.jpg (or upload below)" />
+                <input type="file" id="pf-image-file" accept="image/*" />
+                <button type="button" class="btn btn-outline btn-tiny" onclick="document.getElementById('pf-image-file').click()">Upload Photo</button>
+                <span class="upload-status" id="pf-image-status"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-field">
+          <label>SDS (Safety Data Sheet) PDF</label>
+          <span class="field-help">Optional. If left blank, the product page shows "available on request" instead of a download button.</span>
+          <div class="upload-field">
+            <div class="upload-preview" id="pf-sds-preview">No file</div>
+            <div class="upload-controls">
+              <input type="text" id="pf-sds" placeholder="assets/sds/bpc-157-sds.pdf (or upload below)" />
+              <input type="file" id="pf-sds-file" accept="application/pdf" />
+              <button type="button" class="btn btn-outline btn-tiny" onclick="document.getElementById('pf-sds-file').click()">Upload SDS</button>
+              <span class="upload-status" id="pf-sds-status"></span>
+            </div>
+          </div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>CAS Number</label><input id="pf-chem-cas" placeholder="137525-51-0 (free base)" /></div>
+          <div class="admin-field"><label>Molecular Formula</label><input id="pf-chem-formula" placeholder="C62H98N16O22" /></div>
+        </div>
+        <div class="admin-field"><label>Molecular Weight</label><input id="pf-chem-mw" placeholder="1419.55 g/mol" /></div>
+        <div class="admin-field"><label>Summary</label><textarea id="pf-summary"></textarea></div>
+        <div class="admin-field">
+          <label>Doses &amp; Prices</label>
+          <span class="field-help">Each dose needs its own photo path - that's the picture that swaps in when a shopper picks that size on the product page.</span>
+          <div id="pf-doses"></div>
+          <button class="btn btn-outline btn-tiny" id="pf-add-dose" type="button">+ Add dose</button>
+        </div>
+        <div class="admin-field">
+          <label>Stock Status</label>
+          <button class="stock-pill in" id="pf-stock-toggle" type="button" data-stock="in">In Stock</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" id="pf-save">Save Product</button>
+          <button class="btn btn-outline" id="pf-clear" type="button">Clear Form</button>
+        </div>
+        <div class="admin-msg" id="pf-msg"></div>
+      </div>
+    </div>
+
+    <!-- ---------- Categories ---------- -->
+    <div class="admin-panel" id="panel-categories">
+      <div class="admin-panel-head">
+        <h2>Categories</h2>
+        <p>The 8 groups products are filed under (shown on the Shop page's filter pills and the "Browse by category" section, where used).</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Categories</h3>
+        <p class="admin-note">Scroll sideways on mobile to see all columns.</p>
+        <div class="admin-table-scroll">
+          <table class="admin-table" id="categories-table">
+            <thead><tr><th>Name</th><th>Slug</th><th>Blurb</th><th></th></tr></thead>
+            <tbody id="categories-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3 style="margin-bottom:4px;" id="category-form-title">Add a Category</h3>
+        <p class="admin-note">The slug must exactly match what products list in their Categories field (Products tab) for them to show up here.</p>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Name</label><input id="cf-name" placeholder="e.g. BPC-157 &amp; Thymosin" /></div>
+          <div class="admin-field"><label>Slug</label><input id="cf-slug" placeholder="e.g. bpc-thymosin" /></div>
+        </div>
+        <div class="admin-field"><label>Blurb</label><textarea id="cf-blurb" placeholder="One or two sentences describing this category"></textarea></div>
+        <div class="admin-field">
+          <label>Category Photo</label>
+          <div class="upload-field">
+            <div class="upload-preview" id="cf-image-preview">No photo</div>
+            <div class="upload-controls">
+              <input type="text" id="cf-image" placeholder="assets/img/categories/bpc-thymosin.jpg (or upload below)" />
+              <input type="file" id="cf-image-file" accept="image/*" />
+              <button type="button" class="btn btn-outline btn-tiny" onclick="document.getElementById('cf-image-file').click()">Upload Photo</button>
+              <span class="upload-status" id="cf-image-status"></span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" id="cf-save">Save Category</button>
+          <button class="btn btn-outline" id="cf-clear" type="button">Clear Form</button>
+        </div>
+        <div class="admin-msg" id="cf-msg"></div>
+      </div>
+    </div>
+
+    <!-- ---------- Bundle Deals (unused) ---------- -->
+    <div class="admin-panel" id="panel-bundles">
+      <div class="admin-panel-head">
+        <h2>Bundle Deals <span style="color:var(--ink-soft); font-weight:600;">(unused)</span></h2>
+        <p>Bundle Deals were discontinued and no longer appear anywhere on the live site. This tab is kept dormant in case they come back later - anything saved here has no effect on the storefront right now.</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Bundle Deals</h3>
+        <p class="admin-note">Scroll sideways on mobile to see all columns.</p>
+        <div class="admin-table-scroll">
+          <table class="admin-table" id="bundles-table">
+            <thead><tr><th>Name</th><th>Slug</th><th>Tiers</th><th></th></tr></thead>
+            <tbody id="bundles-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3 style="margin-bottom:4px;" id="bundle-form-title">Add a Bundle Deal</h3>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Name</label><input id="bf-name" placeholder="e.g. Tissue Repair Stack" /></div>
+          <div class="admin-field"><label>Slug</label><input id="bf-slug" placeholder="e.g. tissue-repair-stack" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Blurb</label><input id="bf-blurb" /></div>
+          <div class="admin-field">
+            <label>Bundle Photo</label>
+            <div class="upload-field">
+              <div class="upload-preview" id="bf-image-preview">No photo</div>
+              <div class="upload-controls">
+                <input type="text" id="bf-image" placeholder="assets/img/combos/tissue-repair-stack.jpg (or upload below)" />
+                <input type="file" id="bf-image-file" accept="image/*" />
+                <button type="button" class="btn btn-outline btn-tiny" onclick="document.getElementById('bf-image-file').click()">Upload Photo</button>
+                <span class="upload-status" id="bf-image-status"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-field">
+          <label>Tiers (each is one purchasable size combination)</label>
+          <div id="bf-tiers"></div>
+          <button class="btn btn-outline btn-tiny" id="bf-add-tier" type="button">+ Add tier</button>
+          <p class="admin-note" style="margin-top:8px;">Item slugs/doses must exactly match existing product slugs and dose labels, e.g. slug "bpc-157" dose "10mg".</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" id="bf-save">Save Bundle</button>
+          <button class="btn btn-outline" id="bf-clear" type="button">Clear Form</button>
+        </div>
+        <div class="admin-msg" id="bf-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- Promotions ---------- -->
+    <div class="admin-panel" id="panel-promotions">
+      <div class="admin-panel-head">
+        <h2>Promotions</h2>
+        <p>Create discount codes with their own time window, and choose where each one gets advertised. A code always works when typed in the cart while it's active, regardless of where it's shown.</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Promotions</h3>
+        <p class="admin-note">Expired or paused promotions stay listed here - edit one and give it a new time frame to run it again.</p>
+        <div id="promo-list"></div>
+        <button class="btn btn-outline btn-tiny" id="promo-add" type="button">+ Add a promotion</button>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="promo-save">Save Promotions</button>
+        <div class="admin-msg" id="promo-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- Payment Methods ---------- -->
+    <div class="admin-panel" id="panel-payment-methods">
+      <div class="admin-panel-head">
+        <h2>Payment Methods</h2>
+        <p>Switch a method on or off instead of deleting it - turning one off removes it everywhere at once (home page, Payment Methods page, cart dropdown, FAQ) and turning it back on brings its logo straight back.</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Payment Methods</h3>
+        <p class="admin-note" style="margin-top:-6px;">Each row is one payment method. The <b>name</b> is what customers see at checkout, and the <b>switch</b> shows or hides it on the site. The logo appears automatically when the name matches a known method.</p>
+        <div id="payment-method-list"></div>
+        <button class="btn btn-outline btn-tiny" id="payment-add" type="button">+ Add a payment method</button>
+        <p class="admin-note" style="margin-top:10px;">Adding a brand-new name with no logo on file shows as a plain text tile until a logo is added to the site.</p>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="payment-save">Save Payment Methods</button>
+        <div class="admin-msg" id="payment-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- Announcement Banner ---------- -->
+    <div class="admin-panel" id="panel-announcement">
+      <div class="admin-panel-head">
+        <h2>Announcement Banner</h2>
+        <p>The rotating strip at the very top of every page. Any active promotion flagged for the Banner placement (Promotions tab) is added into this same rotation automatically - you don't need to type it here too.</p>
+      </div>
+      <div class="admin-card">
+        <h3>Rotating Messages</h3>
+        <div id="sf-messages"></div>
+        <button class="btn btn-outline btn-tiny" id="sf-add-msg" type="button">+ Add message</button>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="announcement-save">Save Announcement Banner</button>
+        <div class="admin-msg" id="announcement-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- Homepage ---------- -->
+    <div class="admin-panel" id="panel-homepage">
+      <div class="admin-panel-head">
+        <h2>Homepage</h2>
+        <p>Every piece of text on the home page, top to bottom. Leave a field blank to keep its current default wording.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Hero</h3>
+        <p class="admin-note">The large section at the very top of the page.</p>
+        <div class="admin-field"><label>Eyebrow (small label above the heading)</label><input id="h-heroEyebrow" placeholder="Research Use Only" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-heroHeading" placeholder="Premium Research Peptides." /></div>
+        <div class="admin-field"><label>Tagline</label><input id="h-heroTagline" placeholder="Pure. Precise. Performance." /></div>
+        <div class="admin-field"><label>Lead paragraph</label><textarea id="h-heroLead"></textarea></div>
+        <div class="admin-field"><label>Badge text on the hero photo</label><input id="h-heroBadge" placeholder="Fast, Tracked Dispatch" /></div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Stat 1 number</label><input id="h-stat1Num" placeholder="&gt;99%" /></div>
+          <div class="admin-field"><label>Stat 1 label</label><input id="h-stat1Label" placeholder="Purity Focus" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Stat 2 number</label><input id="h-stat2Num" placeholder="US" /></div>
+          <div class="admin-field"><label>Stat 2 label</label><input id="h-stat2Label" placeholder="Based &amp; Dispatch" /></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Why Choose Us</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-whyEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-whyHeading" /></div>
+        <div class="admin-field"><label>Subtext</label><textarea id="h-whySubtext"></textarea></div>
+        <div class="admin-field">
+          <label>Cards</label>
+          <span class="field-help">The layout is designed for 6 cards - a different count will still work but may look uneven.</span>
+          <div id="h-whyCards"></div>
+          <button class="btn btn-outline btn-tiny" data-add-cards="h-whyCards" type="button">+ Add card</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Featured Research Peptides</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-featuredEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-featuredHeading" /></div>
+        <div class="admin-field"><label>Subtext</label><textarea id="h-featuredSubtext"></textarea></div>
+        <div class="admin-field">
+          <label>Featured products (comma-separated slugs, in order)</label>
+          <span class="field-help">Must match a product's Slug exactly (see the Products tab). 8 fits the layout best.</span>
+          <input id="h-featuredSlugs" placeholder="retatrutide, tirzepatide, semaglutide, bpc-157, ipamorelin, tb-500, ghk-cu, cjc-1295-no-dac" />
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Creatine &amp; Supplements (home page teaser)</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-creatineEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-creatineHeading" /></div>
+        <div class="admin-field"><label>Subtext</label><textarea id="h-creatineSubtext"></textarea></div>
+        <div class="admin-field"><label>Button text</label><input id="h-creatineButton" /></div>
+        <div class="admin-field">
+          <label>Supplements shown (comma-separated slugs, in order)</label>
+          <span class="field-help">Only a few show here (4 fits best). The button sends customers to the full Supplements category.</span>
+          <input id="h-creatineSlugs" />
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Process</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-processEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-processHeading" /></div>
+        <div class="admin-field">
+          <label>Steps</label>
+          <span class="field-help">The layout is designed for 3 steps, numbered automatically in order.</span>
+          <div id="h-processSteps"></div>
+          <button class="btn btn-outline btn-tiny" data-add-cards="h-processSteps" type="button">+ Add step</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Shipped With Care</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-careEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-careHeading" /></div>
+        <div class="admin-field">
+          <label>Cards</label>
+          <span class="field-help">The layout is designed for 4 cards.</span>
+          <div id="h-careCards"></div>
+          <button class="btn btn-outline btn-tiny" data-add-cards="h-careCards" type="button">+ Add card</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Institutional &amp; Bulk Orders</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-bulkEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-bulkHeading" /></div>
+        <div class="admin-field"><label>Text</label><textarea id="h-bulkText1"></textarea></div>
+        <div class="admin-field">
+          <label>Minimum order ($)</label>
+          <span class="field-help">The second line under the heading is built automatically from this number, e.g. "Minimum order $160."</span>
+          <input id="h-minOrderUsd" type="number" min="0" placeholder="160" />
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Homepage FAQs</h3>
+        <p class="admin-note">Which questions from the FAQ tab show on the home page, and in what order. List their IDs, comma-separated - the FAQ tab shows each question's ID.</p>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-faqEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-faqHeading" /></div>
+        <div class="admin-field"><label>FAQ IDs to show (comma-separated, in order)</label><input id="h-faqIds" placeholder="what-are-peptides, purity-tested, dispatch-speed, ship-internationally, payment-methods, storage" /></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Research Use Only Banner</h3>
+        <div class="admin-field"><label>Heading</label><input id="h-complianceHeading" /></div>
+        <div class="admin-field"><label>Text</label><textarea id="h-complianceText"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Payments Section</h3>
+        <div class="admin-field"><label>Eyebrow</label><input id="h-paymentsEyebrow" /></div>
+        <div class="admin-field"><label>Heading</label><input id="h-paymentsHeading" /></div>
+        <div class="admin-field"><label>Subtext</label><input id="h-paymentsSubtext" /></div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn btn-primary" id="homepage-save">Save Homepage</button>
+        <button class="btn btn-outline" id="homepage-reset" type="button">Reset this form to defaults</button>
+        <div class="admin-msg" id="homepage-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- About Page ---------- -->
+    <div class="admin-panel" id="panel-about">
+      <div class="admin-panel-head">
+        <h2>About Page</h2>
+        <p>Every piece of text on the About page. Leave a field blank to keep its current default wording.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Header</h3>
+        <div class="admin-field"><label>Tagline (under the page title)</label><input id="ab-tagline" placeholder="Premium-quality research peptides. Pure. Precise. Performance." /></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Who We Are</h3>
+        <div class="admin-field"><label>Heading</label><input id="ab-introHeading" /></div>
+        <div class="admin-field">
+          <label>Paragraphs</label>
+          <div id="ab-introParagraphs"></div>
+          <button class="btn btn-outline btn-tiny" data-add-text="ab-introParagraphs" type="button">+ Add paragraph</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Why Choose Us</h3>
+        <div class="admin-field"><label>Heading</label><input id="ab-whyHeading" /></div>
+        <div class="admin-field">
+          <label>Cards</label>
+          <span class="field-help">The layout is designed for 8 cards.</span>
+          <div id="ab-whyCards"></div>
+          <button class="btn btn-outline btn-tiny" data-add-cards="ab-whyCards" type="button">+ Add card</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Our Approach to Quality</h3>
+        <div class="admin-field"><label>Heading</label><input id="ab-approachHeading" /></div>
+        <div class="admin-field"><label>Paragraph 1</label><textarea id="ab-approachP1"></textarea></div>
+        <div class="admin-field"><label>Paragraph 2</label><textarea id="ab-approachP2"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Service You Can Rely On</h3>
+        <div class="admin-field"><label>Heading</label><input id="ab-serviceHeading" /></div>
+        <div class="admin-field"><label>Paragraph 1</label><textarea id="ab-serviceP1"></textarea></div>
+        <div class="admin-field"><label>Paragraph 2</label><textarea id="ab-serviceP2"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Looking Ahead</h3>
+        <div class="admin-field"><label>Heading</label><input id="ab-lookingHeading" /></div>
+        <div class="admin-field"><label>Paragraph</label><textarea id="ab-lookingP"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Contact Us</h3>
+        <div class="admin-field"><label>Intro text</label><textarea id="ab-contactIntro"></textarea></div>
+        <p class="admin-note">Email and phone shown here come from the Contact tab.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Research Use Only Notice</h3>
+        <div class="admin-field"><label>Paragraph 1</label><textarea id="ab-ruoP1"></textarea></div>
+        <div class="admin-field"><label>Paragraph 2</label><textarea id="ab-ruoP2"></textarea></div>
+        <div class="admin-field"><label>Paragraph 3</label><textarea id="ab-ruoP3"></textarea></div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn btn-primary" id="about-save">Save About Page</button>
+        <button class="btn btn-outline" id="about-reset" type="button">Reset this form to defaults</button>
+        <div class="admin-msg" id="about-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- Delivery Info Page ---------- -->
+    <div class="admin-panel" id="panel-delivery">
+      <div class="admin-panel-head">
+        <h2>Delivery Info Page</h2>
+        <p>Every piece of text on the Delivery Information page. Leave a field blank to keep its current default wording.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Intro</h3>
+        <div class="admin-field"><label>Intro paragraph</label><textarea id="d-intro"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>The Four Info Cards</h3>
+        <span class="field-help">US Delivery, International Shipping, Secure Packaging, Track Your Order - in that order.</span>
+        <div id="d-cards"></div>
+        <button class="btn btn-outline btn-tiny" data-add-cards="d-cards" type="button">+ Add card</button>
+      </div>
+
+      <div class="admin-card">
+        <h3>Important Delivery Notes</h3>
+        <div class="admin-field"><label>Heading</label><input id="d-notesHeading" /></div>
+        <div class="admin-field">
+          <label>Notes (one per line)</label>
+          <div id="d-notes"></div>
+          <button class="btn btn-outline btn-tiny" data-add-text="d-notes" type="button">+ Add note</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Shipping Costs</h3>
+        <div class="admin-field"><label>Heading</label><input id="d-costsHeading" /></div>
+        <div class="admin-field"><label>Text</label><textarea id="d-costsText"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Need Help?</h3>
+        <div class="admin-field"><label>Heading</label><input id="d-helpHeading" /></div>
+        <div class="admin-field"><label>Text</label><textarea id="d-helpText"></textarea></div>
+        <p class="admin-note">Email and phone shown here come from the Contact tab.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Research Use Only &amp; Disclaimer</h3>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Research Use Only title</label><input id="d-ruoTitle" /></div>
+          <div class="admin-field"><label>Disclaimer title</label><input id="d-disclaimerTitle" /></div>
+        </div>
+        <div class="admin-field"><label>Research Use Only text</label><textarea id="d-ruoText"></textarea></div>
+        <div class="admin-field"><label>Disclaimer text</label><textarea id="d-disclaimerText"></textarea></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Insulated Packaging</h3>
+        <p class="admin-note">This is the free checkbox shown at checkout in the cart.</p>
+        <div class="admin-field"><label>Checkbox label</label><input id="d-insulatedLabel" placeholder="Insulated packaging (free)" /></div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn btn-primary" id="delivery-save">Save Delivery Info Page</button>
+        <button class="btn btn-outline" id="delivery-reset" type="button">Reset this form to defaults</button>
+        <div class="admin-msg" id="delivery-msg"></div>
+      </div>
+    </div>
+    <!-- ---------- FAQ Page ---------- -->
+    <div class="admin-panel" id="panel-faq">
+      <div class="admin-panel-head">
+        <h2>FAQ Page</h2>
+        <p>Every question and answer, in the order they appear on the FAQ page. Use the arrows to reorder. Pick which ones also show on the homepage from the Homepage tab, using the ID shown on each question here.</p>
+      </div>
+      <div class="admin-card">
+        <h3>All Questions</h3>
+        <div id="faq-list-admin"></div>
+        <button class="btn btn-outline btn-tiny" id="faq-add" type="button">+ Add a question</button>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="faq-save">Save FAQ Page</button>
+        <button class="btn btn-outline" id="faq-reset" type="button">Reset this form to defaults</button>
+        <div class="admin-msg" id="faq-msg"></div>
+      </div>
+    </div>
+
+    <!-- ---------- Footer ---------- -->
+    <div class="admin-panel" id="panel-footer">
+      <div class="admin-panel-head">
+        <h2>Footer</h2>
+        <p>The two link columns in the footer (Shop and Company). Add, remove, rename, or reorder links, each with its own destination.</p>
+      </div>
+      <div class="admin-card">
+        <h3>Shop Column</h3>
+        <div id="footer-shop-links-admin"></div>
+        <button class="btn btn-outline btn-tiny" data-add-links="footer-shop-links-admin" type="button">+ Add link</button>
+      </div>
+      <div class="admin-card">
+        <h3>Company Column</h3>
+        <div id="footer-company-links-admin"></div>
+        <button class="btn btn-outline btn-tiny" data-add-links="footer-company-links-admin" type="button">+ Add link</button>
+      </div>
+      <p class="admin-note">The Contact column (email, phone, Shipping link) isn't editable here - the email and phone come from the Contact tab.</p>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="footer-save">Save Footer</button>
+        <button class="btn btn-outline" id="footer-reset" type="button">Reset this form to defaults</button>
+        <div class="admin-msg" id="footer-msg"></div>
+      </div>
+    </div>
+
+    <!-- ---------- Contact ---------- -->
+    <div class="admin-panel" id="panel-contact">
+      <div class="admin-panel-head">
+        <h2>Contact</h2>
+        <p>Used across the whole site: the footer, the About and Delivery Info pages, and the Contact page. Changing this here updates all of them at once.</p>
+      </div>
+      <div class="admin-card">
+        <h3>Contact Details</h3>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Support Email</label><input id="sf-contact-email" type="email" placeholder="contact@elementlabpeptides.com" /></div>
+          <div class="admin-field"><label>Phone number</label><span class="field-help">Include the country code, e.g. +1 555 123 4567.</span><input id="sf-contact-phone" type="tel" placeholder="+1 (555) 123-4567" /></div>
+        </div>
+        <div class="admin-field"><label>Business Address (optional)</label><input id="sf-contact-address" placeholder="Not shown anywhere unless filled in" /></div>
+        <div class="admin-field"><label>Support Hours (optional)</label><input id="sf-chat-hours" placeholder="e.g. Mon-Fri 9am-6pm ET" /></div>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="contact-save">Save Contact</button>
+        <div class="admin-msg" id="contact-msg"></div>
+      </div>
+    </div>
+
+    <!-- ---------- Shipping & Discounts ---------- -->
+    <div class="admin-panel" id="panel-shipping-discounts">
+      <div class="admin-panel-head">
+        <h2>Shipping &amp; Discounts</h2>
+        <p>The store-wide discount rules that stack on every order, plus the free-shipping threshold.</p>
+      </div>
+      <div class="admin-card">
+        <h3>Mix &amp; Match Discount Tiers</h3>
+        <p class="admin-note">Buy this many items (products or bundle deals combined) and get this % off.</p>
+        <div id="sf-tiers"></div>
+        <button class="btn btn-outline btn-tiny" id="sf-add-tier" type="button">+ Add tier</button>
+      </div>
+      <div class="admin-card">
+        <h3>Other Discounts</h3>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Welcome Discount %</label><span class="field-help">Applies automatically to a customer's first order once they sign up - no code needed.</span><input id="sf-welcome-pct" type="number" min="0" max="100" /></div>
+          <div class="admin-field"><label>Bitcoin Payment Discount %</label><span class="field-help">Only Bitcoin gets this discount, not other crypto methods.</span><input id="sf-crypto-pct" type="number" min="0" max="100" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label>Free Shipping Threshold ($)</label><input id="sf-free-shipping" type="number" min="0" /></div>
+        </div>
+      </div>
+      <div class="save-bar">
+        <button class="btn btn-primary" id="shipping-discounts-save">Save Shipping &amp; Discounts</button>
+        <div class="admin-msg" id="shipping-discounts-msg"></div>
+      </div>
+    </div>
+
+  </main>
+  </div>
+</div>
+
+<script src="js/products-data.js?v=b8fdb58910"></script>
+<script src="js/site-content.js?v=b8fdb58910"></script>
+<script src="js/promo.js?v=b8fdb58910"></script>
+<script>
+const ADMIN_PW_KEY = "pf_admin_pw";
+
+function adminHeaders() {
+  return { "Content-Type": "application/json", "x-admin-password": sessionStorage.getItem(ADMIN_PW_KEY) || "" };
+}
+function showMsg(el, text, ok) {
+  el.textContent = text;
+  el.className = "admin-msg show " + (ok ? "ok" : "err");
+}
+
+// ---------- File uploads (product/category photos, SDS PDFs) ----------
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+const uploadPreviewRefreshers = {};
+
+function wireUploadField(prefix, folder) {
+  const fileInput = document.getElementById(`${prefix}-file`);
+  const textInput = document.getElementById(prefix);
+  const preview = document.getElementById(`${prefix}-preview`);
+  const status = document.getElementById(`${prefix}-status`);
+  if (!fileInput) return;
+
+  const updatePreview = () => {
+    const url = textInput.value.trim();
+    if (url && /\.(jpe?g|png|webp|gif)$/i.test(url)) {
+      preview.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.textContent='Preview unavailable'" />`;
+    } else if (url) {
+      preview.textContent = "File set";
+    } else {
+      preview.textContent = "No file";
+    }
+  };
+  textInput.addEventListener("input", updatePreview);
+  updatePreview();
+  uploadPreviewRefreshers[prefix] = updatePreview;
+
+  fileInput.addEventListener("change", async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    status.textContent = "Uploading…";
+    status.className = "upload-status uploading";
+    try {
+      const contentBase64 = await fileToBase64(file);
+      const res = await fetch("/.netlify/functions/admin-upload", {
+        method: "POST",
+        headers: adminHeaders(),
+        body: JSON.stringify({ filename: file.name, folder, contentBase64, contentType: file.type }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || "Upload failed");
+      textInput.value = body.url;
+      updatePreview();
+      status.textContent = "Uploaded ✓";
+      status.className = "upload-status";
+    } catch (err) {
+      status.textContent = err.message || "Upload failed";
+      status.className = "upload-status error";
+    } finally {
+      fileInput.value = "";
+    }
+  });
+}
+function refreshAllUploadPreviews() {
+  Object.values(uploadPreviewRefreshers).forEach((fn) => fn());
+}
+
+// ---------- Login ----------
+async function tryLogin(password) {
+  const res = await fetch("/.netlify/functions/admin-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password }),
+  });
+  return res.ok;
+}
+
+document.getElementById("login-btn").addEventListener("click", async () => {
+  const pw = document.getElementById("login-password").value;
+  const msg = document.getElementById("login-msg");
+  const ok = await tryLogin(pw);
+  if (ok) {
+    sessionStorage.setItem(ADMIN_PW_KEY, pw);
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("admin-shell").style.display = "block";
+    loadEverything();
+  } else {
+    showMsg(msg, "Incorrect password, or ADMIN_PASSWORD isn't set in Netlify yet.", false);
+  }
+});
+document.getElementById("logout-btn").addEventListener("click", () => {
+  sessionStorage.removeItem(ADMIN_PW_KEY);
+  location.reload();
+});
+
+(async () => {
+  const saved = sessionStorage.getItem(ADMIN_PW_KEY);
+  if (saved && (await tryLogin(saved))) {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("admin-shell").style.display = "block";
+    loadEverything();
+  }
+})();
+
+// ---------- Navigation: sidebar (desktop) + select (mobile) + search ----------
+function goToSection(id) {
+  document.querySelectorAll(".admin-panel").forEach((p) => p.classList.remove("active"));
+  const panel = document.getElementById("panel-" + id);
+  if (panel) panel.classList.add("active");
+  document.querySelectorAll(".admin-nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.target === id));
+  const select = document.getElementById("admin-nav-select");
+  if (select && select.value !== id) select.value = id;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+document.querySelectorAll(".admin-nav-btn").forEach((btn) => {
+  btn.addEventListener("click", () => goToSection(btn.dataset.target));
+});
+document.getElementById("admin-nav-select").addEventListener("change", (e) => goToSection(e.target.value));
+
+function filterNav(query) {
+  const q = query.trim().toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll(".admin-nav-group").forEach((group) => {
+    let groupHasVisible = false;
+    group.querySelectorAll(".admin-nav-btn").forEach((btn) => {
+      const match = !q || btn.dataset.search.includes(q);
+      btn.style.display = match ? "" : "none";
+      if (match) groupHasVisible = true;
+    });
+    group.style.display = groupHasVisible ? "" : "none";
+    if (groupHasVisible) anyVisible = true;
+  });
+  document.getElementById("admin-nav-empty").hidden = anyVisible;
+  // Mirror the same filter onto the mobile <select>'s options.
+  document.querySelectorAll("#admin-nav-select option").forEach((opt) => {
+    const btn = document.querySelector(`.admin-nav-btn[data-target="${opt.value}"]`);
+    opt.hidden = btn ? btn.style.display === "none" : false;
+  });
+}
+document.getElementById("admin-nav-search").addEventListener("input", (e) => {
+  filterNav(e.target.value);
+  document.getElementById("admin-nav-search-mobile").value = e.target.value;
+});
+document.getElementById("admin-nav-search-mobile").addEventListener("input", (e) => {
+  filterNav(e.target.value);
+  document.getElementById("admin-nav-search").value = e.target.value;
+});
+</script>
+<script>
+// ---------- Inbox tab ----------
+let inboxData = { orders: [], messages: [], subscribers: [], unread: { orders: 0, messages: 0 } };
+let inboxTab = "orders";
+
+function ibDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return isNaN(d) ? "" : d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
+function ibEmailChip(row) {
+  if (row.emails_sent === true) return '<span class="ib-chip ok">Email sent</span>';
+  if (row.emails_sent === false) return '<span class="ib-chip bad">Email failed' + (row.email_error ? ": " + escapeHtml(row.email_error) : "") + "</span>";
+  return "";
+}
+function ibItemHtml(kind, r) {
+  const unread = !r.read_at;
+  const chips = (unread ? '<span class="ib-chip new">New</span>' : "") + ibEmailChip(r);
+  const table = kind === "orders" ? "orders" : "contact_messages";
+  const who = escapeHtml(r.name || r.email || "Unknown");
+  const sub = escapeHtml([r.email, r.phone].filter(Boolean).join(" · "));
+  let body = "";
+  let details = "";
+  if (kind === "orders") {
+    body = escapeHtml(r.items || "");
+    const bits = [];
+    if (r.total_cents != null) bits.push("<b>Total</b> $" + (r.total_cents / 100).toFixed(2));
+    if (r.shipping_label) bits.push("<b>Shipping</b> " + escapeHtml(r.shipping_label));
+    if (r.payment_method) bits.push("<b>Payment</b> " + escapeHtml(r.payment_method));
+    if (r.country) bits.push("<b>Country</b> " + escapeHtml(r.country));
+    if (r.address) bits.push("<b>Address</b> " + escapeHtml(r.address));
+    if (r.promo_code) bits.push("<b>Promo</b> " + escapeHtml(r.promo_code));
+    details = bits.join(" &nbsp;|&nbsp; ");
+  } else {
+    body = escapeHtml(r.message || "");
+    const bits = [];
+    if (r.org) bits.push("<b>Organization</b> " + escapeHtml(r.org));
+    if (r.product_slug) bits.push("<b>Product</b> " + escapeHtml(r.product_slug));
+    details = bits.join(" &nbsp;|&nbsp; ");
+  }
+  const subject = encodeURIComponent(kind === "orders" ? "Your ElementLab Peptides order" : "Re: your message to ElementLab Peptides");
+  return `<div class="ib-item ${unread ? "unread" : ""}">
+    <div class="ib-head">
+      <div><strong>${who}</strong><span class="ib-sub">${sub}</span></div>
+      <div class="ib-meta">${chips}<span>${ibDate(r.created_at)}</span></div>
+    </div>
+    <pre class="ib-body">${body}</pre>
+    ${details ? `<div class="ib-details">${details}</div>` : ""}
+    <div class="ib-actions">
+      ${r.email ? `<a class="btn btn-outline btn-tiny" href="mailto:${escapeHtml(r.email)}?subject=${subject}">Reply</a>` : ""}
+      <button type="button" class="btn btn-outline btn-tiny" data-ib-read="${r.id}" data-ib-table="${table}" data-ib-state="${unread ? "read" : "unread"}">${unread ? "Mark as read" : "Mark as unread"}</button>
+    </div>
+  </div>`;
+}
+function renderInbox() {
+  const list = document.getElementById("ib-list");
+  document.querySelectorAll("[data-ib-tab]").forEach((b) => b.classList.toggle("active", b.dataset.ibTab === inboxTab));
+  const uo = inboxData.unread.orders, um = inboxData.unread.messages;
+  document.getElementById("ib-count-orders").textContent = uo || "";
+  document.getElementById("ib-count-messages").textContent = um || "";
+  const total = uo + um;
+  const badge = document.getElementById("inbox-badge");
+  if (badge) { badge.textContent = total; badge.hidden = total === 0; }
+  const opt = document.querySelector('#admin-nav-select option[value="inbox"]');
+  if (opt) opt.textContent = total ? `Inbox (${total} new)` : "Inbox";
+  document.getElementById("ib-markall").style.display = inboxTab === "subscribers" ? "none" : "";
+  if (inboxTab === "subscribers") {
+    const rows = inboxData.subscribers;
+    list.innerHTML = rows.length
+      ? rows.map((r) => `<div class="ib-item"><div class="ib-head"><strong>${escapeHtml(r.email)}</strong><div class="ib-meta"><span>${ibDate(r.created_at)}</span></div></div></div>`).join("")
+      : '<p class="ib-empty">No signups yet.</p>';
+    return;
+  }
+  const rows = inboxTab === "orders" ? inboxData.orders : inboxData.messages;
+  list.innerHTML = rows.length
+    ? rows.map((r) => ibItemHtml(inboxTab, r)).join("")
+    : `<p class="ib-empty">No ${inboxTab === "orders" ? "orders" : "messages"} yet.</p>`;
+}
+async function refreshInbox() {
+  const msg = document.getElementById("ib-msg");
+  try {
+    const res = await fetch("/.netlify/functions/admin-inbox", { headers: adminHeaders() });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Could not load the inbox (is Supabase connected?)");
+    inboxData = data;
+    msg.className = "admin-msg";
+    msg.textContent = "";
+    renderInbox();
+  } catch (err) {
+    document.getElementById("ib-list").innerHTML = "";
+    showMsg(msg, err.message, false);
+  }
+}
+async function ibMark(body) {
+  const res = await fetch("/.netlify/functions/admin-inbox", { method: "POST", headers: adminHeaders(), body: JSON.stringify(body) });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    showMsg(document.getElementById("ib-msg"), data.error || "Could not update", false);
+    return;
+  }
+  await refreshInbox();
+}
+document.querySelectorAll("[data-ib-tab]").forEach((b) => b.addEventListener("click", () => { inboxTab = b.dataset.ibTab; renderInbox(); }));
+document.getElementById("ib-refresh").addEventListener("click", refreshInbox);
+document.getElementById("ib-markall").addEventListener("click", () => ibMark({ table: inboxTab === "orders" ? "orders" : "contact_messages", all: true }));
+document.getElementById("ib-list").addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-ib-read]");
+  if (btn) ibMark({ table: btn.dataset.ibTable, id: btn.dataset.ibRead, read: btn.dataset.ibState === "read" });
+});
+// Keep the unread badge fresh while the admin panel is open.
+setInterval(() => { if (sessionStorage.getItem(ADMIN_PW_KEY)) refreshInbox(); }, 60000);
+</script>
+<script>
+// ---------- Data load ----------
+let liveProducts = [];
+let liveCategories = [];
+let liveBundles = [];
+let liveSettings = null;
+let liveFaqsAdmin = [];
+
+wireUploadField("pf-image", "products");
+wireUploadField("pf-sds", "sds");
+wireUploadField("cf-image", "categories");
+wireUploadField("bf-image", "combos");
+
+async function loadEverything() {
+  try {
+    const res = await fetch("/.netlify/functions/get-products");
+    const data = res.ok ? await res.json() : {};
+    liveProducts = (data.products && data.products.length) ? data.products : PRODUCTS;
+    liveCategories = (data.categories && data.categories.length) ? data.categories : CATEGORIES;
+    liveBundles = (data.combos && data.combos.length) ? data.combos : COMBOS;
+    liveSettings = data.settings || null;
+    liveFaqsAdmin = (liveSettings && Array.isArray(liveSettings.faqs) && liveSettings.faqs.length) ? liveSettings.faqs : DEFAULT_FAQS.slice();
+  } catch {
+    liveProducts = PRODUCTS;
+    liveCategories = CATEGORIES;
+    liveBundles = COMBOS;
+    liveFaqsAdmin = DEFAULT_FAQS.slice();
+  }
+  renderProductsTable();
+  renderCategoriesTable();
+  renderBundlesTable();
+  renderPromotionsForm();
+  renderPaymentMethodsForm();
+  renderAnnouncementForm();
+  renderHomepageForm();
+  renderAboutForm();
+  renderDeliveryForm();
+  renderFaqForm();
+  renderFooterForm();
+  renderContactForm();
+  renderShippingDiscountsForm();
+  refreshInbox();
+}
+
+// ---------- Products tab ----------
+function renderProductsTable() {
+  const tbody = document.getElementById("products-tbody");
+  tbody.innerHTML = liveProducts
+    .map((p, i) => {
+      const inStock = p.inStock !== false;
+      return `<tr>
+        <td>${escapeHtml(p.name)}</td>
+        <td style="font-size:0.78rem;">${escapeHtml(p.slug)}</td>
+        <td>${escapeHtml(p.coverDose) || "-"}</td>
+        <td><button class="stock-pill ${inStock ? "in" : "out"}" data-toggle-stock="${i}">${inStock ? "In Stock" : "Out of Stock"}</button></td>
+        <td>
+          <button class="btn btn-outline btn-tiny" data-edit-product="${i}">Edit</button>
+          <button class="btn btn-outline btn-tiny" data-delete-product="${p.slug}" style="color:var(--danger); border-color:var(--danger);">Delete</button>
+        </td>
+      </tr>`;
+    })
+    .join("");
+}
+
+document.getElementById("products-tbody").addEventListener("click", async (e) => {
+  const editIdx = e.target.dataset.editProduct;
+  const delSlug = e.target.dataset.deleteProduct;
+  const toggleIdx = e.target.dataset.toggleStock;
+  if (editIdx !== undefined) loadProductIntoForm(liveProducts[editIdx]);
+  if (toggleIdx !== undefined) {
+    const p = liveProducts[toggleIdx];
+    p.inStock = !(p.inStock !== false);
+    await saveProduct(p, true);
+    renderProductsTable();
+  }
+  if (delSlug) {
+    if (!confirm(`Delete "${delSlug}"? This can't be undone.`)) return;
+    await fetch(`/.netlify/functions/admin-products?slug=${encodeURIComponent(delSlug)}`, { method: "DELETE", headers: adminHeaders() });
+    liveProducts = liveProducts.filter((p) => p.slug !== delSlug);
+    renderProductsTable();
+  }
+});
+
+function newDoseRow(label = "", price = "", image = "") {
+  const row = document.createElement("div");
+  row.className = "dose-row";
+  row.innerHTML = `<input placeholder="Label e.g. 10mg" value="${label}" class="dose-label" />
+    <input placeholder="Price in $ e.g. 34.99" value="${price}" class="dose-price" type="number" step="0.01" />
+    <input placeholder="Photo path e.g. assets/img/products/bpc-157-10mg.jpg" value="${image}" class="dose-image" />
+    <button class="btn btn-outline btn-tiny" type="button" onclick="this.parentElement.remove()">Remove</button>`;
+  return row;
+}
+document.getElementById("pf-add-dose").addEventListener("click", () => {
+  document.getElementById("pf-doses").appendChild(newDoseRow());
+});
+document.getElementById("pf-stock-toggle").addEventListener("click", (e) => {
+  const isIn = e.target.dataset.stock === "in";
+  e.target.dataset.stock = isIn ? "out" : "in";
+  e.target.textContent = isIn ? "Out of Stock" : "In Stock";
+  e.target.className = "stock-pill " + (isIn ? "out" : "in");
+});
+
+function loadProductIntoForm(p) {
+  document.getElementById("product-form-title").textContent = `Editing: ${p.name}`;
+  document.getElementById("pf-name").value = p.name || "";
+  document.getElementById("pf-slug").value = p.slug || "";
+  document.getElementById("pf-categories").value = (p.categories || []).join(", ");
+  document.getElementById("pf-cover-dose").value = p.coverDose || "";
+  document.getElementById("pf-appearance").value = p.appearance || "";
+  document.getElementById("pf-image").value = p.image || "";
+  document.getElementById("pf-sds").value = p.sds || "";
+  document.getElementById("pf-chem-cas").value = (p.chem && p.chem.cas) || "";
+  document.getElementById("pf-chem-formula").value = (p.chem && p.chem.formula) || "";
+  document.getElementById("pf-chem-mw").value = (p.chem && p.chem.mw) || "";
+  document.getElementById("pf-summary").value = p.summary || "";
+  const dosesEl = document.getElementById("pf-doses");
+  dosesEl.innerHTML = "";
+  (p.doses || []).forEach((d) => dosesEl.appendChild(newDoseRow(d.label, (d.priceCents / 100).toFixed(2), d.image || "")));
+  const stockBtn = document.getElementById("pf-stock-toggle");
+  const inStock = p.inStock !== false;
+  stockBtn.dataset.stock = inStock ? "in" : "out";
+  stockBtn.textContent = inStock ? "In Stock" : "Out of Stock";
+  stockBtn.className = "stock-pill " + (inStock ? "in" : "out");
+  goToSection("products");
+  window.scrollTo({ top: document.getElementById("product-form-title").offsetTop - 20, behavior: "smooth" });
+  refreshAllUploadPreviews();
+}
+
+document.getElementById("pf-clear").addEventListener("click", () => {
+  document.getElementById("product-form-title").textContent = "Add a Product";
+  ["pf-name", "pf-slug", "pf-categories", "pf-cover-dose", "pf-appearance", "pf-image", "pf-sds", "pf-chem-cas", "pf-chem-formula", "pf-chem-mw", "pf-summary"].forEach((id) => (document.getElementById(id).value = ""));
+  document.getElementById("pf-doses").innerHTML = "";
+  const stockBtn = document.getElementById("pf-stock-toggle");
+  stockBtn.dataset.stock = "in";
+  stockBtn.textContent = "In Stock";
+  stockBtn.className = "stock-pill in";
+  refreshAllUploadPreviews();
+});
+
+async function saveProduct(product, silent) {
+  const res = await fetch("/.netlify/functions/admin-products", {
+    method: "POST",
+    headers: adminHeaders(),
+    body: JSON.stringify(product),
+  });
+  if (!silent) {
+    const msg = document.getElementById("pf-msg");
+    if (res.ok) showMsg(msg, "Saved. Live on the site within a minute.", true);
+    else {
+      const body = await res.json().catch(() => ({}));
+      showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+    }
+  }
+  return res.ok;
+}
+
+document.getElementById("pf-save").addEventListener("click", async () => {
+  const doses = Array.from(document.querySelectorAll("#pf-doses .dose-row")).map((row) => ({
+    label: row.querySelector(".dose-label").value.trim(),
+    priceCents: Math.round(parseFloat(row.querySelector(".dose-price").value || "0") * 100),
+    image: row.querySelector(".dose-image").value.trim(),
+  })).filter((d) => d.label);
+
+  const product = {
+    slug: document.getElementById("pf-slug").value.trim(),
+    name: document.getElementById("pf-name").value.trim(),
+    categories: document.getElementById("pf-categories").value.split(",").map((s) => s.trim()).filter(Boolean),
+    coverDose: document.getElementById("pf-cover-dose").value.trim(),
+    appearance: document.getElementById("pf-appearance").value.trim(),
+    image: document.getElementById("pf-image").value.trim(),
+    sds: document.getElementById("pf-sds").value.trim(),
+    chem: {
+      cas: document.getElementById("pf-chem-cas").value.trim(),
+      formula: document.getElementById("pf-chem-formula").value.trim(),
+      mw: document.getElementById("pf-chem-mw").value.trim(),
+    },
+    summary: document.getElementById("pf-summary").value.trim(),
+    doses,
+    inStock: document.getElementById("pf-stock-toggle").dataset.stock === "in",
+  };
+  if (!product.slug || !product.name) {
+    showMsg(document.getElementById("pf-msg"), "Name and slug are required.", false);
+    return;
+  }
+  const ok = await saveProduct(product);
+  if (ok) {
+    const idx = liveProducts.findIndex((p) => p.slug === product.slug);
+    if (idx >= 0) liveProducts[idx] = { ...liveProducts[idx], ...product };
+    else liveProducts.push(product);
+    renderProductsTable();
+  }
+});
+
+// ---------- Categories tab ----------
+function renderCategoriesTable() {
+  const tbody = document.getElementById("categories-tbody");
+  tbody.innerHTML = liveCategories
+    .map((c, i) => `<tr>
+      <td>${escapeHtml(c.name)}</td>
+      <td style="font-size:0.78rem;">${escapeHtml(c.slug)}</td>
+      <td>${escapeHtml(c.blurb || "")}</td>
+      <td>
+        <button class="btn btn-outline btn-tiny" data-edit-category="${i}">Edit</button>
+        <button class="btn btn-outline btn-tiny" data-delete-category="${c.slug}" style="color:var(--danger); border-color:var(--danger);">Delete</button>
+      </td>
+    </tr>`)
+    .join("");
+}
+document.getElementById("categories-tbody").addEventListener("click", async (e) => {
+  const editIdx = e.target.dataset.editCategory;
+  const delSlug = e.target.dataset.deleteCategory;
+  if (editIdx !== undefined) loadCategoryIntoForm(liveCategories[editIdx]);
+  if (delSlug) {
+    if (!confirm(`Delete "${delSlug}"? Products already filed under it will simply stop matching a category until you update them.`)) return;
+    await fetch(`/.netlify/functions/admin-categories?slug=${encodeURIComponent(delSlug)}`, { method: "DELETE", headers: adminHeaders() });
+    liveCategories = liveCategories.filter((c) => c.slug !== delSlug);
+    renderCategoriesTable();
+  }
+});
+function loadCategoryIntoForm(c) {
+  document.getElementById("category-form-title").textContent = `Editing: ${c.name}`;
+  document.getElementById("cf-name").value = c.name || "";
+  document.getElementById("cf-slug").value = c.slug || "";
+  document.getElementById("cf-blurb").value = c.blurb || "";
+  document.getElementById("cf-image").value = c.image || "";
+  goToSection("categories");
+  window.scrollTo({ top: document.getElementById("category-form-title").offsetTop - 20, behavior: "smooth" });
+  refreshAllUploadPreviews();
+}
+document.getElementById("cf-clear").addEventListener("click", () => {
+  document.getElementById("category-form-title").textContent = "Add a Category";
+  ["cf-name", "cf-slug", "cf-blurb", "cf-image"].forEach((id) => (document.getElementById(id).value = ""));
+  refreshAllUploadPreviews();
+});
+document.getElementById("cf-save").addEventListener("click", async () => {
+  const category = {
+    slug: document.getElementById("cf-slug").value.trim(),
+    name: document.getElementById("cf-name").value.trim(),
+    blurb: document.getElementById("cf-blurb").value.trim(),
+    image: document.getElementById("cf-image").value.trim(),
+  };
+  if (!category.slug || !category.name) {
+    showMsg(document.getElementById("cf-msg"), "Name and slug are required.", false);
+    return;
+  }
+  const res = await fetch("/.netlify/functions/admin-categories", { method: "POST", headers: adminHeaders(), body: JSON.stringify(category) });
+  const msg = document.getElementById("cf-msg");
+  if (res.ok) {
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+    const idx = liveCategories.findIndex((c) => c.slug === category.slug);
+    if (idx >= 0) liveCategories[idx] = category;
+    else liveCategories.push(category);
+    renderCategoriesTable();
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+
+// ---------- Bundles tab (unused, kept dormant) ----------
+function renderBundlesTable() {
+  const tbody = document.getElementById("bundles-tbody");
+  tbody.innerHTML = liveBundles
+    .map(
+      (b, i) => `<tr>
+        <td>${escapeHtml(b.name)}</td>
+        <td style="font-size:0.78rem;">${escapeHtml(b.slug)}</td>
+        <td>${(b.tiers || []).length}</td>
+        <td>
+          <button class="btn btn-outline btn-tiny" data-edit-bundle="${i}">Edit</button>
+          <button class="btn btn-outline btn-tiny" data-delete-bundle="${b.slug}" style="color:var(--danger); border-color:var(--danger);">Delete</button>
+        </td>
+      </tr>`
+    )
+    .join("");
+}
+
+document.getElementById("bundles-tbody").addEventListener("click", async (e) => {
+  const editIdx = e.target.dataset.editBundle;
+  const delSlug = e.target.dataset.deleteBundle;
+  if (editIdx !== undefined) loadBundleIntoForm(liveBundles[editIdx]);
+  if (delSlug) {
+    if (!confirm(`Delete "${delSlug}"? This can't be undone.`)) return;
+    await fetch(`/.netlify/functions/admin-bundles?slug=${encodeURIComponent(delSlug)}`, { method: "DELETE", headers: adminHeaders() });
+    liveBundles = liveBundles.filter((b) => b.slug !== delSlug);
+    renderBundlesTable();
+  }
+});
+
+function newTierRow(tier) {
+  tier = tier || { label: "", items: [{ slug: "", dose: "" }, { slug: "", dose: "" }], separateCents: 0, bundleCents: 0 };
+  const row = document.createElement("div");
+  row.className = "admin-card";
+  row.style.padding = "14px";
+  row.innerHTML = `
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Tier label</label><input class="tier-label" value="${tier.label || ""}" /></div>
+      <div class="admin-field"><label>Bundle price ($)</label><input class="tier-bundle" type="number" step="0.01" value="${((tier.bundleCents || 0) / 100).toFixed(2)}" /></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Item 1 slug / dose</label>
+        <div class="tier-row"><input class="tier-item1-slug" placeholder="slug" value="${tier.items[0]?.slug || ""}" /><input class="tier-item1-dose" placeholder="dose" value="${tier.items[0]?.dose || ""}" /></div>
+      </div>
+      <div class="admin-field"><label>Item 2 slug / dose</label>
+        <div class="tier-row"><input class="tier-item2-slug" placeholder="slug" value="${tier.items[1]?.slug || ""}" /><input class="tier-item2-dose" placeholder="dose" value="${tier.items[1]?.dose || ""}" /></div>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-tiny" type="button" onclick="this.parentElement.remove()">Remove tier</button>
+  `;
+  return row;
+}
+document.getElementById("bf-add-tier").addEventListener("click", () => {
+  document.getElementById("bf-tiers").appendChild(newTierRow());
+});
+
+function loadBundleIntoForm(b) {
+  document.getElementById("bundle-form-title").textContent = `Editing: ${b.name}`;
+  document.getElementById("bf-name").value = b.name || "";
+  document.getElementById("bf-slug").value = b.slug || "";
+  document.getElementById("bf-blurb").value = b.blurb || "";
+  document.getElementById("bf-image").value = b.image || "";
+  const tiersEl = document.getElementById("bf-tiers");
+  tiersEl.innerHTML = "";
+  (b.tiers || []).forEach((t) => tiersEl.appendChild(newTierRow(t)));
+  goToSection("bundles");
+  window.scrollTo({ top: document.getElementById("bundle-form-title").offsetTop - 20, behavior: "smooth" });
+  refreshAllUploadPreviews();
+}
+
+document.getElementById("bf-clear").addEventListener("click", () => {
+  document.getElementById("bundle-form-title").textContent = "Add a Bundle Deal";
+  ["bf-name", "bf-slug", "bf-blurb", "bf-image"].forEach((id) => (document.getElementById(id).value = ""));
+  document.getElementById("bf-tiers").innerHTML = "";
+  refreshAllUploadPreviews();
+});
+
+document.getElementById("bf-save").addEventListener("click", async () => {
+  const tiers = Array.from(document.querySelectorAll("#bf-tiers > .admin-card")).map((row) => {
+    const items = [
+      { slug: row.querySelector(".tier-item1-slug").value.trim(), dose: row.querySelector(".tier-item1-dose").value.trim() },
+      { slug: row.querySelector(".tier-item2-slug").value.trim(), dose: row.querySelector(".tier-item2-dose").value.trim() },
+    ].filter((i) => i.slug && i.dose);
+    const bundleCents = Math.round(parseFloat(row.querySelector(".tier-bundle").value || "0") * 100);
+    const separateCents = items.reduce((sum, i) => {
+      const prod = liveProducts.find((p) => p.slug === i.slug);
+      const dose = prod && (prod.doses || []).find((d) => d.label === i.dose);
+      return sum + (dose ? dose.priceCents : 0);
+    }, 0);
+    return { label: row.querySelector(".tier-label").value.trim(), items, bundleCents, separateCents };
+  });
+
+  const bundle = {
+    slug: document.getElementById("bf-slug").value.trim(),
+    name: document.getElementById("bf-name").value.trim(),
+    blurb: document.getElementById("bf-blurb").value.trim(),
+    image: document.getElementById("bf-image").value.trim(),
+    tiers,
+  };
+  if (!bundle.slug || !bundle.name) {
+    showMsg(document.getElementById("bf-msg"), "Name and slug are required.", false);
+    return;
+  }
+  const res = await fetch("/.netlify/functions/admin-bundles", { method: "POST", headers: adminHeaders(), body: JSON.stringify(bundle) });
+  const msg = document.getElementById("bf-msg");
+  if (res.ok) {
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+    const idx = liveBundles.findIndex((b) => b.slug === bundle.slug);
+    if (idx >= 0) liveBundles[idx] = bundle;
+    else liveBundles.push(bundle);
+    renderBundlesTable();
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Promotions tab ----------
+// Each promo card is built from the same shape used on the live site
+// (see js/promo.js): { code, pct, active, startDate, endDate,
+// placements, label, popupDelaySec }. startDate/endDate are datetime-local
+// strings ("" = no bound). popupDelaySec only matters when "popup" is a
+// checked placement.
+function promoStatus(p) {
+  const now = new Date();
+  if (p.active === false) return { text: "Paused", cls: "paused" };
+  if (p.endDate && now > new Date(p.endDate)) return { text: "Expired", cls: "expired" };
+  if (p.startDate && now < new Date(p.startDate)) return { text: "Scheduled", cls: "scheduled" };
+  return { text: "Active now", cls: "active" };
+}
+function toDatetimeLocal(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d)) return "";
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function newPromoCard(promo) {
+  promo = promo || { code: "", pct: 15, active: true, startDate: "", endDate: "", placements: [], label: "", popupDelaySec: 5 };
+  const card = document.createElement("div");
+  card.className = "promo-card admin-card";
+  const status = promoStatus(promo);
+  const hasPopup = (promo.placements || []).includes("popup");
+  card.innerHTML = `
+    <div class="promo-card-foot" style="margin-top:0; margin-bottom:16px;">
+      <span class="promo-status-chip ${status.cls}">${status.text}</span>
+      <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+        <span class="toggle-switch"><input type="checkbox" class="promo-active" ${promo.active !== false ? "checked" : ""} /><span class="toggle-track"></span></span>
+        Active
+      </label>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Code</label><input class="promo-code" style="text-transform:uppercase;" value="${escapeHtml(promo.code || "")}" placeholder="e.g. SUMMER20" /></div>
+      <div class="admin-field"><label>Discount %</label><input class="promo-pct" type="number" min="0" max="100" value="${promo.pct != null ? promo.pct : ""}" /></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Starts (optional)</label><span class="field-help">Leave blank to start immediately.</span><input class="promo-start" type="datetime-local" value="${toDatetimeLocal(promo.startDate)}" /></div>
+      <div class="admin-field"><label>Ends (optional)</label><span class="field-help">Leave blank to run with no end date.</span><input class="promo-end" type="datetime-local" value="${toDatetimeLocal(promo.endDate)}" /></div>
+    </div>
+    <div class="admin-field">
+      <label>Custom display message (optional)</label>
+      <span class="field-help">Shown wherever this promo is advertised below. Leave blank to auto-generate, e.g. "Use code SUMMER20 for 20% off".</span>
+      <input class="promo-label" value="${escapeHtml(promo.label || "")}" placeholder="e.g. Flash Sale - this weekend only" />
+    </div>
+    <div class="admin-field">
+      <label>Where to advertise this code</label>
+      <span class="field-help">The code always works when typed in the cart while active, no matter what's checked here.</span>
+      <div class="promo-placements">
+        <label><input type="checkbox" class="promo-place-banner" ${(promo.placements || []).includes("banner") ? "checked" : ""} /> Top banner</label>
+        <label><input type="checkbox" class="promo-place-product" ${(promo.placements || []).includes("product") ? "checked" : ""} /> Every product page</label>
+        <label><input type="checkbox" class="promo-place-popup" ${hasPopup ? "checked" : ""} /> Pop-up</label>
+      </div>
+    </div>
+    <div class="promo-popup-fields ${hasPopup ? "show" : ""}">
+      <div class="admin-field" style="margin-bottom:0;"><label>Pop-up delay (seconds)</label><span class="field-help">How long after a page loads this pop-up appears.</span><input class="promo-popup-delay" type="number" min="0" value="${promo.popupDelaySec != null ? promo.popupDelaySec : 5}" /></div>
+      <div class="admin-field" style="margin-bottom:0;"><label>How this works</label><span class="field-help">Each pop-up on the site (this one and others) shows once ever per visitor, and waits its turn if another pop-up is already showing.</span></div>
+    </div>
+    <div class="promo-card-foot">
+      <span></span>
+      <button class="btn btn-outline btn-tiny" type="button" data-remove-promo style="color:var(--danger); border-color:var(--danger);">Remove promotion</button>
+    </div>
+  `;
+  card.querySelector(".promo-place-popup").addEventListener("change", (e) => {
+    card.querySelector(".promo-popup-fields").classList.toggle("show", e.target.checked);
+  });
+  card.querySelector("[data-remove-promo]").addEventListener("click", () => {
+    if (confirm("Remove this promotion? This can't be undone.")) card.remove();
+  });
+  return card;
+}
+document.getElementById("promo-add").addEventListener("click", () => {
+  document.getElementById("promo-list").appendChild(newPromoCard());
+});
+
+function renderPromotionsForm() {
+  const s = liveSettings || {};
+  const promos = (s.promoCodes && s.promoCodes.length) ? s.promoCodes : [];
+  const el = document.getElementById("promo-list");
+  el.innerHTML = "";
+  promos.forEach((p) => el.appendChild(newPromoCard(p)));
+}
+
+document.getElementById("promo-save").addEventListener("click", async () => {
+  const cards = Array.from(document.querySelectorAll("#promo-list .promo-card"));
+  const promoCodes = cards.map((card) => {
+    const placements = [];
+    if (card.querySelector(".promo-place-banner").checked) placements.push("banner");
+    if (card.querySelector(".promo-place-product").checked) placements.push("product");
+    if (card.querySelector(".promo-place-popup").checked) placements.push("popup");
+    const startVal = card.querySelector(".promo-start").value;
+    const endVal = card.querySelector(".promo-end").value;
+    return {
+      code: card.querySelector(".promo-code").value.trim().toUpperCase(),
+      pct: parseInt(card.querySelector(".promo-pct").value, 10) || 0,
+      active: card.querySelector(".promo-active").checked,
+      startDate: startVal ? new Date(startVal).toISOString() : "",
+      endDate: endVal ? new Date(endVal).toISOString() : "",
+      label: card.querySelector(".promo-label").value.trim(),
+      placements,
+      popupDelaySec: parseInt(card.querySelector(".promo-popup-delay").value, 10) || 0,
+    };
+  }).filter((p) => p.code && p.pct > 0);
+
+  const msg = document.getElementById("promo-msg");
+  const duplicateCode = promoCodes.find((p, i) => promoCodes.findIndex((q) => q.code === p.code) !== i);
+  if (duplicateCode) {
+    showMsg(msg, `The code "${duplicateCode.code}" is used more than once - each code needs to be unique.`, false);
+    return;
+  }
+  const badRange = promoCodes.find((p) => p.startDate && p.endDate && new Date(p.startDate) > new Date(p.endDate));
+  if (badRange) {
+    showMsg(msg, `"${badRange.code}" ends before it starts - check its dates.`, false);
+    return;
+  }
+
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ promoCodes }) });
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, { promoCodes });
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Payment Methods tab ----------
+function paymentLogoHtml(name) {
+  const src = (typeof PAYMENT_LOGOS !== "undefined" && PAYMENT_LOGOS[name]) || "";
+  return src ? `<img src="${src}" alt="" />` : `<span style="font-size:0.6rem; font-weight:800; color:var(--ink-soft);">${escapeHtml((name || "?").slice(0, 2).toUpperCase())}</span>`;
+}
+function newMethodRow(method) {
+  method = method || { name: "", active: true };
+  const row = document.createElement("div");
+  row.className = "method-row";
+  const isOn = method.active !== false;
+  row.innerHTML = `
+    <div class="method-logo" title="Logo (matched automatically from the name)">${paymentLogoHtml(method.name)}</div>
+    <div class="method-field">
+      <label class="mlabel">Payment method name</label>
+      <input class="method-name" value="${escapeHtml(method.name || "")}" placeholder="e.g. Cash App" />
+    </div>
+    <div class="method-toggle">
+      <label class="mlabel">Show on site</label>
+      <div class="method-toggle-inner">
+        <label class="toggle-switch"><input type="checkbox" class="method-active" ${isOn ? "checked" : ""} /><span class="toggle-track"></span></label>
+        <span class="method-status ${isOn ? "on" : "off"}">${isOn ? "Showing" : "Hidden"}</span>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-tiny" type="button" data-remove-method style="color:var(--danger); border-color:var(--danger);">Remove</button>
+  `;
+  const statusEl = row.querySelector(".method-status");
+  row.querySelector(".method-active").addEventListener("change", (e) => {
+    statusEl.textContent = e.target.checked ? "Showing" : "Hidden";
+    statusEl.className = "method-status " + (e.target.checked ? "on" : "off");
+  });
+  row.querySelector(".method-name").addEventListener("input", (e) => {
+    row.querySelector(".method-logo").innerHTML = paymentLogoHtml(e.target.value.trim());
+  });
+  row.querySelector("[data-remove-method]").addEventListener("click", () => row.remove());
+  return row;
+}
+document.getElementById("payment-add").addEventListener("click", () => {
+  document.getElementById("payment-method-list").appendChild(newMethodRow());
+});
+
+function renderPaymentMethodsForm() {
+  const s = liveSettings || {};
+  const raw = (s.paymentMethods && s.paymentMethods.length) ? s.paymentMethods : (typeof PAYMENT_METHODS !== "undefined" ? PAYMENT_METHODS : []);
+  // The database can hold plain names ("Bitcoin") or {name, active} objects - read both.
+  const methods = raw.map((m) => (typeof m === "string" ? { name: m, active: true } : m)).filter((m) => m && m.name);
+  const el = document.getElementById("payment-method-list");
+  el.innerHTML = '<div class="method-head"><span>Logo</span><span>Payment method name</span><span>Show on site</span><span></span></div>';
+  methods.forEach((m) => el.appendChild(newMethodRow(m)));
+}
+
+document.getElementById("payment-save").addEventListener("click", async () => {
+  const paymentMethods = Array.from(document.querySelectorAll("#payment-method-list .method-row")).map((row) => ({
+    name: row.querySelector(".method-name").value.trim(),
+    active: row.querySelector(".method-active").checked,
+  })).filter((m) => m.name);
+
+  const msg = document.getElementById("payment-msg");
+  if (paymentMethods.length === 0) {
+    showMsg(msg, "Add at least one payment method - the cart needs something to offer at checkout.", false);
+    return;
+  }
+  if (!paymentMethods.some((m) => m.active)) {
+    showMsg(msg, "At least one payment method needs to be switched on.", false);
+    return;
+  }
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ paymentMethods }) });
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, { paymentMethods });
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Announcement Banner tab ----------
+function newMsgRow(text) {
+  const row = document.createElement("div");
+  row.className = "msg-row";
+  row.innerHTML = `<input class="smsg-text" value="${escapeHtml(text || "")}" />
+    <button class="btn btn-outline btn-tiny" type="button" onclick="this.parentElement.remove()">Remove</button>`;
+  return row;
+}
+document.getElementById("sf-add-msg").addEventListener("click", () => {
+  document.getElementById("sf-messages").appendChild(newMsgRow(""));
+});
+
+function renderAnnouncementForm() {
+  const s = liveSettings || {};
+  const messages = (s.announcements && s.announcements.length) ? s.announcements : [
+    "Research peptides: laboratory use only, not for human or veterinary use. Creatine and supplements also available.",
+    "Up to 20% off kits • 99%+ HPLC purity • batch COA",
+    "Fast, tracked US dispatch",
+  ];
+  const msgEl = document.getElementById("sf-messages");
+  msgEl.innerHTML = "";
+  messages.forEach((m) => msgEl.appendChild(newMsgRow(m)));
+}
+
+document.getElementById("announcement-save").addEventListener("click", async () => {
+  const announcements = Array.from(document.querySelectorAll("#sf-messages .smsg-text")).map((i) => i.value.trim()).filter(Boolean);
+  const msg = document.getElementById("announcement-msg");
+  if (announcements.length === 0) {
+    showMsg(msg, "Add at least one message - the banner needs something to show.", false);
+    return;
+  }
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ announcements }) });
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, { announcements });
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Shared repeatable-field helpers (Homepage / About / Delivery / FAQ / Footer) ----------
+function newCardItem(title, text) {
+  const item = document.createElement("div");
+  item.className = "repeat-item";
+  item.innerHTML = `
+    <div class="admin-field" style="margin-bottom:10px;"><label>Title</label><input class="card-title" value="${escapeHtml(title || "")}" /></div>
+    <div class="admin-field" style="margin-bottom:0;"><label>Text</label><textarea class="card-text">${escapeHtml(text || "")}</textarea></div>
+    <div style="text-align:right; margin-top:8px;"><button class="btn btn-outline btn-tiny" type="button" data-remove-item>Remove</button></div>
+  `;
+  item.querySelector("[data-remove-item]").addEventListener("click", () => item.remove());
+  return item;
+}
+function newTextItem(text) {
+  const item = document.createElement("div");
+  item.className = "repeat-item";
+  item.innerHTML = `
+    <div class="admin-field" style="margin-bottom:0;"><textarea class="text-value">${escapeHtml(text || "")}</textarea></div>
+    <div style="text-align:right; margin-top:8px;"><button class="btn btn-outline btn-tiny" type="button" data-remove-item>Remove</button></div>
+  `;
+  item.querySelector("[data-remove-item]").addEventListener("click", () => item.remove());
+  return item;
+}
+function fillCards(containerId, cards) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  (cards || []).forEach((c) => el.appendChild(newCardItem(c.title, c.text)));
+}
+function fillTexts(containerId, texts) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  (texts || []).forEach((t) => el.appendChild(newTextItem(t)));
+}
+function collectCards(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .repeat-item`)).map((item) => ({
+    title: item.querySelector(".card-title").value.trim(),
+    text: item.querySelector(".card-text").value.trim(),
+  })).filter((c) => c.title || c.text);
+}
+function collectTexts(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .repeat-item`)).map((item) => item.querySelector(".text-value").value.trim()).filter(Boolean);
+}
+document.querySelectorAll("[data-add-cards]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.addCards).appendChild(newCardItem("", ""));
+  });
+});
+document.querySelectorAll("[data-add-text]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.addText).appendChild(newTextItem(""));
+  });
+});
+
+// Link-row helper (Footer tab: label + destination pairs)
+function newLinkRow(label, url) {
+  const row = document.createElement("div");
+  row.className = "link-row";
+  row.innerHTML = `
+    <input class="link-label" placeholder="Label, e.g. All Products" value="${escapeHtml(label || "")}" />
+    <input class="link-url" placeholder="Destination, e.g. shop.html" value="${escapeHtml(url || "")}" />
+    <button class="btn btn-outline btn-tiny" type="button" data-remove-item>Remove</button>
+  `;
+  row.querySelector("[data-remove-item]").addEventListener("click", () => row.remove());
+  return row;
+}
+document.querySelectorAll("[data-add-links]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.addLinks).appendChild(newLinkRow("", ""));
+  });
+});
+function fillLinks(containerId, links) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  (links || []).forEach((l) => el.appendChild(newLinkRow(l.label, l.url)));
+}
+function collectLinks(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .link-row`)).map((row) => ({
+    label: row.querySelector(".link-label").value.trim(),
+    url: row.querySelector(".link-url").value.trim(),
+  })).filter((l) => l.label && l.url);
+}
+
+// A field left blank means "use the default" (see mergeContent in
+// site-content.js) - so when saving, an empty string/array is simply
+// omitted rather than sent, and never overwrites a real value with blank.
+function valOrUndef(id) {
+  const v = document.getElementById(id).value.trim();
+  return v === "" ? undefined : v;
+}
+function numOrUndef(id) {
+  const v = document.getElementById(id).value.trim();
+  return v === "" ? undefined : parseFloat(v);
+}
+function arrOrUndef(arr) {
+  return (arr && arr.length) ? arr : undefined;
+}
+// Strips undefined-valued keys so an empty section object isn't sent at
+// all (an empty {} WOULD be treated as "clear every field" by mergeContent
+// on the live site, which is not what a blank form means here).
+function stripUndef(obj) {
+  const out = {};
+  Object.keys(obj).forEach((k) => { if (obj[k] !== undefined) out[k] = obj[k]; });
+  return out;
+}
+</script>
+<script>
+// ---------- Homepage tab ----------
+function renderHomepageForm() {
+  const c = mergeContent("home", DEFAULT_HOME);
+  document.getElementById("h-heroEyebrow").value = c.heroEyebrow;
+  document.getElementById("h-heroHeading").value = c.heroHeading;
+  document.getElementById("h-heroTagline").value = c.heroTagline;
+  document.getElementById("h-heroLead").value = c.heroLead;
+  document.getElementById("h-heroBadge").value = c.heroBadge;
+  document.getElementById("h-stat1Num").value = c.stat1Num;
+  document.getElementById("h-stat1Label").value = c.stat1Label;
+  document.getElementById("h-stat2Num").value = c.stat2Num;
+  document.getElementById("h-stat2Label").value = c.stat2Label;
+  document.getElementById("h-whyEyebrow").value = c.whyEyebrow;
+  document.getElementById("h-whyHeading").value = c.whyHeading;
+  document.getElementById("h-whySubtext").value = c.whySubtext;
+  fillCards("h-whyCards", c.whyCards);
+  document.getElementById("h-featuredEyebrow").value = c.featuredEyebrow;
+  document.getElementById("h-featuredHeading").value = c.featuredHeading;
+  document.getElementById("h-featuredSubtext").value = c.featuredSubtext;
+  document.getElementById("h-featuredSlugs").value = (c.featuredSlugs || []).join(", ");
+  document.getElementById("h-creatineEyebrow").value = c.creatineEyebrow;
+  document.getElementById("h-creatineHeading").value = c.creatineHeading;
+  document.getElementById("h-creatineSubtext").value = c.creatineSubtext;
+  document.getElementById("h-creatineButton").value = c.creatineButton;
+  document.getElementById("h-creatineSlugs").value = (c.creatineSlugs || []).join(", ");
+  document.getElementById("h-processEyebrow").value = c.processEyebrow;
+  document.getElementById("h-processHeading").value = c.processHeading;
+  fillCards("h-processSteps", c.processSteps);
+  document.getElementById("h-careEyebrow").value = c.careEyebrow;
+  document.getElementById("h-careHeading").value = c.careHeading;
+  fillCards("h-careCards", c.careCards);
+  document.getElementById("h-bulkEyebrow").value = c.bulkEyebrow;
+  document.getElementById("h-bulkHeading").value = c.bulkHeading;
+  document.getElementById("h-bulkText1").value = c.bulkText1;
+  document.getElementById("h-minOrderUsd").value = c.minOrderUsd;
+  document.getElementById("h-faqEyebrow").value = c.faqEyebrow;
+  document.getElementById("h-faqHeading").value = c.faqHeading;
+  document.getElementById("h-faqIds").value = (c.faqIds || []).join(", ");
+  document.getElementById("h-complianceHeading").value = c.complianceHeading;
+  document.getElementById("h-complianceText").value = c.complianceText;
+  document.getElementById("h-paymentsEyebrow").value = c.paymentsEyebrow;
+  document.getElementById("h-paymentsHeading").value = c.paymentsHeading;
+  document.getElementById("h-paymentsSubtext").value = c.paymentsSubtext;
+}
+
+function splitList(id) {
+  return document.getElementById(id).value.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+document.getElementById("homepage-reset").addEventListener("click", () => {
+  if (!confirm("Reset every field on this form back to the site's default wording? You'll still need to click Save Homepage to publish it.")) return;
+  const c = DEFAULT_HOME;
+  ["heroEyebrow","heroHeading","heroTagline","heroLead","heroBadge","stat1Num","stat1Label","stat2Num","stat2Label","whyEyebrow","whyHeading","whySubtext","featuredEyebrow","featuredHeading","featuredSubtext","processEyebrow","processHeading","careEyebrow","careHeading","bulkEyebrow","bulkHeading","bulkText1","faqEyebrow","faqHeading","complianceHeading","complianceText","paymentsEyebrow","paymentsHeading","paymentsSubtext"].forEach((k) => {
+    document.getElementById("h-" + k).value = c[k];
+  });
+  document.getElementById("h-minOrderUsd").value = c.minOrderUsd;
+  document.getElementById("h-featuredSlugs").value = c.featuredSlugs.join(", ");
+  ["creatineEyebrow","creatineHeading","creatineSubtext","creatineButton"].forEach((k) => { document.getElementById("h-" + k).value = c[k]; });
+  document.getElementById("h-creatineSlugs").value = c.creatineSlugs.join(", ");
+  document.getElementById("h-faqIds").value = c.faqIds.join(", ");
+  fillCards("h-whyCards", c.whyCards);
+  fillCards("h-processSteps", c.processSteps);
+  fillCards("h-careCards", c.careCards);
+});
+
+document.getElementById("homepage-save").addEventListener("click", async () => {
+  const home = stripUndef({
+    heroEyebrow: valOrUndef("h-heroEyebrow"), heroHeading: valOrUndef("h-heroHeading"), heroTagline: valOrUndef("h-heroTagline"),
+    heroLead: valOrUndef("h-heroLead"), heroBadge: valOrUndef("h-heroBadge"),
+    stat1Num: valOrUndef("h-stat1Num"), stat1Label: valOrUndef("h-stat1Label"), stat2Num: valOrUndef("h-stat2Num"), stat2Label: valOrUndef("h-stat2Label"),
+    whyEyebrow: valOrUndef("h-whyEyebrow"), whyHeading: valOrUndef("h-whyHeading"), whySubtext: valOrUndef("h-whySubtext"),
+    whyCards: arrOrUndef(collectCards("h-whyCards")),
+    featuredEyebrow: valOrUndef("h-featuredEyebrow"), featuredHeading: valOrUndef("h-featuredHeading"), featuredSubtext: valOrUndef("h-featuredSubtext"),
+    featuredSlugs: arrOrUndef(splitList("h-featuredSlugs")),
+    creatineEyebrow: valOrUndef("h-creatineEyebrow"), creatineHeading: valOrUndef("h-creatineHeading"), creatineSubtext: valOrUndef("h-creatineSubtext"),
+    creatineButton: valOrUndef("h-creatineButton"), creatineSlugs: arrOrUndef(splitList("h-creatineSlugs")),
+    processEyebrow: valOrUndef("h-processEyebrow"), processHeading: valOrUndef("h-processHeading"),
+    processSteps: arrOrUndef(collectCards("h-processSteps")),
+    careEyebrow: valOrUndef("h-careEyebrow"), careHeading: valOrUndef("h-careHeading"),
+    careCards: arrOrUndef(collectCards("h-careCards")),
+    bulkEyebrow: valOrUndef("h-bulkEyebrow"), bulkHeading: valOrUndef("h-bulkHeading"), bulkText1: valOrUndef("h-bulkText1"),
+    minOrderUsd: numOrUndef("h-minOrderUsd"),
+    faqEyebrow: valOrUndef("h-faqEyebrow"), faqHeading: valOrUndef("h-faqHeading"),
+    faqIds: arrOrUndef(splitList("h-faqIds")),
+    complianceHeading: valOrUndef("h-complianceHeading"), complianceText: valOrUndef("h-complianceText"),
+    paymentsEyebrow: valOrUndef("h-paymentsEyebrow"), paymentsHeading: valOrUndef("h-paymentsHeading"), paymentsSubtext: valOrUndef("h-paymentsSubtext"),
+  });
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ siteContent: { home } }) });
+  const msg = document.getElementById("homepage-msg");
+  if (res.ok) {
+    liveSettings = liveSettings || {};
+    liveSettings.siteContent = Object.assign({}, liveSettings.siteContent, { home });
+    showMsg(msg, "Saved. Live on the home page within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- About Page tab ----------
+function renderAboutForm() {
+  const c = mergeContent("about", DEFAULT_ABOUT);
+  document.getElementById("ab-tagline").value = c.tagline;
+  document.getElementById("ab-introHeading").value = c.introHeading;
+  fillTexts("ab-introParagraphs", c.introParagraphs);
+  document.getElementById("ab-whyHeading").value = c.whyHeading;
+  fillCards("ab-whyCards", c.whyCards);
+  document.getElementById("ab-approachHeading").value = c.approachHeading;
+  document.getElementById("ab-approachP1").value = c.approachP1;
+  document.getElementById("ab-approachP2").value = c.approachP2;
+  document.getElementById("ab-serviceHeading").value = c.serviceHeading;
+  document.getElementById("ab-serviceP1").value = c.serviceP1;
+  document.getElementById("ab-serviceP2").value = c.serviceP2;
+  document.getElementById("ab-lookingHeading").value = c.lookingHeading;
+  document.getElementById("ab-lookingP").value = c.lookingP;
+  document.getElementById("ab-contactIntro").value = c.contactIntro;
+  document.getElementById("ab-ruoP1").value = c.ruoP1;
+  document.getElementById("ab-ruoP2").value = c.ruoP2;
+  document.getElementById("ab-ruoP3").value = c.ruoP3;
+}
+
+document.getElementById("about-reset").addEventListener("click", () => {
+  if (!confirm("Reset every field on this form back to the site's default wording? You'll still need to click Save About Page to publish it.")) return;
+  const c = DEFAULT_ABOUT;
+  ["tagline","introHeading","whyHeading","approachHeading","approachP1","approachP2","serviceHeading","serviceP1","serviceP2","lookingHeading","lookingP","contactIntro","ruoP1","ruoP2","ruoP3"].forEach((k) => {
+    document.getElementById("ab-" + k).value = c[k];
+  });
+  fillTexts("ab-introParagraphs", c.introParagraphs);
+  fillCards("ab-whyCards", c.whyCards);
+});
+
+document.getElementById("about-save").addEventListener("click", async () => {
+  const about = stripUndef({
+    tagline: valOrUndef("ab-tagline"), introHeading: valOrUndef("ab-introHeading"),
+    introParagraphs: arrOrUndef(collectTexts("ab-introParagraphs")),
+    whyHeading: valOrUndef("ab-whyHeading"), whyCards: arrOrUndef(collectCards("ab-whyCards")),
+    approachHeading: valOrUndef("ab-approachHeading"), approachP1: valOrUndef("ab-approachP1"), approachP2: valOrUndef("ab-approachP2"),
+    serviceHeading: valOrUndef("ab-serviceHeading"), serviceP1: valOrUndef("ab-serviceP1"), serviceP2: valOrUndef("ab-serviceP2"),
+    lookingHeading: valOrUndef("ab-lookingHeading"), lookingP: valOrUndef("ab-lookingP"),
+    contactIntro: valOrUndef("ab-contactIntro"),
+    ruoP1: valOrUndef("ab-ruoP1"), ruoP2: valOrUndef("ab-ruoP2"), ruoP3: valOrUndef("ab-ruoP3"),
+  });
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ siteContent: { about } }) });
+  const msg = document.getElementById("about-msg");
+  if (res.ok) {
+    liveSettings = liveSettings || {};
+    liveSettings.siteContent = Object.assign({}, liveSettings.siteContent, { about });
+    showMsg(msg, "Saved. Live on the About page within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Delivery Info Page tab ----------
+function renderDeliveryForm() {
+  const c = mergeContent("delivery", DEFAULT_DELIVERY);
+  document.getElementById("d-intro").value = c.intro;
+  fillCards("d-cards", c.cards);
+  document.getElementById("d-notesHeading").value = c.notesHeading;
+  fillTexts("d-notes", c.notes);
+  document.getElementById("d-costsHeading").value = c.costsHeading;
+  document.getElementById("d-costsText").value = c.costsText;
+  document.getElementById("d-helpHeading").value = c.helpHeading;
+  document.getElementById("d-helpText").value = c.helpText;
+  document.getElementById("d-ruoTitle").value = c.ruoTitle;
+  document.getElementById("d-disclaimerTitle").value = c.disclaimerTitle;
+  document.getElementById("d-ruoText").value = c.ruoText;
+  document.getElementById("d-disclaimerText").value = c.disclaimerText;
+  document.getElementById("d-insulatedLabel").value = (liveSettings && liveSettings.insulatedPackagingLabel) || "Insulated packaging (free)";
+}
+
+document.getElementById("delivery-reset").addEventListener("click", () => {
+  if (!confirm("Reset every field on this form back to the site's default wording? You'll still need to click Save Delivery Info Page to publish it.")) return;
+  const c = DEFAULT_DELIVERY;
+  ["intro","notesHeading","costsHeading","costsText","helpHeading","helpText","ruoTitle","disclaimerTitle","ruoText","disclaimerText"].forEach((k) => {
+    document.getElementById("d-" + k).value = c[k];
+  });
+  fillCards("d-cards", c.cards);
+  fillTexts("d-notes", c.notes);
+  document.getElementById("d-insulatedLabel").value = "Insulated packaging (free)";
+});
+
+document.getElementById("delivery-save").addEventListener("click", async () => {
+  const delivery = stripUndef({
+    intro: valOrUndef("d-intro"),
+    cards: arrOrUndef(collectCards("d-cards")),
+    notesHeading: valOrUndef("d-notesHeading"),
+    notes: arrOrUndef(collectTexts("d-notes")),
+    costsHeading: valOrUndef("d-costsHeading"), costsText: valOrUndef("d-costsText"),
+    helpHeading: valOrUndef("d-helpHeading"), helpText: valOrUndef("d-helpText"),
+    ruoTitle: valOrUndef("d-ruoTitle"), disclaimerTitle: valOrUndef("d-disclaimerTitle"),
+    ruoText: valOrUndef("d-ruoText"), disclaimerText: valOrUndef("d-disclaimerText"),
+  });
+  const insulatedPackagingLabel = document.getElementById("d-insulatedLabel").value.trim() || "Insulated packaging (free)";
+  const res = await fetch("/.netlify/functions/admin-settings", {
+    method: "POST", headers: adminHeaders(),
+    body: JSON.stringify({ siteContent: { delivery }, insulatedPackagingLabel }),
+  });
+  const msg = document.getElementById("delivery-msg");
+  if (res.ok) {
+    liveSettings = liveSettings || {};
+    liveSettings.siteContent = Object.assign({}, liveSettings.siteContent, { delivery });
+    liveSettings.insulatedPackagingLabel = insulatedPackagingLabel;
+    showMsg(msg, "Saved. Live on the Delivery Info page within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- FAQ Page tab ----------
+function slugifyFaqId(text, existingIds) {
+  let base = (text || "question").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "question";
+  let id = base, n = 2;
+  while (existingIds.includes(id)) { id = `${base}-${n}`; n++; }
+  return id;
+}
+function newFaqRow(faq) {
+  faq = faq || { id: "", q: "", a: "" };
+  const row = document.createElement("div");
+  row.className = "faq-item-row";
+  row.dataset.faqId = faq.id || "";
+  row.innerHTML = `
+    <div class="faq-item-head">
+      <div class="faq-move-btns">
+        <button type="button" data-move="up" title="Move up">▲</button>
+        <button type="button" data-move="down" title="Move down">▼</button>
+      </div>
+      <span style="font-size:0.72rem; color:var(--ink-soft); font-weight:700;">ID: <span class="faq-id-display">${escapeHtml(faq.id || "(new)")}</span></span>
+    </div>
+    <div class="admin-field" style="margin-bottom:10px;"><label>Question</label><input class="faq-q" value="${escapeHtml(faq.q || "")}" /></div>
+    <div class="admin-field" style="margin-bottom:0;"><label>Answer</label><span class="field-help">Two paragraphs can be separated with a blank line. Basic tags like &lt;strong&gt; and &lt;a href="..."&gt; are allowed.</span><textarea class="faq-a" style="min-height:100px;">${escapeHtml(faq.a || "")}</textarea></div>
+    <div style="text-align:right; margin-top:8px;"><button class="btn btn-outline btn-tiny" type="button" data-remove-faq style="color:var(--danger); border-color:var(--danger);">Remove question</button></div>
+  `;
+  row.querySelector("[data-remove-faq]").addEventListener("click", () => {
+    if (confirm("Remove this question? If it's picked to show on the homepage, remove its ID from the Homepage tab too.")) row.remove();
+  });
+  row.querySelector('[data-move="up"]').addEventListener("click", () => {
+    const prev = row.previousElementSibling;
+    if (prev) row.parentElement.insertBefore(row, prev);
+  });
+  row.querySelector('[data-move="down"]').addEventListener("click", () => {
+    const next = row.nextElementSibling;
+    if (next) row.parentElement.insertBefore(next, row);
+  });
+  return row;
+}
+document.getElementById("faq-add").addEventListener("click", () => {
+  document.getElementById("faq-list-admin").appendChild(newFaqRow());
+});
+
+function renderFaqForm() {
+  const list = (liveSettings && Array.isArray(liveSettings.faqs) && liveSettings.faqs.length) ? liveSettings.faqs : DEFAULT_FAQS;
+  const el = document.getElementById("faq-list-admin");
+  el.innerHTML = "";
+  list.forEach((f) => el.appendChild(newFaqRow(f)));
+}
+
+document.getElementById("faq-reset").addEventListener("click", () => {
+  if (!confirm("Reset the FAQ list back to the site's default questions? You'll still need to click Save FAQ Page to publish it.")) return;
+  const el = document.getElementById("faq-list-admin");
+  el.innerHTML = "";
+  DEFAULT_FAQS.forEach((f) => el.appendChild(newFaqRow(f)));
+});
+
+document.getElementById("faq-save").addEventListener("click", async () => {
+  const rows = Array.from(document.querySelectorAll("#faq-list-admin .faq-item-row"));
+  const ids = [];
+  const faqs = rows.map((row) => {
+    const q = row.querySelector(".faq-q").value.trim();
+    const a = row.querySelector(".faq-a").value.trim();
+    let id = row.dataset.faqId;
+    if (!id) id = slugifyFaqId(q, ids);
+    ids.push(id);
+    row.querySelector(".faq-id-display").textContent = id;
+    row.dataset.faqId = id;
+    return { id, q, a };
+  }).filter((f) => f.q && f.a);
+
+  const msg = document.getElementById("faq-msg");
+  if (faqs.length === 0) {
+    showMsg(msg, "Add at least one question.", false);
+    return;
+  }
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ faqs }) });
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, { faqs });
+    showMsg(msg, "Saved. Live on the FAQ page (and homepage, where picked) within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+<script>
+// ---------- Footer tab ----------
+function renderFooterForm() {
+  const f = mergeContent("footer", DEFAULT_FOOTER);
+  fillLinks("footer-shop-links-admin", f.shopLinks);
+  fillLinks("footer-company-links-admin", f.companyLinks);
+}
+document.getElementById("footer-reset").addEventListener("click", () => {
+  if (!confirm("Reset the footer links back to the site's defaults? You'll still need to click Save Footer to publish it.")) return;
+  fillLinks("footer-shop-links-admin", DEFAULT_FOOTER.shopLinks);
+  fillLinks("footer-company-links-admin", DEFAULT_FOOTER.companyLinks);
+});
+document.getElementById("footer-save").addEventListener("click", async () => {
+  const footer = stripUndef({
+    shopLinks: arrOrUndef(collectLinks("footer-shop-links-admin")),
+    companyLinks: arrOrUndef(collectLinks("footer-company-links-admin")),
+  });
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify({ siteContent: { footer } }) });
+  const msg = document.getElementById("footer-msg");
+  if (res.ok) {
+    liveSettings = liveSettings || {};
+    liveSettings.siteContent = Object.assign({}, liveSettings.siteContent, { footer });
+    showMsg(msg, "Saved. Live in the footer within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+
+// ---------- Contact tab ----------
+function renderContactForm() {
+  const s = liveSettings || {};
+  document.getElementById("sf-contact-email").value = s.contactEmail || "contact@elementlabpeptides.com";
+  document.getElementById("sf-contact-phone").value = s.contactPhone || "";
+  document.getElementById("sf-contact-address").value = s.contactAddress || "";
+  document.getElementById("sf-chat-hours").value = s.chatHours || "";
+}
+document.getElementById("contact-save").addEventListener("click", async () => {
+  const contactEmail = document.getElementById("sf-contact-email").value.trim();
+  const msg = document.getElementById("contact-msg");
+  if (contactEmail && !/^\S+@\S+\.\S+$/.test(contactEmail)) {
+    showMsg(msg, "That doesn't look like a valid email address.", false);
+    return;
+  }
+  const payload = {
+    contactEmail: contactEmail || null,
+    contactPhone: document.getElementById("sf-contact-phone").value.trim() || null,
+    contactAddress: document.getElementById("sf-contact-address").value.trim() || null,
+    chatHours: document.getElementById("sf-chat-hours").value.trim() || null,
+  };
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify(payload) });
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, payload);
+    showMsg(msg, "Saved. Live across the site within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+
+// ---------- Shipping & Discounts tab ----------
+function newSettingsTierRow(min, pct) {
+  const row = document.createElement("div");
+  row.className = "tier-row";
+  row.innerHTML = `Buy <input type="number" class="stier-min" value="${min}" style="width:70px;" /> or more items, get
+    <input type="number" class="stier-pct" value="${pct}" style="width:70px;" />% off
+    <button class="btn btn-outline btn-tiny" type="button" onclick="this.parentElement.remove()">Remove</button>`;
+  return row;
+}
+document.getElementById("sf-add-tier").addEventListener("click", () => {
+  document.getElementById("sf-tiers").appendChild(newSettingsTierRow(3, 5));
+});
+function renderShippingDiscountsForm() {
+  const s = liveSettings || {};
+  const tiers = s.mixMatchTiers || [{ min: 10, pct: 10 }, { min: 6, pct: 7 }, { min: 3, pct: 5 }];
+  const tiersEl = document.getElementById("sf-tiers");
+  tiersEl.innerHTML = "";
+  tiers.forEach((t) => tiersEl.appendChild(newSettingsTierRow(t.min, t.pct)));
+  document.getElementById("sf-welcome-pct").value = s.welcomePct != null ? s.welcomePct : 10;
+  document.getElementById("sf-free-shipping").value = s.freeShippingThresholdCents != null ? s.freeShippingThresholdCents / 100 : 200;
+  document.getElementById("sf-crypto-pct").value = s.cryptoDiscountPct != null ? s.cryptoDiscountPct : 5;
+}
+document.getElementById("shipping-discounts-save").addEventListener("click", async () => {
+  const mixMatchTiers = Array.from(document.querySelectorAll("#sf-tiers .tier-row")).map((row) => ({
+    min: parseInt(row.querySelector(".stier-min").value, 10) || 0,
+    pct: parseInt(row.querySelector(".stier-pct").value, 10) || 0,
+  }));
+  const payload = {
+    mixMatchTiers,
+    welcomePct: parseInt(document.getElementById("sf-welcome-pct").value, 10) || 0,
+    freeShippingThresholdCents: Math.round(parseFloat(document.getElementById("sf-free-shipping").value || "0") * 100),
+    cryptoDiscountPct: parseInt(document.getElementById("sf-crypto-pct").value, 10) || 0,
+  };
+  const res = await fetch("/.netlify/functions/admin-settings", { method: "POST", headers: adminHeaders(), body: JSON.stringify(payload) });
+  const msg = document.getElementById("shipping-discounts-msg");
+  if (res.ok) {
+    liveSettings = Object.assign({}, liveSettings, payload);
+    showMsg(msg, "Saved. Live on the site within a minute.", true);
+  } else {
+    const body = await res.json().catch(() => ({}));
+    showMsg(msg, body.error || "Save failed - is Supabase connected yet?", false);
+  }
+});
+</script>
+</body></html>

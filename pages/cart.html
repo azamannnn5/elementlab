@@ -1,0 +1,310 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Your Order</div>
+    <h1 style="margin-bottom:6px;">Your Order</h1>
+    <p style="margin-bottom:0;">Review your items, then submit your order details so our team can confirm payment and shipping.</p>
+  </div>
+</section>
+
+<div id="order-success-modal" class="age-gate" hidden>
+  <div class="age-gate-card" style="max-width:440px;">
+    <div style="width:52px; height:52px; border-radius:50%; background:var(--green-600); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>Order request submitted</h2>
+    <p>A confirmation email is on its way to <strong id="osm-email">you</strong>, and our team has been notified. We'll reach out within 24 hours to confirm final pricing, payment, and shipping - nothing has been charged yet.</p>
+    <p style="font-size:0.8rem;">Questions in the meantime? Email <a href="mailto:contact@elementlabpeptides.com" class="js-contact-email" style="color:var(--teal-500); font-weight:600;">contact@elementlabpeptides.com</a>.</p>
+    <div class="age-gate-actions">
+      <a class="btn btn-primary" href="shop.html">Continue Shopping</a>
+      <button class="btn btn-outline" id="osm-close" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<section class="section" style="padding-top:44px;">
+  <div class="container split-grid-wide">
+    <div>
+      <h2 style="margin-bottom:20px;">Order Summary</h2>
+      <div id="cart-list"></div>
+      <div id="cart-empty" class="cart-empty" style="display:none;">
+        Your order is empty. <a href="shop.html" style="color:var(--teal-500); font-weight:600;">Browse the catalog →</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="cart-summary" style="margin-bottom:24px;">
+        <div id="promo-nudges"></div>
+        <div class="row"><span>Subtotal</span><span id="sum-subtotal">$0.00</span></div>
+        <div id="sum-discount-rows"></div>
+        <div class="row" id="sum-shipping-row" style="display:none;">
+          <span>Shipping</span><span id="sum-shipping">$0.00</span>
+        </div>
+        <div class="row" style="font-weight:700; font-size:1.05rem; border-top:1px solid var(--line); padding-top:14px;">
+          <span>Estimated Total</span>
+          <span>
+            <span id="sum-total-original" style="display:none; text-decoration:line-through; color:var(--ink-soft); font-weight:500; font-size:0.85em; margin-right:6px;"></span>
+            <span id="sum-total">$0.00</span>
+          </span>
+        </div>
+        <p style="font-size:0.78rem; margin-top:12px; margin-bottom:0;">Prices shown are estimates. Final pricing and shipping are confirmed with our team before payment.</p>
+      </div>
+
+      <div class="form-card" id="order-form-card">
+        <h3 style="margin-bottom:18px;">Order Details</h3>
+        <form id="order-form">
+          <div class="field">
+            <label for="o-name">Full Name</label>
+            <input type="text" id="o-name" required />
+          </div>
+          <div class="field">
+            <label for="o-phone">Phone Number</label>
+            <input type="tel" id="o-phone" required />
+          </div>
+          <div class="field">
+            <label for="o-email">Email</label>
+            <input type="email" id="o-email" required />
+          </div>
+          <div class="field">
+            <label for="o-address">Delivery Address</label>
+            <textarea id="o-address" rows="3" required></textarea>
+          </div>
+          <div class="field">
+            <label for="o-country">Country</label>
+            <select id="o-country" required>
+              <option value="US">United States</option>
+              <option value="Other">Other (shipping cost confirmed with your order)</option>
+            </select>
+          </div>
+          <div class="field field-check">
+            <label class="check-field">
+              <input type="checkbox" id="o-insulated" />
+              <span id="o-insulated-label">Insulated packaging (free)</span>
+            </label>
+          </div>
+          <div class="field">
+            <label for="o-payment">Payment Method</label>
+            <select id="o-payment" required></select>
+          </div>
+          <div class="field">
+            <label for="o-promo">Promo Code (optional)</label>
+            <input type="text" id="o-promo" placeholder="Enter code" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="submit-order-btn">Submit Order Request</button>
+          <div class="form-msg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Renders the payment dropdown from live settings (falls back to the
+// defaults above before live data arrives, or if Supabase isn't
+// connected). Preserves whatever the customer already selected across a
+// re-render, matching the instant-render-then-refresh pattern used
+// everywhere else on this site. The "Bitcoin" option specifically gets
+// "(X% off)" appended using the live crypto discount % - if the admin
+// ever renames or removes it from the list, the discount itself (in
+// promo.js) still keys off the literal string "Bitcoin", so renaming it
+// would need a matching code change, not just an admin panel edit.
+function renderPaymentOptions() {
+  const select = document.getElementById("o-payment");
+  const previousValue = select.value;
+  const methods = activePaymentMethods();
+
+  select.innerHTML = `<option value="">Select a payment method</option>` +
+    methods.map((m) => {
+      const label = m === "Bitcoin" ? `${escapeHtml(m)} (${CRYPTO_DISCOUNT_PCT}% off)` : escapeHtml(m);
+      return `<option value="${escapeHtml(m)}">${label}</option>`;
+    }).join("");
+
+  if (previousValue && methods.includes(previousValue)) {
+    select.value = previousValue;
+  }
+}
+renderPaymentOptions();
+window.catalogReadyPromise.then(renderPaymentOptions);
+
+function currentDiscount() {
+    const promo = document.getElementById("o-promo")?.value || "";
+    const payment = document.getElementById("o-payment")?.value || "";
+    return stackedDiscount(cartCount(), promo, payment);
+  }
+
+  function renderSummary() {
+    const subtotal = cartEstimatedTotalCents();
+    const discount = currentDiscount();
+    const discCents = discount ? discountCents(subtotal, discount) : 0;
+    const afterDiscount = subtotal - discCents;
+    const shipping = calculateShipping(afterDiscount);
+    const total = afterDiscount;
+
+    document.getElementById("sum-subtotal").textContent = money(subtotal);
+    const discRowsEl = document.getElementById("sum-discount-rows");
+    if (discount) {
+      // Every qualifying discount stacks and shows as its own line, so
+      // it's clear to the customer exactly what they're getting and why
+      // (e.g. Mix & Match + a promo code + crypto payment can all apply
+      // to the same order at once).
+      discRowsEl.innerHTML = discount.discounts.map((d) => {
+        const cents = discountCents(subtotal, { pct: d.pct });
+        return `<div class="row" style="color:var(--green-600); font-weight:600;"><span>${escapeHtml(d.label)}</span><span>-${money(cents)}</span></div>`;
+      }).join("");
+    } else {
+      discRowsEl.innerHTML = "";
+    }
+
+    const shipRow = document.getElementById("sum-shipping-row");
+    const shipEl = document.getElementById("sum-shipping");
+    if (cartCount() > 0) {
+      shipRow.style.display = "flex";
+      shipEl.textContent = shipping.label;
+      shipEl.style.color = shipping.isFree ? "var(--green-600)" : "";
+      shipEl.style.fontWeight = shipping.isFree ? "600" : "";
+    } else {
+      shipRow.style.display = "none";
+    }
+
+    // Show the pre-discount total crossed out once a discount is applied,
+    // so the savings are visually obvious, not just a separate line item.
+    const originalEl = document.getElementById("sum-total-original");
+    if (discount && discCents > 0) {
+      originalEl.style.display = "inline";
+      originalEl.textContent = money(subtotal);
+    } else {
+      originalEl.style.display = "none";
+    }
+    document.getElementById("sum-total").textContent = money(total);
+
+    // Promo nudges
+    const nudges = [];
+    const itemCount = cartCount();
+    const nextTier = nextMixAndMatchTier(itemCount);
+    if (nextTier) {
+      const needed = nextTier.min - itemCount;
+      nudges.push(`Add ${needed} more item${needed === 1 ? "" : "s"} to unlock ${nextTier.pct}% off`);
+    }
+    if (afterDiscount < FREE_SHIPPING_THRESHOLD_CENTS && itemCount > 0) {
+      nudges.push(`${money(FREE_SHIPPING_THRESHOLD_CENTS - afterDiscount)} away from free shipping`);
+    } else if (itemCount > 0) {
+      nudges.push(`Free shipping unlocked`);
+    }
+    document.getElementById("promo-nudges").innerHTML = nudges
+      .map((n) => `<p style="font-size:0.8rem; color:var(--teal-500); font-weight:600; margin-bottom:8px;">${n}</p>`)
+      .join("");
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const list = document.getElementById("cart-list");
+    const empty = document.getElementById("cart-empty");
+    const formCard = document.getElementById("order-form-card");
+
+    if (cart.length === 0) {
+      list.innerHTML = "";
+      empty.style.display = "block";
+      formCard.style.display = "none";
+      renderSummary();
+      return;
+    }
+    empty.style.display = "none";
+    formCard.style.display = "block";
+
+    list.innerHTML = cart
+      .map((item, index) => {
+        if (item.type === "combo") {
+          const c = getCombo(item.slug);
+          if (!c) return "";
+          const unit = lineUnitPriceCents(item);
+          return `
+          <div class="cart-item">
+            <img src="${c.image}" alt="${escapeHtml(c.name)}" />
+            <div>
+              <strong>${escapeHtml(c.name)}</strong> <span style="font-size:0.72rem; color:var(--teal-500); font-weight:700;">BUNDLE DEAL</span>
+              <div style="font-size:0.8rem; color:var(--ink-soft);">${escapeHtml(item.tier)} - ${money(unit)}</div>
+            </div>
+            <input class="qty-input" type="number" min="1" value="${item.qty}" data-qty="${index}" />
+            <span class="cart-remove" data-remove="${index}">Remove</span>
+          </div>`;
+        }
+        const p = getProduct(item.slug);
+        if (!p) return "";
+        const unit = lineUnitPriceCents(item);
+        return `
+        <div class="cart-item">
+          <img src="${thumbOf(getDoseImage(p, item.dose)) || 'assets/img/logo-mark.png'}" alt="${escapeHtml(p.name)}" />
+          <div>
+            <strong>${escapeHtml(p.name)}</strong> <span style="font-size:0.8rem; color:var(--ink-soft);">(${escapeHtml(item.dose)})</span>
+            <div style="font-size:0.8rem; color:var(--ink-soft);">${money(unit)} each</div>
+          </div>
+          <input class="qty-input" type="number" min="1" value="${item.qty}" data-qty="${index}" />
+          <span class="cart-remove" data-remove="${index}">Remove</span>
+        </div>`;
+      })
+      .join("");
+
+    list.querySelectorAll("[data-qty]").forEach((input) => {
+      input.addEventListener("change", () => {
+        setQty(parseInt(input.dataset.qty, 10), parseInt(input.value, 10) || 1);
+        renderCart();
+      });
+    });
+    list.querySelectorAll("[data-remove]").forEach((el) => {
+      el.addEventListener("click", () => {
+        removeFromCart(parseInt(el.dataset.remove, 10));
+        renderCart();
+      });
+    });
+
+    renderSummary();
+  }
+  renderCart();
+
+document.getElementById("o-payment").addEventListener("change", renderSummary);
+document.getElementById("o-promo").addEventListener("input", renderSummary);
+document.getElementById("o-country").addEventListener("change", renderSummary);
+
+function renderInsulatedLabel() {
+  const el = document.getElementById("o-insulated-label");
+  const label = window.LIVE_SETTINGS && window.LIVE_SETTINGS.insulatedPackagingLabel;
+  if (el && label) el.textContent = label;
+}
+renderInsulatedLabel();
+window.catalogReadyPromise.then(renderInsulatedLabel);
+
+document.getElementById("order-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const details = {
+    name: document.getElementById("o-name").value.trim(),
+    phone: document.getElementById("o-phone").value.trim(),
+    email: document.getElementById("o-email").value.trim(),
+    address: document.getElementById("o-address").value.trim(),
+    country: document.getElementById("o-country").value,
+    payment: document.getElementById("o-payment").value,
+    promo: document.getElementById("o-promo").value.trim(),
+    insulated: document.getElementById("o-insulated").checked,
+  };
+  submitOrder(details);
+  renderCart();
+  updateCartBadge();
+
+  document.getElementById("osm-email").textContent = details.email;
+  const modal = document.getElementById("order-success-modal");
+  modal.hidden = false;
+  document.documentElement.style.overflow = "hidden";
+});
+
+function closeOrderSuccessModal() {
+  document.getElementById("order-success-modal").hidden = true;
+  document.documentElement.style.overflow = "";
+}
+document.getElementById("osm-close").addEventListener("click", closeOrderSuccessModal);
+
+// Cart display only needs cart contents (localStorage) + product data that's
+// already loaded statically, so render immediately - no blank page waiting
+// on the network. Re-render again once live catalog data arrives in case
+// prices/images changed. renderCart/renderSummary fully rebuild their
+// containers each time, so calling them again is always safe; the
+// payment/promo/submit listeners above are bound exactly once.
+window.catalogReadyPromise.then(renderCart);
+</script>

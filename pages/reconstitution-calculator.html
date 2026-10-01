@@ -1,0 +1,69 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Reconstitution Calculator</div>
+    <h1 style="margin-bottom:6px;">Peptide Reconstitution Calculator</h1>
+    <p style="margin-bottom:0; max-width:60ch;">Use this calculator to determine the correct volume to draw when reconstituting peptides with bacteriostatic water for your research.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:32px;">
+  <div class="container" style="max-width:640px;">
+
+    <div class="form-msg show err" style="display:flex; gap:10px; align-items:flex-start; margin-bottom:32px;">
+      <span style="font-size:1.1rem; line-height:1;">!</span>
+      <div>
+        <strong style="display:block; margin-bottom:6px;">For Research Purposes Only - Not for Human Consumption</strong>
+        <span style="font-size:0.88rem;">This calculator is provided as a research tool to assist with accurate reconstitution of lyophilised peptides in a laboratory setting. Enter your syringe size, peptide vial quantity, bacteriostatic water volume, and desired dosage to calculate the volume required per dose.</span>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h2 style="font-size:1.1rem; margin-bottom:6px;">How to Use</h2>
+      <ol style="padding-left:20px; margin-bottom:32px; color:var(--ink-soft); font-size:0.92rem;">
+        <li style="margin-bottom:6px;">Enter the size of your syringe in ml (e.g., 1 ml, 0.5 ml)</li>
+        <li style="margin-bottom:6px;">Enter the total peptide quantity in the vial in mg</li>
+        <li style="margin-bottom:6px;">Enter the amount of bacteriostatic water you will add in ml</li>
+        <li style="margin-bottom:6px;">Enter your desired dosage in either mg or mcg (fill one field)</li>
+        <li>The calculator will display the volume to draw per dose and total doses per vial</li>
+      </ol>
+    </div>
+
+    <div class="form-card reveal" id="recon-calc">
+      <h2 style="font-size:1.05rem; margin-bottom:20px;">Calculator</h2>
+
+      <div class="field">
+        <label for="rc-syringe">Syringe Size (ml)</label>
+        <input type="number" id="rc-syringe" inputmode="decimal" step="any" min="0" placeholder="e.g. 1" />
+      </div>
+      <div class="field">
+        <label for="rc-vial">Peptide Vial Quantity (mg)</label>
+        <input type="number" id="rc-vial" inputmode="decimal" step="any" min="0" placeholder="e.g. 20" />
+      </div>
+      <div class="field">
+        <label for="rc-water">Bacteriostatic Water (ml)</label>
+        <input type="number" id="rc-water" inputmode="decimal" step="any" min="0" placeholder="e.g. 2" />
+      </div>
+      <div class="two-col-fields" style="margin-bottom:6px;">
+        <div class="field"><label for="rc-dose-mg">Desired Dosage (mg)</label><input type="number" id="rc-dose-mg" inputmode="decimal" step="any" min="0" placeholder="e.g. 2.5" /></div>
+        <div class="field"><label for="rc-dose-mcg">Desired Dosage (mcg)</label><input type="number" id="rc-dose-mcg" inputmode="decimal" step="any" min="0" placeholder="e.g. 250" /></div>
+      </div>
+      <p id="rc-error" style="display:none; color:var(--danger); font-size:0.85rem; margin-top:0;"></p>
+
+      <div id="rc-results" style="display:none; margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
+        <div style="background:var(--paper-soft); border-radius:var(--radius-md); padding:20px; margin-bottom:14px;">
+          <div style="font-size:0.78rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px;">Draw to this mark</div>
+          <div style="font-size:1.6rem; font-weight:700; color:var(--navy-900);" id="rc-result-volume">-</div>
+          <div style="font-size:0.82rem; color:var(--ink-soft);" id="rc-result-units">-</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; padding:8px 0; border-bottom:1px solid var(--line);">
+          <span style="color:var(--ink-soft);">Concentration</span><span id="rc-result-concentration" style="font-weight:600;">-</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; padding:8px 0;">
+          <span style="color:var(--ink-soft);">Total doses per vial</span><span id="rc-result-doses" style="font-weight:600;">-</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:0.78rem; color:var(--ink-soft); margin-top:20px;">Always confirm calculations independently before use. ElementLab Peptides is not responsible for errors resulting from incorrect input values.</p>
+  </div>
+</section>

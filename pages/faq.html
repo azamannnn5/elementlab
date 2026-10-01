@@ -1,0 +1,30 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / FAQs</div>
+    <h1 style="margin-bottom:6px;">Frequently Asked Questions</h1>
+    <p style="margin-bottom:0; max-width:60ch;">Answers to common questions about peptides, storage, orders, and delivery. Can't find what you're looking for? <a href="contact.html">Contact us</a>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container" style="max-width:820px; text-align:center;">
+    <h2>Still have questions?</h2>
+    <p>Our team can point you to the right documentation or answer research-use questions directly.</p>
+    <a href="contact.html" class="btn btn-primary">Contact Us</a>
+  </div>
+</section>
+
+<script>
+function renderFaqPage() {
+  const el = document.getElementById("faq-list");
+  el.innerHTML = liveFaqs().map((f, i) => faqItemHtml(f, i === 0)).join("");
+}
+renderFaqPage();
+window.catalogReadyPromise.then(renderFaqPage);
+</script>

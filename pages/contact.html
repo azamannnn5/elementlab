@@ -1,0 +1,79 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+    <h1 style="margin-bottom:6px;">Contact Us</h1>
+    <p style="margin-bottom:0; max-width:64ch;">Have questions about our products, purity standards, or research applications? Our team is here to provide technical support and answer your inquiries about our research peptides.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card reveal">
+      <form data-contact-form id="contact-form">
+        <div class="field">
+          <label for="c-name">Full name</label>
+          <input type="text" id="c-name" required />
+        </div>
+        <div class="field">
+          <label for="c-email">Email</label>
+          <input type="email" required />
+        </div>
+        <div class="field">
+          <label for="c-org">Institution / Lab (optional)</label>
+          <input type="text" id="c-org" />
+        </div>
+        <input type="hidden" id="c-product" />
+        <div class="field">
+          <label for="c-msg">Message</label>
+          <textarea id="c-msg" rows="5" required></textarea>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="c-research" required />
+          <label for="c-research">If my enquiry is about research peptides, I confirm it is for laboratory research purposes and I am not seeking guidance on human or animal use.</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        <div class="form-msg"></div>
+      </form>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Direct Contact</span>
+      <h2>Reach our team</h2>
+      <p>For order-specific requests, include your order number if you have it - it speeds things up considerably.</p>
+      <table class="spec-table stack-sm">
+        <tr><td>Email</td><td class="js-contact-email">contact@elementlabpeptides.com</td></tr>
+        <tr class="js-contact-phone-row" style="display:none;"><td>Phone</td><td class="js-contact-phone"></td></tr>
+        <tr class="js-contact-address-row" style="display:none;"><td>Address</td><td class="js-contact-address"></td></tr>
+        <tr class="js-chat-hours-row" style="display:none;"><td>Hours</td><td class="js-chat-hours"></td></tr>
+        <tr><td>Response time</td><td>Promptly, during business hours</td></tr>
+        <tr><td>Delivery questions</td><td><a href="shipping.html">Delivery Information →</a></td></tr>
+        <tr><td>Returns</td><td><a href="returns.html">Return Policy →</a></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+  const orderParams = new URLSearchParams(window.location.search);
+  const orderSummary = orderParams.get("order");
+  if (orderSummary) {
+    document.getElementById("c-msg").value = `Order request:\n${orderSummary}\n\nPlease help me confirm payment and shipping.`;
+  }
+
+  // "Request This Product" sends ?product=<slug>&size=<size>: pre-fill the message
+  // (only while the visitor hasn't typed their own) and remember the product.
+  const reqSlug = orderParams.get("product");
+  const reqSize = orderParams.get("size");
+  if (reqSlug && !orderSummary) {
+    document.getElementById("c-product").value = reqSlug;
+    const msgEl = document.getElementById("c-msg");
+    let lastAuto = "";
+    const fillRequest = () => {
+      const p = (typeof getProduct === "function") ? getProduct(reqSlug) : null;
+      const label = p ? p.name : reqSlug;
+      const text = `I'd like to request: ${label}${reqSize ? " (" + reqSize + ")" : ""}.\n\nPlease let me know availability and pricing.`;
+      if (!msgEl.value || msgEl.value === lastAuto) { msgEl.value = text; lastAuto = text; }
+    };
+    fillRequest();
+    if (window.catalogReadyPromise) window.catalogReadyPromise.then(fillRequest);
+  }
+</script>

@@ -1,0 +1,17 @@
+{
+  "name": "elementlab-peptides-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site build + regression test suite",
+  "scripts": {
+    "build": "python3 build.py",
+    "test": "node tests/run-all.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "nodemailer": "^6.9.14"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
