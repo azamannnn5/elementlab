@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peptide Price Board | Imperial Blowork</title>
+<meta name="description" content="Imperial Blowork peptide prices per vial and per 10-pack.">
+<meta name="theme-color" content="#050507">
+<meta property="og:title" content="Peptide Price Board | Imperial Blowork">
+<meta property="og:description" content="Imperial Blowork peptide prices per vial and per 10-pack.">
+<meta property="og:image" content="assets/img/logo.png">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="p-board">
+<header class="bar" id="bar">
+  <button class="bar-btn" id="menu-open" aria-label="Open menu" aria-expanded="false"><span class="burger"><i></i><i></i></span><span class="bar-label">Menu</span></button>
+  <a class="bar-mark" href="index.html" aria-label="Imperial Blowork home"><img src="assets/img/mark.png" alt="" width="40" height="48"></a>
+  <a class="bar-btn bar-cart" href="cart.html" aria-label="Open your cart"><span class="bar-label">Cart</span><span class="count" id="bar-count">0</span></a>
+</header>
+<nav class="overlay" id="overlay" aria-hidden="true" aria-label="Main menu">
+  <button class="overlay-close" id="menu-close" aria-label="Close menu">Close</button>
+  <a href="index.html">Home</a>
+  <div class="drop" id="drop">
+    <button class="drop-btn" id="drop-btn" aria-expanded="false" aria-controls="drop-list">Lineup <i aria-hidden="true"></i></button>
+    <div class="drop-list" id="drop-list"><a href="lineup.html?c=all">All</a><a href="lineup.html?c=peptides">Peptides</a><a href="lineup.html?c=injectables">Injectables</a><a href="lineup.html?c=orals">Orals</a><a href="lineup.html?c=sarms">SARMs</a><a href="lineup.html?c=pct">PCT</a><a href="lineup.html?c=hcg">HCG</a><a href="lineup.html?c=support">Support</a></div>
+  </div>
+  <a href="price-board.html">Price Board</a>
+  <a href="care.html">Care Guide</a>
+  <a href="help.html">Help Center</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html" class="hot">Your Cart</a>
+</nav>
+<main class="sub">
+<section class="sec top">
+  <div class="wrap narrow reveal"><p class="eyebrow">Peptide Price Board</p><h1 class="h2 silver split">One vial or ten.</h1><p class="lead">Pricing is per vial. A pack is ten vials. Tap any line for the full product page.</p></div>
+  <div class="wrap board-wrap reveal"><div class="board" id="board"></div><p class="fine">Pricing is per vial.</p></div>
+  <div class="stack reveal"><a class="btn btn-ghost" href="lineup.html?c=peptides">See peptide photos and details</a></div>
+</section>
+</main>
+<footer class="footer">
+  <img src="assets/img/mark.png" alt="" width="56" height="67" class="foot-mark">
+  <p class="foot-brand silver">Imperial Blowork</p>
+  <p class="foot-tag">Premium research products.</p>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="lineup.html?c=all">Lineup</a><a href="price-board.html">Price Board</a><a href="care.html">Care Guide</a><a href="help.html">Help Center</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a>
+  </nav>
+  <nav class="foot-links legal" aria-label="Policies">
+    <a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="refunds.html">Refunds &amp; Returns</a>
+  </nav>
+  <p class="foot-copy">&copy; 2026 Imperial Blowork. All rights reserved.</p>
+</footer>
+<a class="pill" id="pill" href="cart.html" hidden><span id="pill-text">0 items</span><strong id="pill-total">$0</strong><span class="pill-go">View cart</span></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Care Guide | Imperial Blowork</title>
+<meta name="description" content="Storage and handling guidance for Imperial Blowork peptides, injectables and tablets.">
+<meta name="theme-color" content="#050507">
+<meta property="og:title" content="Care Guide | Imperial Blowork">
+<meta property="og:description" content="Storage and handling guidance for Imperial Blowork peptides, injectables and tablets.">
+<meta property="og:image" content="assets/img/logo.png">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="p-care">
+<header class="bar" id="bar">
+  <button class="bar-btn" id="menu-open" aria-label="Open menu" aria-expanded="false"><span class="burger"><i></i><i></i></span><span class="bar-label">Menu</span></button>
+  <a class="bar-mark" href="index.html" aria-label="Imperial Blowork home"><img src="assets/img/mark.png" alt="" width="40" height="48"></a>
+  <a class="bar-btn bar-cart" href="cart.html" aria-label="Open your cart"><span class="bar-label">Cart</span><span class="count" id="bar-count">0</span></a>
+</header>
+<nav class="overlay" id="overlay" aria-hidden="true" aria-label="Main menu">
+  <button class="overlay-close" id="menu-close" aria-label="Close menu">Close</button>
+  <a href="index.html">Home</a>
+  <div class="drop" id="drop">
+    <button class="drop-btn" id="drop-btn" aria-expanded="false" aria-controls="drop-list">Lineup <i aria-hidden="true"></i></button>
+    <div class="drop-list" id="drop-list"><a href="lineup.html?c=all">All</a><a href="lineup.html?c=peptides">Peptides</a><a href="lineup.html?c=injectables">Injectables</a><a href="lineup.html?c=orals">Orals</a><a href="lineup.html?c=sarms">SARMs</a><a href="lineup.html?c=pct">PCT</a><a href="lineup.html?c=hcg">HCG</a><a href="lineup.html?c=support">Support</a></div>
+  </div>
+  <a href="price-board.html">Price Board</a>
+  <a href="care.html">Care Guide</a>
+  <a href="help.html">Help Center</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html" class="hot">Your Cart</a>
+</nav>
+<main class="sub">
+<section class="sec top">
+  <div class="wrap narrow reveal"><p class="eyebrow">Care Guide</p><h1 class="h2 silver split">Store it right.</h1><p class="lead">Follow these steps to protect what you ordered. Always check the label on your product too.</p></div>
+  <div class="wrap narrow handling">
+    <div class="h-block reveal"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.2 6.5l15.6 11M4.2 17.5l15.6-11M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/></svg><h3>Peptides before reconstituting</h3><p>Keep lyophilized vials in the freezer, between -20°C and -80°C.</p></div>
+    <div class="h-block reveal"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v3l-2 3v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9l-2-3V3"/><path d="M8 13h8"/></svg><h3>Peptides after reconstituting</h3><p>Refrigerate between 2°C and 8°C. Keep away from direct light. Never freeze reconstituted solutions.</p></div>
+    <div class="h-block reveal"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7.5 15h9"/></svg><h3>Injectable vials</h3><p>Store at room temperature, away from direct light and heat. Shake suspensions well before use. Do not freeze.</p></div>
+    <div class="h-block reveal"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="9" rx="2"/><path d="M12 8v9"/></svg><h3>Tablets</h3><p>Keep tablets in the original foil pouch until needed. Store in a cool, dry place away from light and moisture, and out of reach of children.</p></div>
+    <div class="h-block reveal"><h3>Bacteriostatic water</h3><p>Store at room temperature, away from direct light. Discard a vial 28 days after it is first opened.</p></div>
+  </div>
+  <p class="fine wrap narrow reveal">Sold for research use only.</p>
+</section>
+</main>
+<footer class="footer">
+  <img src="assets/img/mark.png" alt="" width="56" height="67" class="foot-mark">
+  <p class="foot-brand silver">Imperial Blowork</p>
+  <p class="foot-tag">Premium research products.</p>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="lineup.html?c=all">Lineup</a><a href="price-board.html">Price Board</a><a href="care.html">Care Guide</a><a href="help.html">Help Center</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a>
+  </nav>
+  <nav class="foot-links legal" aria-label="Policies">
+    <a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="refunds.html">Refunds &amp; Returns</a>
+  </nav>
+  <p class="foot-copy">&copy; 2026 Imperial Blowork. All rights reserved.</p>
+</footer>
+<a class="pill" id="pill" href="cart.html" hidden><span id="pill-text">0 items</span><strong id="pill-total">$0</strong><span class="pill-go">View cart</span></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
