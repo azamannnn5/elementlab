@@ -41,7 +41,7 @@ function ib_category_list() {
 /** Full catalog (cached). Keys starting with "_" are private (server use only). */
 function ib_catalog() {
     $cached = get_transient('ib_catalog_v2');
-    if (is_array($cached)) return $cached;
+    if (is_array($cached) && $cached) return $cached;
     $items = array();
     if (!function_exists('wc_get_product')) return $items;
     $ids = get_posts(array(
@@ -97,7 +97,7 @@ function ib_catalog() {
         $item['_pid'] = $pid; $item['_single_id'] = $single_id; $item['_kit_id'] = $kit_id;
         $items[] = $item;
     }
-    set_transient('ib_catalog_v2', $items, 12 * HOUR_IN_SECONDS);
+    if ($items) set_transient('ib_catalog_v2', $items, 12 * HOUR_IN_SECONDS);
     return $items;
 }
 
