@@ -28,6 +28,11 @@ function ib_run_setup() {
             $log[] = 'Created page: ' . $title;
         } else {
             $ids[$slug] = $page->ID;
+            // WordPress ships a draft Privacy Policy template: replace it with the real text.
+            if (isset($legal[$slug]) && $page->post_status !== 'publish') {
+                wp_update_post(array('ID' => $page->ID, 'post_status' => 'publish', 'post_title' => $title, 'post_content' => (string) @file_get_contents(IB_CORE_PATH . 'data/legal/' . $legal[$slug] . '.html')));
+                $log[] = 'Published page: ' . $title;
+            }
         }
     }
     if (!empty($ids['home'])) {
