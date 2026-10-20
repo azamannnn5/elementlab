@@ -131,4 +131,4 @@ add_action('init', function () {
     echo 'const PRODUCTS = ' . wp_json_encode(ib_public_catalog(), $flags) . ";\n";
     echo 'const MIN_ORDER = ' . ib_num(ib_min_order()) . ";\n";
     exit;
-}, 1);
+}, 20);
