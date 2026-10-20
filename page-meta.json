@@ -1,0 +1,38 @@
+{
+ "index": {
+  "title": "Imperial Blowork | Premium Research Products",
+  "desc": "Imperial Blowork supplies premium research products: peptides, injectables, orals and SARMs. Clearly labeled and sealed."
+ },
+ "products": {
+  "title": "Products | Imperial Blowork",
+  "desc": "Browse every Imperial Blowork collection: peptides, injectables, orals, SARMs, PCT, HCG and support."
+ },
+ "product": {
+  "title": "Product | Imperial Blowork",
+  "desc": "Imperial Blowork product details, storage and handling."
+ },
+ "cart": {
+  "title": "Cart | Imperial Blowork",
+  "desc": "Review your cart and check out with Imperial Blowork."
+ },
+ "contact": {
+  "title": "Contact | Imperial Blowork",
+  "desc": "Contact Imperial Blowork about products, your cart or a delivery issue."
+ },
+ "help": {
+  "title": "Help Center | Imperial Blowork",
+  "desc": "Answers about checkout, minimum order, payment options, storage and returns."
+ },
+ "terms": {
+  "title": "Terms of Service | Imperial Blowork",
+  "desc": "Terms of Service for the Imperial Blowork website."
+ },
+ "privacy": {
+  "title": "Privacy Policy | Imperial Blowork",
+  "desc": "Privacy Policy for the Imperial Blowork website."
+ },
+ "refunds": {
+  "title": "Refunds & Returns Policy | Imperial Blowork",
+  "desc": "Refunds & Returns Policy for the Imperial Blowork website."
+ }
+}

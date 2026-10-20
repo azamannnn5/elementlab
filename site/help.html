@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050507">
+<link rel="icon" href="{{T}}assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{T}}css/style.css">
+<!--IB:HEAD-->
+</head>
+<body class="p-help">
+<header class="bar" id="bar">
+  <button class="bar-btn" id="menu-open" aria-label="Open menu" aria-expanded="false"><span class="burger"><i></i><i></i></span><span class="bar-label">Menu</span></button>
+  <a class="bar-mark" href="index.html" aria-label="Imperial Blowork home"><img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="60" height="61"></a>
+  <a class="bar-btn bar-cart" href="cart.html" aria-label="Open your cart"><span class="bar-label">Cart</span><span class="count" id="bar-count">0</span></a>
+</header>
+<nav class="overlay" id="overlay" aria-hidden="true" aria-label="Main menu">
+  <button class="overlay-close" id="menu-close" aria-label="Close menu">Close</button>
+  <a href="index.html">Home</a>
+  <div class="drop" id="drop">
+    <button class="drop-btn" id="drop-btn" aria-expanded="false" aria-controls="drop-list">Products <i aria-hidden="true"></i></button>
+    <div class="drop-list" id="drop-list"><a href="products.html?c=all">All</a><a href="products.html?c=peptides">Peptides</a><a href="products.html?c=injectables">Injectables</a><a href="products.html?c=orals">Orals</a><a href="products.html?c=sarms">SARMs</a><a href="products.html?c=pct">PCT</a><a href="products.html?c=hcg">HCG</a><a href="products.html?c=support">Support</a></div>
+  </div>
+  <a href="index.html#price-board">Price Board</a>
+  <a href="index.html#care">Care Guide</a>
+  <a href="help.html">Help Center</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html" class="hot">Your Cart</a>
+</nav>
+<main class="sub">
+<section class="sec top">
+  <div class="wrap narrow reveal"><p class="eyebrow">Help Center</p><h1 class="h2 silver split">Straight answers.</h1></div>
+  <div class="wrap narrow faq reveal">
+    <details><summary>How does checkout work?</summary><p>Add products to your cart, then fill in your details on the cart page and send it. Sending your cart is a request to purchase. We review it, confirm items, availability and your total with you, and tell you how to pay.</p></details>
+    <details><summary>Is there a minimum?</summary><p>Yes. The minimum order is $80. The cart page shows how much more you need if you are under it.</p></details>
+    <details><summary>Which payment options are available?</summary><p>Bitcoin, Cashapp, Apple Pay, Zelle and Chime. Tick the options you would like to use on the cart page and we will send instructions once your cart is confirmed.</p></details>
+    <details><summary>When will my items arrive?</summary><p>We confirm delivery details with you when we confirm your cart. Delivery estimates are not guarantees and may be affected by circumstances outside our control.</p></details>
+    <details><summary>Can a request be declined?</summary><p>Yes. A request may be reviewed, declined or cancelled where necessary, including where information or availability is incorrect. See the <a class="ulink" href="terms.html">Terms of Service</a>.</p></details>
+    <details><summary>How should I store peptides?</summary><p>Freezer (-20°C to -80°C) before reconstituting. Refrigerator (2°C to 8°C) after. Keep away from direct light and never freeze reconstituted solutions. See the <a class="ulink" href="index.html#care">Care Guide</a>.</p></details>
+    <details><summary>What does research use only mean?</summary><p>Everything we sell is intended for laboratory and research purposes. It is not a medicine. You are responsible for using products lawfully where you live.</p></details>
+    <details><summary>What if something arrives damaged or wrong?</summary><p>Contact us promptly through the <a class="ulink" href="contact.html">Contact page</a> with your order reference and a clear description of the issue. Photographs help. Please do not send anything back before you receive return instructions. Full details are in our <a class="ulink" href="refunds.html">Refunds &amp; Returns Policy</a>.</p></details>
+    <details><summary>How is my information used?</summary><p>We use it to process your cart, communicate with you and provide support. We do not intend to sell personal information. Read the <a class="ulink" href="privacy.html">Privacy Policy</a>.</p></details>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="150" height="153" class="foot-mark">
+  <p class="foot-tag">Premium research products.</p>
+  <p class="foot-mail"><a href="mailto:%%EMAIL%%">%%EMAIL%%</a>%%PHONE%%</p>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="products.html?c=all">Products</a><a href="index.html#price-board">Price Board</a><a href="index.html#care">Care Guide</a><a href="help.html">Help Center</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a>
+  </nav>
+  <nav class="foot-links legal" aria-label="Policies">
+    <a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="refunds.html">Refunds &amp; Returns</a>
+  </nav>
+  <p class="foot-copy">&copy; 2026 Imperial Blowork. All rights reserved.</p>
+</footer>
+<a class="pill" id="pill" href="cart.html" hidden><span id="pill-text">0 items</span><strong id="pill-total">$0</strong><span class="pill-go">View cart</span></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="{{DATA}}"></script>
+<script src="{{T}}js/app.js"></script>
+<!--IB:FOOT-->
+</body>
+</html>
