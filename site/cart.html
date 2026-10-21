@@ -11,63 +11,63 @@
 </head>
 <body class="p-cart">
 <header class="bar" id="bar">
-  <button class="bar-btn" id="menu-open" aria-label="Open menu" aria-expanded="false"><span class="burger"><i></i><i></i></span><span class="bar-label">Menu</span></button>
-  <a class="bar-mark" href="index.html" aria-label="Imperial Blowork home"><img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="60" height="61"></a>
-  <a class="bar-btn bar-cart" href="cart.html" aria-label="Open your cart"><span class="bar-label">Cart</span><span class="count" id="bar-count">0</span></a>
+  <button class="bar-btn" id="menu-open" aria-label="Open menu" aria-expanded="false"><span class="burger"><i></i><i></i></span><span class="bar-label" data-cms="shared.header.span-1">Menu</span></button>
+  <a class="bar-mark" href="index.html" aria-label="Imperial Blowork home" data-cms-href="shared.header.a-1.href"><img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="60" height="61" data-cms-src="shared.header.img-1.src" data-cms-alt="shared.header.img-1.alt"></a>
+  <a class="bar-btn bar-cart" href="cart.html" aria-label="Open your cart" data-cms-href="shared.header.a-2.href"><span class="bar-label" data-cms="shared.header.span-2">Cart</span><span class="count" id="bar-count">0</span></a>
 </header>
 <nav class="overlay" id="overlay" aria-hidden="true" aria-label="Main menu">
-  <button class="overlay-close" id="menu-close" aria-label="Close menu">Close</button>
-  <a href="index.html">Home</a>
+  <button class="overlay-close" id="menu-close" aria-label="Close menu" data-cms="shared.menu.button-1">Close</button>
+  <a href="index.html" data-cms="shared.menu.a-1" data-cms-href="shared.menu.a-1.href">Home</a>
   <div class="drop" id="drop">
-    <button class="drop-btn" id="drop-btn" aria-expanded="false" aria-controls="drop-list">Products <i aria-hidden="true"></i></button>
-    <div class="drop-list" id="drop-list"><a href="products.html?c=all">All</a><a href="products.html?c=peptides">Peptides</a><a href="products.html?c=injectables">Injectables</a><a href="products.html?c=orals">Orals</a><a href="products.html?c=sarms">SARMs</a><a href="products.html?c=pct">PCT</a><a href="products.html?c=hcg">HCG</a><a href="products.html?c=support">Support</a></div>
+    <button class="drop-btn" id="drop-btn" aria-expanded="false" aria-controls="drop-list" data-cms="shared.menu.button-2">Products <i aria-hidden="true"></i></button>
+    <div class="drop-list" id="drop-list"><a href="products.html?c=all" data-cms="shared.menu.a-2" data-cms-href="shared.menu.a-2.href">All</a><a href="products.html?c=peptides" data-cms="shared.menu.a-3" data-cms-href="shared.menu.a-3.href">Peptides</a><a href="products.html?c=injectables" data-cms="shared.menu.a-4" data-cms-href="shared.menu.a-4.href">Injectables</a><a href="products.html?c=orals" data-cms="shared.menu.a-5" data-cms-href="shared.menu.a-5.href">Orals</a><a href="products.html?c=sarms" data-cms="shared.menu.a-6" data-cms-href="shared.menu.a-6.href">SARMs</a><a href="products.html?c=pct" data-cms="shared.menu.a-7" data-cms-href="shared.menu.a-7.href">PCT</a><a href="products.html?c=hcg" data-cms="shared.menu.a-8" data-cms-href="shared.menu.a-8.href">HCG</a><a href="products.html?c=support" data-cms="shared.menu.a-9" data-cms-href="shared.menu.a-9.href">Support</a></div>
   </div>
-  <a href="index.html#price-board">Price Board</a>
-  <a href="index.html#care">Care Guide</a>
-  <a href="help.html">Help Center</a>
-  <a href="contact.html">Contact</a>
-  <a href="cart.html" class="hot">Your Cart</a>
+  <a href="index.html#price-board" data-cms="shared.menu.a-10" data-cms-href="shared.menu.a-10.href">Price Board</a>
+  <a href="index.html#care" data-cms="shared.menu.a-11" data-cms-href="shared.menu.a-11.href">Care Guide</a>
+  <a href="help.html" data-cms="shared.menu.a-12" data-cms-href="shared.menu.a-12.href">Help Center</a>
+  <a href="contact.html" data-cms="shared.menu.a-13" data-cms-href="shared.menu.a-13.href">Contact</a>
+  <a href="cart.html" class="hot" data-cms="shared.menu.a-14" data-cms-href="shared.menu.a-14.href">Your Cart</a>
 </nav>
 <main class="sub">
 <section class="sec top">
-  <div class="wrap narrow reveal"><p class="eyebrow">Your Cart</p><h1 class="h2 silver split">Review and check out.</h1></div>
+  <div class="wrap narrow reveal"><p class="eyebrow" data-cms="cart.content.p-1">Your Cart</p><h1 class="h2 silver split" data-cms="cart.content.h1-1">Review and check out.</h1></div>
   <div class="wrap narrow">
     <div class="cart reveal" id="cart">
-      <p class="cart-empty" id="cart-empty">Your cart is empty. <a href="products.html?c=all">Browse products</a>.</p>
+      <p class="cart-empty" id="cart-empty" data-cms="cart.content.p-2">Your cart is empty. <a href="products.html?c=all">Browse products</a>.</p>
       <ul id="cart-list"></ul>
-      <div class="cart-total" id="cart-total" hidden><span>Subtotal</span><strong id="subtotal">$0</strong></div>
+      <div class="cart-total" id="cart-total" hidden><span data-cms="cart.content.span-1">Subtotal</span><strong id="subtotal">$0</strong></div>
       <p class="min-note" id="min-note" hidden></p>
-      <p class="fine" id="cart-note" hidden>Minimum order is $80. Delivery details and the final total are confirmed when we reply.</p>
+      <p class="fine" id="cart-note" hidden data-cms="cart.content.p-3">Minimum order is $80. Delivery details and the final total are confirmed when we reply.</p>
     </div>
     <form class="form" id="checkout-form" name="checkout" method="POST">
       <input type="hidden" name="form-name" value="checkout">
       <p class="hp"><label>Leave this empty <input name="bot-field"></label></p>
       <input type="hidden" name="cart_summary" id="cart-summary">
-      <label>Full name<input name="name" required autocomplete="name"></label>
-      <label>Email<input name="email" type="email" required autocomplete="email"></label>
-      <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
-      <label>Shipping address<textarea name="address" rows="3" required autocomplete="street-address"></textarea></label>
-      <fieldset class="pay"><legend>Payment options</legend><div class="checks"><label class="check"><input type="checkbox" name="payment_options" value="Bitcoin"><span>Bitcoin</span></label><label class="check"><input type="checkbox" name="payment_options" value="Cashapp"><span>Cashapp</span></label><label class="check"><input type="checkbox" name="payment_options" value="Apple Pay"><span>Apple Pay</span></label><label class="check"><input type="checkbox" name="payment_options" value="Zelle"><span>Zelle</span></label><label class="check"><input type="checkbox" name="payment_options" value="Chime"><span>Chime</span></label></div></fieldset>
-      <label class="check agree"><input type="checkbox" name="agree" value="yes" required><span>I agree to the <a class="ulink" href="terms.html" target="_blank" rel="noopener">Terms of Service</a>, <a class="ulink" href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a class="ulink" href="refunds.html" target="_blank" rel="noopener">Refunds &amp; Returns Policy</a>.</span></label>
-      <button class="btn btn-red" type="submit" id="submit-btn">Check out</button>
+      <label data-cms="cart.content.label-1">Full name<input name="name" required autocomplete="name"></label>
+      <label data-cms="cart.content.label-2">Email<input name="email" type="email" required autocomplete="email"></label>
+      <label data-cms="cart.content.label-3">Phone<input name="phone" type="tel" autocomplete="tel"></label>
+      <label data-cms="cart.content.label-4">Shipping address<textarea name="address" rows="3" required autocomplete="street-address"></textarea></label>
+      <fieldset class="pay"><legend data-cms="cart.content.legend-1">Payment options</legend><div class="checks"><label class="check"><input type="checkbox" name="payment_options" value="Bitcoin"><span data-cms="cart.content.span-2">Bitcoin</span></label><label class="check"><input type="checkbox" name="payment_options" value="Cashapp"><span data-cms="cart.content.span-3">Cashapp</span></label><label class="check"><input type="checkbox" name="payment_options" value="Apple Pay"><span data-cms="cart.content.span-4">Apple Pay</span></label><label class="check"><input type="checkbox" name="payment_options" value="Zelle"><span data-cms="cart.content.span-5">Zelle</span></label><label class="check"><input type="checkbox" name="payment_options" value="Chime"><span data-cms="cart.content.span-6">Chime</span></label></div></fieldset>
+      <label class="check agree"><input type="checkbox" name="agree" value="yes" required><span data-cms="cart.content.span-7">I agree to the <a class="ulink" href="terms.html" target="_blank" rel="noopener">Terms of Service</a>, <a class="ulink" href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a class="ulink" href="refunds.html" target="_blank" rel="noopener">Refunds &amp; Returns Policy</a>.</span></label>
+      <button class="btn btn-red" type="submit" id="submit-btn" data-cms="cart.content.button-1">Check out</button>
       <p class="form-msg" id="form-msg" role="status" hidden></p>
     </form>
   </div>
 </section>
 </main>
 <footer class="footer">
-  <img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="150" height="153" class="foot-mark">
-  <p class="foot-tag">Premium research products.</p>
+  <img src="{{T}}assets/img/logo-full.png" alt="Imperial Blowork" width="150" height="153" class="foot-mark" data-cms-src="shared.footer.img-1.src" data-cms-alt="shared.footer.img-1.alt">
+  <p class="foot-tag" data-cms="shared.footer.p-1">Premium research products.</p>
   <p class="foot-mail"><a href="mailto:%%EMAIL%%">%%EMAIL%%</a>%%PHONE%%</p>
   <nav class="foot-links" aria-label="Footer">
-    <a href="products.html?c=all">Products</a><a href="index.html#price-board">Price Board</a><a href="index.html#care">Care Guide</a><a href="help.html">Help Center</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a>
+    <a href="products.html?c=all" data-cms="shared.footer.a-1" data-cms-href="shared.footer.a-1.href">Products</a><a href="index.html#price-board" data-cms="shared.footer.a-2" data-cms-href="shared.footer.a-2.href">Price Board</a><a href="index.html#care" data-cms="shared.footer.a-3" data-cms-href="shared.footer.a-3.href">Care Guide</a><a href="help.html" data-cms="shared.footer.a-4" data-cms-href="shared.footer.a-4.href">Help Center</a><a href="contact.html" data-cms="shared.footer.a-5" data-cms-href="shared.footer.a-5.href">Contact</a><a href="cart.html" data-cms="shared.footer.a-6" data-cms-href="shared.footer.a-6.href">Cart</a>
   </nav>
   <nav class="foot-links legal" aria-label="Policies">
-    <a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="refunds.html">Refunds &amp; Returns</a>
+    <a href="terms.html" data-cms="shared.footer.a-7" data-cms-href="shared.footer.a-7.href">Terms of Service</a><a href="privacy.html" data-cms="shared.footer.a-8" data-cms-href="shared.footer.a-8.href">Privacy Policy</a><a href="refunds.html" data-cms="shared.footer.a-9" data-cms-href="shared.footer.a-9.href">Refunds &amp; Returns</a>
   </nav>
-  <p class="foot-copy">&copy; 2026 Imperial Blowork. All rights reserved.</p>
+  <p class="foot-copy" data-cms="shared.footer.p-2">&copy; 2026 Imperial Blowork. All rights reserved.</p>
 </footer>
-<a class="pill" id="pill" href="cart.html" hidden><span id="pill-text">0 items</span><strong id="pill-total">$0</strong><span class="pill-go">View cart</span></a>
+<a class="pill" id="pill" href="cart.html" hidden data-cms-href="shared.floating.a-1.href"><span id="pill-text">0 items</span><strong id="pill-total">$0</strong><span class="pill-go" data-cms="shared.floating.span-1">View cart</span></a>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="{{DATA}}"></script>
 <script src="{{T}}js/app.js"></script>

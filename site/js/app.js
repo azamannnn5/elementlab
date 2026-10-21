@@ -13,8 +13,26 @@
   function save(c) { try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) { /* private mode */ } }
   let cart = load().filter((l) => PRODUCTS.some((p) => p.id === l.id));
   const byId = (id) => PRODUCTS.find((p) => p.id === id);
-  const lineUnit = (l) => { const p = byId(l.id); return l.opt === 'kit' && p.kit ? p.kit : p.price; };
+  const CFG = (typeof IB_CFG !== 'undefined' && IB_CFG) || {};
+  const MSG = CFG.msgs || {}, SHIP = CFG.shipping || {};
+  const r2 = (n) => Math.round(n * 100) / 100;
+  const maxQ = (p) => Math.min(99, p && p.max > 0 ? p.max : (CFG.maxq > 0 ? CFG.maxq : 99));
+  const stepsFor = (p) => (p.disc === 'none' ? [] : Array.isArray(p.disc) ? p.disc : (CFG.disc && CFG.disc.on ? (CFG.disc.steps || []) : []));
+  const pctFor = (p, q) => { let pc = 0; stepsFor(p).forEach((s) => { if (q >= s.min && s.pct > pc) pc = s.pct; }); return pc; };
+  const isOut = (p, opt) => !!(p.stock && !p.stock[opt === 'kit' ? 'kit' : 'single']);
+  const outLabel = () => MSG.out_of_stock || 'Out of stock';
+  const lineBase = (l) => { const p = byId(l.id); return l.opt === 'kit' && p.kit ? p.kit : p.price; };
+  const lineUnit = (l) => { const pc = pctFor(byId(l.id), l.qty); return pc ? r2(lineBase(l) * (1 - pc / 100)) : lineBase(l); };
   const totals = () => ({ n: cart.reduce((s, l) => s + l.qty, 0), sub: cart.reduce((s, l) => s + lineUnit(l) * l.qty, 0) });
+  let promo = null;
+  const minText = (short) => (MSG.min_note || 'Minimum order is {min}. Add {more} more to check out.').replace('{min}', money(MIN_ORDER)).replace('{more}', money(short));
+  function calc() {
+    const t = totals(); let disc = 0, free = false;
+    if (promo) { if (promo.type === 'percent') disc = r2(t.sub * Math.min(100, promo.amount) / 100); else if (promo.type === 'fixed') disc = Math.min(t.sub, r2(promo.amount)); else free = true; }
+    const fee = Number(SHIP.fee) || 0, fo = Number(SHIP.free_over) || 0;
+    const ship = fee > 0 && !free && !(fo > 0 && t.sub - disc >= fo) ? fee : 0;
+    return { n: t.n, sub: t.sub, disc, ship, fee, total: r2(t.sub - disc + ship) };
+  }
 
   /* ---------- top bar + menu ---------- */
   const bar = $('#bar');
@@ -42,8 +60,10 @@
   /* ---------- cart state + badges ---------- */
   function addToCart(id, opt, qty) {
     const l = cart.find((x) => x.id === id && x.opt === opt);
-    if (l) l.qty = Math.min(99, l.qty + qty); else cart.push({ id, opt, qty });
-    save(cart); badges(); toast(byId(id).name + ' added to cart');
+    const pp = byId(id);
+    if (isOut(pp, opt)) { toast(outLabel()); return; }
+    if (l) l.qty = Math.min(maxQ(pp), l.qty + qty); else cart.push({ id, opt, qty: Math.min(maxQ(pp), qty) });
+    save(cart); badges(); toast((MSG.added_toast || '{name} added to cart').replace('{name}', pp.name));
   }
   function badges() {
     const t = totals();
@@ -65,7 +85,7 @@
         <p class="meta">${esc(meta)}</p>
       </a>
       <p class="price">${priceLabel(p)}</p>
-      <button class="btn btn-red" data-add="${p.id}">Add to cart</button>
+      <button class="btn btn-red" data-add="${p.id}"${isOut(p, 'single') ? ' disabled' : ''}>${isOut(p, 'single') ? esc(outLabel()) : esc(MSG.add_btn || 'Add to cart')}</button>
     </article>`;
   }
   document.addEventListener('click', (e) => {
@@ -140,16 +160,20 @@
         opts.hidden = false;
         opts.innerHTML = '<button type="button" data-opt="single" aria-pressed="true">Single vial</button><button type="button" data-opt="kit" aria-pressed="false">10-pack</button>';
       }
-      const unit = () => (curOpt === 'kit' ? cur.kit : cur.price);
+      const unit = () => { const b = curOpt === 'kit' ? cur.kit : cur.price; const pc = pctFor(cur, curQty); return pc ? r2(b * (1 - pc / 100)) : b; };
+      const tiers = stepsFor(cur);
+      if (tiers.length) { const tn = document.createElement('p'); tn.className = 'fine'; tn.id = 'pd-tiers'; tn.textContent = tiers.map((s) => s.min + '+ items: ' + s.pct + '% off each').join(' · '); $('#pd-price').after(tn); }
       const refresh = () => {
         $('#pd-price').textContent = money(unit()) + (cur.kit ? (curOpt === 'kit' ? ' per 10-pack' : ' per vial') : '');
         $('#q-val').textContent = curQty;
         $$('#pd-opts button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.opt === curOpt)));
-        $('#pd-add').textContent = 'Add to cart · ' + money(unit() * curQty);
+        const addb = $('#pd-add'), outNow = isOut(cur, curOpt);
+        addb.disabled = outNow;
+        addb.textContent = outNow ? outLabel() : (MSG.add_btn || 'Add to cart') + ' · ' + money(unit() * curQty);
       };
       opts.addEventListener('click', (e) => { const b = e.target.closest('[data-opt]'); if (!b) return; curOpt = b.dataset.opt; refresh(); });
       $('#q-minus').addEventListener('click', () => { curQty = Math.max(1, curQty - 1); refresh(); });
-      $('#q-plus').addEventListener('click', () => { curQty = Math.min(99, curQty + 1); refresh(); });
+      $('#q-plus').addEventListener('click', () => { curQty = Math.min(maxQ(cur), curQty + 1); refresh(); });
       $('#pd-add').addEventListener('click', () => addToCart(cur.id, curOpt, curQty));
       refresh();
       let rel = (cur.related || []).map(byId).filter(Boolean);
@@ -164,14 +188,37 @@
   function summaryText() {
     if (!cart.length) return 'No items';
     const lines = cart.map((l) => { const p = byId(l.id); return `${l.qty} x ${p.name}${l.opt === 'kit' ? ' (10-pack)' : ''} @ ${money(lineUnit(l))} = ${money(lineUnit(l) * l.qty)}`; });
-    return lines.join('\n') + '\nSubtotal: ' + money(totals().sub);
+    const c = calc();
+    return lines.join('\n') + '\nSubtotal: ' + money(c.sub) + (c.disc ? '\nPromo ' + promo.code + ': -' + money(c.disc) : '') + (c.fee > 0 ? '\n' + (SHIP.label || 'Shipping') + ': ' + (c.ship > 0 ? money(c.ship) : 'Free') : '') + (c.disc || c.fee > 0 ? '\nTotal: ' + money(c.total) : '');
+  }
+  function extras(empty) {
+    const c = calc();
+    let ex = $('#cart-extra');
+    if (!ex) { ex = document.createElement('div'); ex.id = 'cart-extra'; ex.className = 'cart-extra'; $('#cart-total').after(ex); }
+    let h = '';
+    if (!empty) {
+      if (promo && c.disc > 0) h += `<div class="cx"><span>Promo ${esc(promo.code)} <button type="button" class="ci-x" id="promo-rm">Remove</button></span><b>-${money(c.disc)}</b></div>`;
+      else if (promo) h += `<div class="cx"><span>Promo ${esc(promo.code)} <button type="button" class="ci-x" id="promo-rm">Remove</button></span><b>Free shipping</b></div>`;
+      if (c.fee > 0) h += `<div class="cx"><span>${esc(SHIP.label || 'Shipping')}</span><b>${c.ship > 0 ? money(c.ship) : 'Free'}</b></div>`;
+      if (h) h += `<div class="cx tot"><span>Total</span><b>${money(c.total)}</b></div>`;
+    }
+    ex.innerHTML = h; ex.hidden = !h;
+    if (CFG.promo) {
+      let pr = $('#promo-row');
+      if (!pr) {
+        pr = document.createElement('div'); pr.id = 'promo-row'; pr.className = 'promo-row';
+        pr.innerHTML = '<input type="text" id="promo-in" placeholder="Promo code" autocomplete="off" aria-label="Promo code"><button type="button" class="btn" id="promo-apply">Apply</button><p class="fine" id="promo-msg" hidden></p>';
+        $('#cart-total').before(pr);
+      }
+      pr.hidden = empty || !!promo;
+    }
   }
   function renderCart() {
     list.innerHTML = cart.map((l, i) => {
       const p = byId(l.id), u = lineUnit(l);
       return `<li data-i="${i}">
         <a href="product.html?id=${p.id}"><img src="${p.img}" alt=""></a>
-        <div class="ci-name"><a href="product.html?id=${p.id}">${esc(p.name)}</a><small>${l.opt === 'kit' ? '10-pack' : esc(p.form || '')}</small></div>
+        <div class="ci-name"><a href="product.html?id=${p.id}">${esc(p.name)}</a><small>${l.opt === 'kit' ? '10-pack' : esc(p.form || '')}${pctFor(p, l.qty) ? ' · ' + pctFor(p, l.qty) + '% off' : ''}</small></div>
         <div class="ci-row"><span class="qty"><button data-dec aria-label="Less">&minus;</button><span>${l.qty}</span><button data-inc aria-label="More">+</button></span>
         <span><span class="ci-price">${money(u * l.qty)}</span><button class="ci-x" data-rm>Remove</button></span></div>
       </li>`;
@@ -182,7 +229,8 @@
     $('#subtotal').textContent = money(t.sub);
     const mn = $('#min-note'), short = MIN_ORDER - t.sub;
     mn.hidden = t.n === 0 || short <= 0;
-    mn.textContent = `Minimum order is ${money(MIN_ORDER)}. Add ${money(short)} more to check out.`;
+    mn.textContent = minText(short);
+    extras(t.n === 0);
     const btn = $('#submit-btn');
     btn.classList.toggle('is-off', t.n === 0 || short > 0);
     badges();
@@ -191,37 +239,51 @@
     list.addEventListener('click', (e) => {
       const li = e.target.closest('li'); if (!li) return;
       const i = +li.dataset.i, l = cart[i];
-      if (e.target.closest('[data-inc]')) l.qty = Math.min(99, l.qty + 1);
+      if (e.target.closest('[data-inc]')) l.qty = Math.min(maxQ(byId(l.id)), l.qty + 1);
       else if (e.target.closest('[data-dec]')) l.qty = Math.max(1, l.qty - 1);
       else if (e.target.closest('[data-rm]')) cart.splice(i, 1);
       else return;
       save(cart); renderCart();
     });
     renderCart();
+    document.addEventListener('click', async (e) => {
+      if (e.target.id === 'promo-rm') { promo = null; renderCart(); return; }
+      if (e.target.id !== 'promo-apply') return;
+      const code = $('#promo-in').value.trim(), pm = $('#promo-msg');
+      if (!code) return;
+      e.target.disabled = true;
+      try {
+        const res = await fetch(IB_API + '/promo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ code, cart: cart.map((l) => ({ id: l.id, opt: l.opt, qty: l.qty })) }) });
+        const out = await res.json().catch(() => ({}));
+        if (out.ok) { promo = { code: out.code, type: out.type, amount: Number(out.amount) || 0 }; renderCart(); }
+        else { pm.hidden = false; pm.textContent = out.message || 'That code did not work.'; }
+      } catch (er) { pm.hidden = false; pm.textContent = 'Could not check that code. Please try again.'; }
+      e.target.disabled = false;
+    });
 
     const form = $('#checkout-form'), msg = $('#form-msg');
     const say = (text, kind) => { msg.hidden = false; msg.className = 'form-msg ' + (kind || ''); msg.textContent = text; msg.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); };
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const t = totals();
-      if (!cart.length) { say('Your cart is empty. Add at least one product first.', 'err'); return; }
-      if (t.sub < MIN_ORDER) { say(`Minimum order is ${money(MIN_ORDER)}. Add ${money(MIN_ORDER - t.sub)} more to check out.`, 'err'); return; }
+      if (!cart.length) { say(MSG.empty_cart || 'Your cart is empty. Add at least one product first.', 'err'); return; }
+      if (t.sub < MIN_ORDER) { say(minText(MIN_ORDER - t.sub), 'err'); return; }
       if (!$$('input[name=payment_options]:checked', form).length) { say('Please choose at least one payment option.', 'err'); return; }
       $('#cart-summary').value = summaryText();
-      const btn = $('#submit-btn'); btn.disabled = true; btn.textContent = 'Sending...';
+      const btn = $('#submit-btn'), lbl0 = btn.textContent; btn.disabled = true; btn.textContent = 'Sending...';
       try {
         const fd = new FormData(form);
         const payload = { name: fd.get('name'), email: fd.get('email'), phone: fd.get('phone') || '', address: fd.get('address'),
           payment_options: fd.getAll('payment_options'), agree: fd.get('agree') || '', bot_field: fd.get('bot-field') || '',
-          cart: cart.map((l) => ({ id: l.id, opt: l.opt, qty: l.qty })), cart_summary: summaryText() };
+          cart: cart.map((l) => ({ id: l.id, opt: l.opt, qty: l.qty })), promo: promo ? promo.code : '', cart_summary: summaryText() };
         const res = await fetch(IB_API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
         const out = await res.json().catch(() => ({}));
         if (!res.ok || !out.ok) { const er = new Error('bad status'); if (res.status === 400 && out.message) er.userMessage = out.message; throw er; }
         cart = []; save(cart); renderCart(); form.reset();
-        say('Your cart has been sent. We will reply shortly to confirm your items, total and payment.', 'ok');
+        say(MSG.checkout_ok || 'Your cart has been sent. We will reply shortly to confirm your items, total and payment.', 'ok');
       } catch (err) {
-        say(err.userMessage || 'We could not send that right now. Please try again, or reach us through the Contact page.', 'err');
-      } finally { btn.disabled = false; btn.textContent = 'Check out'; }
+        say(err.userMessage || MSG.checkout_err || 'We could not send that right now. Please try again, or reach us through the Contact page.', 'err');
+      } finally { btn.disabled = false; btn.textContent = lbl0; }
     });
   }
 
@@ -230,16 +292,16 @@
   if (cform) {
     cform.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const m = $('#contact-msg'), btn = $('#contact-btn'); btn.disabled = true; btn.textContent = 'Sending...';
+      const m = $('#contact-msg'), btn = $('#contact-btn'), lbl1 = btn.textContent; btn.disabled = true; btn.textContent = 'Sending...';
       try {
         const fd = new FormData(cform);
         const payload = { name: fd.get('name'), email: fd.get('email'), order_reference: fd.get('order_reference') || '', message: fd.get('message'), bot_field: fd.get('bot-field') || '' };
         const res = await fetch(IB_API + '/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
         const out = await res.json().catch(() => ({}));
         if (!res.ok || !out.ok) { const er = new Error('bad'); if (res.status === 400 && out.message) er.userMessage = out.message; throw er; }
-        cform.reset(); m.className = 'form-msg ok'; m.textContent = 'Message sent. We will reply by email.';
-      } catch (err) { m.className = 'form-msg err'; m.textContent = err.userMessage || 'We could not send that right now. Please try again shortly.'; }
-      m.hidden = false; btn.disabled = false; btn.textContent = 'Send message';
+        cform.reset(); m.className = 'form-msg ok'; m.textContent = MSG.contact_ok || 'Message sent. We will reply by email.';
+      } catch (err) { m.className = 'form-msg err'; m.textContent = err.userMessage || MSG.contact_err || 'We could not send that right now. Please try again shortly.'; }
+      m.hidden = false; btn.disabled = false; btn.textContent = lbl1;
     });
   }
 

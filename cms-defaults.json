@@ -1,0 +1,1804 @@
+{
+"fields": [
+{
+"key": "shared.header.span-1",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "text",
+"label": "Menu",
+"value": "Menu",
+"tag": "span"
+},
+{
+"key": "shared.header.a-1.href",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "link",
+"label": "Link of: Imperial Blowork home",
+"value": "index.html",
+"tag": "a"
+},
+{
+"key": "shared.header.img-1.src",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "image",
+"label": "Image: Imperial Blowork",
+"value": "{{T}}assets/img/logo-full.png",
+"tag": "img"
+},
+{
+"key": "shared.header.img-1.alt",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "alt",
+"label": "Image description: Imperial Blowork",
+"value": "Imperial Blowork",
+"tag": "img"
+},
+{
+"key": "shared.header.a-2.href",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "link",
+"label": "Link of: Cart 0",
+"value": "cart.html",
+"tag": "a"
+},
+{
+"key": "shared.header.span-2",
+"page": "shared",
+"section": "shared.header",
+"section_label": "Header",
+"kind": "text",
+"label": "Cart",
+"value": "Cart",
+"tag": "span"
+},
+{
+"key": "shared.menu.button-1",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Close",
+"value": "Close",
+"tag": "button"
+},
+{
+"key": "shared.menu.a-1",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Home",
+"value": "Home",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-1.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Home",
+"value": "index.html",
+"tag": "a"
+},
+{
+"key": "shared.menu.button-2",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "lead",
+"label": "Products",
+"value": "Products",
+"tag": "button"
+},
+{
+"key": "shared.menu.a-2",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "All",
+"value": "All",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-2.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: All",
+"value": "products.html?c=all",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-3",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Peptides",
+"value": "Peptides",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-3.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Peptides",
+"value": "products.html?c=peptides",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-4",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Injectables",
+"value": "Injectables",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-4.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Injectables",
+"value": "products.html?c=injectables",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-5",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Orals",
+"value": "Orals",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-5.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Orals",
+"value": "products.html?c=orals",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-6",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "SARMs",
+"value": "SARMs",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-6.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: SARMs",
+"value": "products.html?c=sarms",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-7",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "PCT",
+"value": "PCT",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-7.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: PCT",
+"value": "products.html?c=pct",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-8",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "HCG",
+"value": "HCG",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-8.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: HCG",
+"value": "products.html?c=hcg",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-9",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Support",
+"value": "Support",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-9.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Support",
+"value": "products.html?c=support",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-10",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Price Board",
+"value": "Price Board",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-10.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Price Board",
+"value": "index.html#price-board",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-11",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Care Guide",
+"value": "Care Guide",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-11.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Care Guide",
+"value": "index.html#care",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-12",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Help Center",
+"value": "Help Center",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-12.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Help Center",
+"value": "help.html",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-13",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Contact",
+"value": "Contact",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-13.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Contact",
+"value": "contact.html",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-14",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "text",
+"label": "Your Cart",
+"value": "Your Cart",
+"tag": "a"
+},
+{
+"key": "shared.menu.a-14.href",
+"page": "shared",
+"section": "shared.menu",
+"section_label": "Menu",
+"kind": "link",
+"label": "Link of: Your Cart",
+"value": "cart.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.img-1.src",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "image",
+"label": "Image: Imperial Blowork",
+"value": "{{T}}assets/img/logo-full.png",
+"tag": "img"
+},
+{
+"key": "shared.footer.img-1.alt",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "alt",
+"label": "Image description: Imperial Blowork",
+"value": "Imperial Blowork",
+"tag": "img"
+},
+{
+"key": "shared.footer.p-1",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Premium research products.",
+"value": "Premium research products.",
+"tag": "p"
+},
+{
+"key": "shared.footer.a-1",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Products",
+"value": "Products",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-1.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Products",
+"value": "products.html?c=all",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-2",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Price Board",
+"value": "Price Board",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-2.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Price Board",
+"value": "index.html#price-board",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-3",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Care Guide",
+"value": "Care Guide",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-3.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Care Guide",
+"value": "index.html#care",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-4",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Help Center",
+"value": "Help Center",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-4.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Help Center",
+"value": "help.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-5",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Contact",
+"value": "Contact",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-5.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Contact",
+"value": "contact.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-6",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Cart",
+"value": "Cart",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-6.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Cart",
+"value": "cart.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-7",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Terms of Service",
+"value": "Terms of Service",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-7.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Terms of Service",
+"value": "terms.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-8",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Privacy Policy",
+"value": "Privacy Policy",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-8.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Privacy Policy",
+"value": "privacy.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-9",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "Refunds & Returns",
+"value": "Refunds & Returns",
+"tag": "a"
+},
+{
+"key": "shared.footer.a-9.href",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "link",
+"label": "Link of: Refunds & Returns",
+"value": "refunds.html",
+"tag": "a"
+},
+{
+"key": "shared.footer.p-2",
+"page": "shared",
+"section": "shared.footer",
+"section_label": "Footer",
+"kind": "text",
+"label": "© 2026 Imperial Blowork. All rights reserved.",
+"value": "© 2026 Imperial Blowork. All rights reserved.",
+"tag": "p"
+},
+{
+"key": "shared.floating.a-1.href",
+"page": "shared",
+"section": "shared.floating",
+"section_label": "Floating cart button",
+"kind": "link",
+"label": "Link of: 0 items $0 View cart",
+"value": "cart.html",
+"tag": "a"
+},
+{
+"key": "shared.floating.span-1",
+"page": "shared",
+"section": "shared.floating",
+"section_label": "Floating cart button",
+"kind": "text",
+"label": "View cart",
+"value": "View cart",
+"tag": "span"
+},
+{
+"key": "index.hero.bg",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "image",
+"label": "Hero background photo",
+"value": "{{T}}assets/img/gym-floor.jpg",
+"tag": "bg"
+},
+{
+"key": "index.hero.img-1.src",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "image",
+"label": "Image: Imperial Blowork",
+"value": "{{T}}assets/img/logo.png",
+"tag": "img"
+},
+{
+"key": "index.hero.img-1.alt",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "alt",
+"label": "Image description: Imperial Blowork",
+"value": "Imperial Blowork",
+"tag": "img"
+},
+{
+"key": "index.hero.p-1",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "text",
+"label": "Premium research products",
+"value": "Premium research products",
+"tag": "p"
+},
+{
+"key": "index.hero.h1-1",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "text",
+"label": "Imperial Blowork",
+"value": "Imperial Blowork",
+"tag": "h1"
+},
+{
+"key": "index.hero.p-2",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "text",
+"label": "Peptides, injectables, orals and SARMs. Clearly labeled, sea",
+"value": "Peptides, injectables, orals and SARMs. Clearly labeled, sealed and packed with care.",
+"tag": "p"
+},
+{
+"key": "index.hero.a-1",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "text",
+"label": "Browse products",
+"value": "Browse products",
+"tag": "a"
+},
+{
+"key": "index.hero.a-1.href",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "link",
+"label": "Link of: Browse products",
+"value": "products.html?c=all",
+"tag": "a"
+},
+{
+"key": "index.hero.a-2",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "text",
+"label": "See the price board",
+"value": "See the price board",
+"tag": "a"
+},
+{
+"key": "index.hero.a-2.href",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "link",
+"label": "Link of: See the price board",
+"value": "#price-board",
+"tag": "a"
+},
+{
+"key": "index.hero.a-3.href",
+"page": "index",
+"section": "index.hero",
+"section_label": "Hero",
+"kind": "link",
+"label": "Link of: Scroll down",
+"value": "#trust",
+"tag": "a"
+},
+{
+"key": "index.trust.span-1",
+"page": "index",
+"section": "index.trust",
+"section_label": "Trust strip",
+"kind": "rich",
+"label": "Clearly labeled",
+"value": "Clearly<br>labeled",
+"tag": "span"
+},
+{
+"key": "index.trust.span-2",
+"page": "index",
+"section": "index.trust",
+"section_label": "Trust strip",
+"kind": "rich",
+"label": "Research use only",
+"value": "Research<br>use only",
+"tag": "span"
+},
+{
+"key": "index.trust.span-3",
+"page": "index",
+"section": "index.trust",
+"section_label": "Trust strip",
+"kind": "rich",
+"label": "Sealed packaging",
+"value": "Sealed<br>packaging",
+"tag": "span"
+},
+{
+"key": "index.trust.span-4",
+"page": "index",
+"section": "index.trust",
+"section_label": "Trust strip",
+"kind": "rich",
+"label": "Direct support",
+"value": "Direct<br>support",
+"tag": "span"
+},
+{
+"key": "index.runner.span-1",
+"page": "index",
+"section": "index.runner",
+"section_label": "Scrolling text",
+"kind": "text",
+"label": "Discipline • Build • Motivation •",
+"value": "Discipline • Build • Motivation • ",
+"tag": "span"
+},
+{
+"key": "index.runner.span-2",
+"page": "index",
+"section": "index.runner",
+"section_label": "Scrolling text",
+"kind": "text",
+"label": "Imperial Blowork • Premium research products •",
+"value": "Imperial Blowork • Premium research products • ",
+"tag": "span"
+},
+{
+"key": "index.why.p-1",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Why Imperial Blowork",
+"value": "Why Imperial Blowork",
+"tag": "p"
+},
+{
+"key": "index.why.h1-1",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Plain process. Every time.",
+"value": "Plain process. Every time.",
+"tag": "h1"
+},
+{
+"key": "index.why.p-2",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "We keep the range tight and the checkout simple, so you alwa",
+"value": "We keep the range tight and the checkout simple, so you always know what is in your cart and what happens next.",
+"tag": "p"
+},
+{
+"key": "index.why.span-1",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "01",
+"value": "01",
+"tag": "span"
+},
+{
+"key": "index.why.h3-1",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Labeled clearly",
+"value": "Labeled clearly",
+"tag": "h3"
+},
+{
+"key": "index.why.p-3",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Compound, strength and format on every product page and ever",
+"value": "Compound, strength and format on every product page and every label. No guessing.",
+"tag": "p"
+},
+{
+"key": "index.why.span-2",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "02",
+"value": "02",
+"tag": "span"
+},
+{
+"key": "index.why.h3-2",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Packed with care",
+"value": "Packed with care",
+"tag": "h3"
+},
+{
+"key": "index.why.p-4",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Sealed vials and foil pouches, packed to arrive in good cond",
+"value": "Sealed vials and foil pouches, packed to arrive in good condition.",
+"tag": "p"
+},
+{
+"key": "index.why.span-3",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "03",
+"value": "03",
+"tag": "span"
+},
+{
+"key": "index.why.h3-3",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Straightforward checkout",
+"value": "Straightforward checkout",
+"tag": "h3"
+},
+{
+"key": "index.why.p-5",
+"page": "index",
+"section": "index.why",
+"section_label": "Why us: Plain process. Every time.",
+"kind": "text",
+"label": "Fill your cart, send it, and we confirm your items, total an",
+"value": "Fill your cart, send it, and we confirm your items, total and payment directly with you.",
+"tag": "p"
+},
+{
+"key": "index.gallery-sec.p-1",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "text",
+"label": "Built for the work",
+"value": "Built for the work",
+"tag": "p"
+},
+{
+"key": "index.gallery-sec.h2-1",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "text",
+"label": "For people who train.",
+"value": "For people who train.",
+"tag": "h2"
+},
+{
+"key": "index.gallery-sec.img-1.src",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "image",
+"label": "Image: Athlete in a gym",
+"value": "{{T}}assets/img/athlete-1.jpg",
+"tag": "img"
+},
+{
+"key": "index.gallery-sec.img-1.alt",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "alt",
+"label": "Image description: Athlete in a gym",
+"value": "Athlete in a gym",
+"tag": "img"
+},
+{
+"key": "index.gallery-sec.img-2.src",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "image",
+"label": "Image: Athlete posing",
+"value": "{{T}}assets/img/athlete-2.jpg",
+"tag": "img"
+},
+{
+"key": "index.gallery-sec.img-2.alt",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "alt",
+"label": "Image description: Athlete posing",
+"value": "Athlete posing",
+"tag": "img"
+},
+{
+"key": "index.gallery-sec.img-3.src",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "image",
+"label": "Image: Athlete outdoors",
+"value": "{{T}}assets/img/athlete-3.jpg",
+"tag": "img"
+},
+{
+"key": "index.gallery-sec.img-3.alt",
+"page": "index",
+"section": "index.gallery-sec",
+"section_label": "Gallery sec: For people who train.",
+"kind": "alt",
+"label": "Image description: Athlete outdoors",
+"value": "Athlete outdoors",
+"tag": "img"
+},
+{
+"key": "index.price-board.p-1",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "text",
+"label": "Peptide Price Board",
+"value": "Peptide Price Board",
+"tag": "p"
+},
+{
+"key": "index.price-board.h2-1",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "text",
+"label": "One vial or ten.",
+"value": "One vial or ten.",
+"tag": "h2"
+},
+{
+"key": "index.price-board.p-2",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "text",
+"label": "Pricing is per vial. A pack is ten vials. Tap any line for t",
+"value": "Pricing is per vial. A pack is ten vials. Tap any line for the full product page.",
+"tag": "p"
+},
+{
+"key": "index.price-board.p-3",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "text",
+"label": "Pricing is per vial.",
+"value": "Pricing is per vial.",
+"tag": "p"
+},
+{
+"key": "index.price-board.a-1",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "text",
+"label": "See peptide photos and details",
+"value": "See peptide photos and details",
+"tag": "a"
+},
+{
+"key": "index.price-board.a-1.href",
+"page": "index",
+"section": "index.price-board",
+"section_label": "Price board: One vial or ten.",
+"kind": "link",
+"label": "Link of: See peptide photos and details",
+"value": "products.html?c=peptides",
+"tag": "a"
+},
+{
+"key": "index.care.p-1",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Care Guide",
+"value": "Care Guide",
+"tag": "p"
+},
+{
+"key": "index.care.h2-1",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Store it right.",
+"value": "Store it right.",
+"tag": "h2"
+},
+{
+"key": "index.care.p-2",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Follow these steps to protect what you ordered. Always check",
+"value": "Follow these steps to protect what you ordered. Always check the label on your product too.",
+"tag": "p"
+},
+{
+"key": "index.care.h3-1",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Peptides before reconstituting",
+"value": "Peptides before reconstituting",
+"tag": "h3"
+},
+{
+"key": "index.care.p-3",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Keep lyophilized vials in the freezer, between -20°C and -80",
+"value": "Keep lyophilized vials in the freezer, between -20°C and -80°C.",
+"tag": "p"
+},
+{
+"key": "index.care.h3-2",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Peptides after reconstituting",
+"value": "Peptides after reconstituting",
+"tag": "h3"
+},
+{
+"key": "index.care.p-4",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Refrigerate between 2°C and 8°C. Keep away from direct light",
+"value": "Refrigerate between 2°C and 8°C. Keep away from direct light. Never freeze reconstituted solutions.",
+"tag": "p"
+},
+{
+"key": "index.care.h3-3",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Injectable vials",
+"value": "Injectable vials",
+"tag": "h3"
+},
+{
+"key": "index.care.p-5",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Store at room temperature, away from direct light and heat. ",
+"value": "Store at room temperature, away from direct light and heat. Shake suspensions well before use. Do not freeze.",
+"tag": "p"
+},
+{
+"key": "index.care.h3-4",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Tablets",
+"value": "Tablets",
+"tag": "h3"
+},
+{
+"key": "index.care.p-6",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Keep tablets in the original foil pouch until needed. Store ",
+"value": "Keep tablets in the original foil pouch until needed. Store in a cool, dry place away from light and moisture, and out of reach of children.",
+"tag": "p"
+},
+{
+"key": "index.care.h3-5",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Bacteriostatic water",
+"value": "Bacteriostatic water",
+"tag": "h3"
+},
+{
+"key": "index.care.p-7",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Store at room temperature, away from direct light. Discard a",
+"value": "Store at room temperature, away from direct light. Discard a vial 28 days after it is first opened.",
+"tag": "p"
+},
+{
+"key": "index.care.p-8",
+"page": "index",
+"section": "index.care",
+"section_label": "Care guide: Store it right.",
+"kind": "text",
+"label": "Sold for research use only.",
+"value": "Sold for research use only.",
+"tag": "p"
+},
+{
+"key": "products.content.p-1",
+"page": "products",
+"section": "products.content",
+"section_label": "Content: All products",
+"kind": "text",
+"label": "Products",
+"value": "Products",
+"tag": "p"
+},
+{
+"key": "products.content.p-2",
+"page": "products",
+"section": "products.content",
+"section_label": "Content: All products",
+"kind": "text",
+"label": "Nothing matched that search. Try a shorter name.",
+"value": "Nothing matched that search. Try a shorter name.",
+"tag": "p"
+},
+{
+"key": "product.pdp.a-1",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "Products",
+"value": "Products",
+"tag": "a"
+},
+{
+"key": "product.pdp.a-1.href",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "link",
+"label": "Link of: Products",
+"value": "products.html?c=all",
+"tag": "a"
+},
+{
+"key": "product.pdp.button-1",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "−",
+"value": "−",
+"tag": "button"
+},
+{
+"key": "product.pdp.button-2",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "+",
+"value": "+",
+"tag": "button"
+},
+{
+"key": "product.pdp.p-1",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "Sold for research use only.",
+"value": "Sold for research use only.",
+"tag": "p"
+},
+{
+"key": "product.pdp.h2-1",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "About this product",
+"value": "About this product",
+"tag": "h2"
+},
+{
+"key": "product.pdp.h2-2",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "Details",
+"value": "Details",
+"tag": "h2"
+},
+{
+"key": "product.pdp.h2-3",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "Storage and handling",
+"value": "Storage and handling",
+"tag": "h2"
+},
+{
+"key": "product.pdp.p-2",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "rich",
+"label": "Read the full care guide",
+"value": "<a class=\"ulink\" href=\"index.html#care\">Read the full care guide</a>",
+"tag": "p"
+},
+{
+"key": "product.pdp.p-3",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "rich",
+"label": "We could not find that product. Back to products .",
+"value": "We could not find that product. <a class=\"ulink\" href=\"products.html?c=all\">Back to products</a>.",
+"tag": "p"
+},
+{
+"key": "product.pdp.h2-4",
+"page": "product",
+"section": "product.pdp",
+"section_label": "Pdp",
+"kind": "text",
+"label": "You may also like",
+"value": "You may also like",
+"tag": "h2"
+},
+{
+"key": "cart.content.p-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Your Cart",
+"value": "Your Cart",
+"tag": "p"
+},
+{
+"key": "cart.content.h1-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Review and check out.",
+"value": "Review and check out.",
+"tag": "h1"
+},
+{
+"key": "cart.content.p-2",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "rich",
+"label": "Your cart is empty. Browse products .",
+"value": "Your cart is empty. <a href=\"products.html?c=all\">Browse products</a>.",
+"tag": "p"
+},
+{
+"key": "cart.content.span-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Subtotal",
+"value": "Subtotal",
+"tag": "span"
+},
+{
+"key": "cart.content.p-3",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Minimum order is $80. Delivery details and the final total a",
+"value": "Minimum order is $80. Delivery details and the final total are confirmed when we reply.",
+"tag": "p"
+},
+{
+"key": "cart.content.label-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "lead",
+"label": "Full name",
+"value": "Full name",
+"tag": "label"
+},
+{
+"key": "cart.content.label-2",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "lead",
+"label": "Email",
+"value": "Email",
+"tag": "label"
+},
+{
+"key": "cart.content.label-3",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "lead",
+"label": "Phone",
+"value": "Phone",
+"tag": "label"
+},
+{
+"key": "cart.content.label-4",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "lead",
+"label": "Shipping address",
+"value": "Shipping address",
+"tag": "label"
+},
+{
+"key": "cart.content.legend-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Payment options",
+"value": "Payment options",
+"tag": "legend"
+},
+{
+"key": "cart.content.span-2",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Bitcoin",
+"value": "Bitcoin",
+"tag": "span"
+},
+{
+"key": "cart.content.span-3",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Cashapp",
+"value": "Cashapp",
+"tag": "span"
+},
+{
+"key": "cart.content.span-4",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Apple Pay",
+"value": "Apple Pay",
+"tag": "span"
+},
+{
+"key": "cart.content.span-5",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Zelle",
+"value": "Zelle",
+"tag": "span"
+},
+{
+"key": "cart.content.span-6",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Chime",
+"value": "Chime",
+"tag": "span"
+},
+{
+"key": "cart.content.span-7",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "rich",
+"label": "I agree to the Terms of Service , Privacy Policy and Refunds",
+"value": "I agree to the <a class=\"ulink\" href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a>, <a class=\"ulink\" href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a class=\"ulink\" href=\"refunds.html\" target=\"_blank\" rel=\"noopener\">Refunds &amp; Returns Policy</a>.",
+"tag": "span"
+},
+{
+"key": "cart.content.button-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Check out",
+"value": "Check out",
+"tag": "button"
+},
+{
+"key": "contact.content.p-1",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "text",
+"label": "Contact",
+"value": "Contact",
+"tag": "p"
+},
+{
+"key": "contact.content.h1-1",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "text",
+"label": "Talk to us.",
+"value": "Talk to us.",
+"tag": "h1"
+},
+{
+"key": "contact.content.label-1",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "lead",
+"label": "Full name",
+"value": "Full name",
+"tag": "label"
+},
+{
+"key": "contact.content.label-2",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "lead",
+"label": "Email",
+"value": "Email",
+"tag": "label"
+},
+{
+"key": "contact.content.label-3",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "lead",
+"label": "Order reference (if any)",
+"value": "Order reference (if any)",
+"tag": "label"
+},
+{
+"key": "contact.content.label-4",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "lead",
+"label": "Message",
+"value": "Message",
+"tag": "label"
+},
+{
+"key": "contact.content.button-1",
+"page": "contact",
+"section": "contact.content",
+"section_label": "Content: Talk to us.",
+"kind": "text",
+"label": "Send message",
+"value": "Send message",
+"tag": "button"
+},
+{
+"key": "help.content.p-1",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Help Center",
+"value": "Help Center",
+"tag": "p"
+},
+{
+"key": "help.content.h1-1",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Straight answers.",
+"value": "Straight answers.",
+"tag": "h1"
+},
+{
+"key": "help.content.summary-1",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "How does checkout work?",
+"value": "How does checkout work?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-2",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Add products to your cart, then fill in your details on the ",
+"value": "Add products to your cart, then fill in your details on the cart page and send it. Sending your cart is a request to purchase. We review it, confirm items, availability and your total with you, and tell you how to pay.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-2",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Is there a minimum?",
+"value": "Is there a minimum?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-3",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Yes. The minimum order is $80. The cart page shows how much ",
+"value": "Yes. The minimum order is $80. The cart page shows how much more you need if you are under it.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-3",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Which payment options are available?",
+"value": "Which payment options are available?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-4",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Bitcoin, Cashapp, Apple Pay, Zelle and Chime. Tick the optio",
+"value": "Bitcoin, Cashapp, Apple Pay, Zelle and Chime. Tick the options you would like to use on the cart page and we will send instructions once your cart is confirmed.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-4",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "When will my items arrive?",
+"value": "When will my items arrive?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-5",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "We confirm delivery details with you when we confirm your ca",
+"value": "We confirm delivery details with you when we confirm your cart. Delivery estimates are not guarantees and may be affected by circumstances outside our control.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-5",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Can a request be declined?",
+"value": "Can a request be declined?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-6",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "rich",
+"label": "Yes. A request may be reviewed, declined or cancelled where ",
+"value": "Yes. A request may be reviewed, declined or cancelled where necessary, including where information or availability is incorrect. See the <a class=\"ulink\" href=\"terms.html\">Terms of Service</a>.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-6",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "How should I store peptides?",
+"value": "How should I store peptides?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-7",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "rich",
+"label": "Freezer (-20°C to -80°C) before reconstituting. Refrigerator",
+"value": "Freezer (-20°C to -80°C) before reconstituting. Refrigerator (2°C to 8°C) after. Keep away from direct light and never freeze reconstituted solutions. See the <a class=\"ulink\" href=\"index.html#care\">Care Guide</a>.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-7",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "What does research use only mean?",
+"value": "What does research use only mean?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-8",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "Everything we sell is intended for laboratory and research p",
+"value": "Everything we sell is intended for laboratory and research purposes. It is not a medicine. You are responsible for using products lawfully where you live.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-8",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "What if something arrives damaged or wrong?",
+"value": "What if something arrives damaged or wrong?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-9",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "rich",
+"label": "Contact us promptly through the Contact page with your order",
+"value": "Contact us promptly through the <a class=\"ulink\" href=\"contact.html\">Contact page</a> with your order reference and a clear description of the issue. Photographs help. Please do not send anything back before you receive return instructions. Full details are in our <a class=\"ulink\" href=\"refunds.html\">Refunds &amp; Returns Policy</a>.",
+"tag": "p"
+},
+{
+"key": "help.content.summary-9",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "text",
+"label": "How is my information used?",
+"value": "How is my information used?",
+"tag": "summary"
+},
+{
+"key": "help.content.p-10",
+"page": "help",
+"section": "help.content",
+"section_label": "Content: Straight answers.",
+"kind": "rich",
+"label": "We use it to process your cart, communicate with you and pro",
+"value": "We use it to process your cart, communicate with you and provide support. We do not intend to sell personal information. Read the <a class=\"ulink\" href=\"privacy.html\">Privacy Policy</a>.",
+"tag": "p"
+},
+{
+"key": "terms.content.p-1",
+"page": "terms",
+"section": "terms.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "text",
+"label": "Policies",
+"value": "Policies",
+"tag": "p"
+},
+{
+"key": "terms.content.p-2",
+"page": "terms",
+"section": "terms.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "rich",
+"label": "Also read: Privacy Policy Refunds & Returns Policy",
+"value": "Also read: <a href=\"privacy.html\">Privacy Policy</a><a href=\"refunds.html\">Refunds &amp; Returns Policy</a>",
+"tag": "p"
+},
+{
+"key": "privacy.content.p-1",
+"page": "privacy",
+"section": "privacy.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "text",
+"label": "Policies",
+"value": "Policies",
+"tag": "p"
+},
+{
+"key": "privacy.content.p-2",
+"page": "privacy",
+"section": "privacy.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "rich",
+"label": "Also read: Terms of Service Refunds & Returns Policy",
+"value": "Also read: <a href=\"terms.html\">Terms of Service</a><a href=\"refunds.html\">Refunds &amp; Returns Policy</a>",
+"tag": "p"
+},
+{
+"key": "refunds.content.p-1",
+"page": "refunds",
+"section": "refunds.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "text",
+"label": "Policies",
+"value": "Policies",
+"tag": "p"
+},
+{
+"key": "refunds.content.p-2",
+"page": "refunds",
+"section": "refunds.content",
+"section_label": "Content: %%TITLE%%",
+"kind": "rich",
+"label": "Also read: Terms of Service Privacy Policy",
+"value": "Also read: <a href=\"terms.html\">Terms of Service</a><a href=\"privacy.html\">Privacy Policy</a>",
+"tag": "p"
+}
+]
+}

@@ -121,7 +121,7 @@ add_filter('pre_get_document_title', function ($t) {
     if (ib_seo_active()) return $t;
     $f = ib_current_file();
     $m = ib_meta();
-    if ($f && isset($m[$f])) return $m[$f]['title'];
+    if ($f && isset($m[$f])) { $x = apply_filters('ib_page_meta', $m[$f], $f); return $x['title']; }
     if (is_404()) return 'Page not found | Imperial Blowork';
     return $t;
 });
@@ -131,13 +131,16 @@ add_action('wp_head', function () {
     $f = ib_current_file();
     $m = ib_meta();
     if (!$f || !isset($m[$f])) return;
-    $title = esc_attr($m[$f]['title']);
-    $desc = esc_attr($m[$f]['desc']);
-    $img = esc_url(get_template_directory_uri() . '/site/assets/img/logo.png');
+    $x = apply_filters('ib_page_meta', $m[$f], $f);
+    $title = esc_attr($x['title']);
+    $desc = esc_attr($x['desc']);
+    $img = esc_url(!empty($x['image']) ? $x['image'] : get_template_directory_uri() . '/site/assets/img/logo.png');
     echo '<meta name="description" content="' . $desc . '">' . "\n";
     echo '<meta property="og:title" content="' . $title . '">' . "\n";
     echo '<meta property="og:description" content="' . $desc . '">' . "\n";
     echo '<meta property="og:image" content="' . $img . '">' . "\n";
+    if (!empty($x['site_name'])) echo '<meta property="og:site_name" content="' . esc_attr($x['site_name']) . '">' . "\n";
+    if (!empty($x['noindex'])) echo '<meta name="robots" content="noindex, nofollow">' . "\n";
 }, 1);
 
 /* ---------- Render ---------- */
@@ -154,6 +157,13 @@ function ib_render() {
         status_header(500);
         echo 'Template missing.';
         return;
+    }
+
+    // Owner edits (Imperial Blowork Core plugin). Without the plugin the edit keys are simply removed.
+    if (has_filter('ib_render_html')) {
+        $html = apply_filters('ib_render_html', $html, $file);
+    } else {
+        $html = preg_replace('/ data-cms(?:-(?:href|src|alt|lead))?="[^"]*"/', '', $html);
     }
 
     $base = trailingslashit(get_template_directory_uri()) . 'site/';
