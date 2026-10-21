@@ -7,21 +7,7 @@ function ib_table() {
 }
 
 function ib_install_table() {
-    global $wpdb;
-    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    $charset = $wpdb->get_charset_collate();
-    $sql = 'CREATE TABLE ' . ib_table() . " (
-        id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-        type varchar(20) NOT NULL,
-        payload longtext NOT NULL,
-        mail_sent tinyint(1) NOT NULL DEFAULT 0,
-        mail_error text NULL,
-        order_id bigint(20) unsigned NULL,
-        created datetime NOT NULL,
-        PRIMARY KEY  (id)
-    ) $charset;";
-    dbDelta($sql);
-    update_option('ib_db_v', '1');
+    if (function_exists('ib_install_cms_tables')) ib_install_cms_tables();
 }
 
 function ib_email() {

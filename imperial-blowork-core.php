@@ -12,22 +12,26 @@ if (!defined('ABSPATH')) exit;
 define('IB_CORE_VER', '1.0.0');
 define('IB_CORE_PATH', plugin_dir_path(__FILE__));
 
+define('IB_CORE_FILE', __FILE__);
+
 require_once IB_CORE_PATH . 'inc/helpers.php';
 require_once IB_CORE_PATH . 'inc/mail.php';
 require_once IB_CORE_PATH . 'inc/catalog.php';
+require_once IB_CORE_PATH . 'inc/cms-apply.php';
+require_once IB_CORE_PATH . 'inc/cms.php';
+require_once IB_CORE_PATH . 'inc/pricing.php';
 require_once IB_CORE_PATH . 'inc/rest.php';
 require_once IB_CORE_PATH . 'inc/redirects.php';
 require_once IB_CORE_PATH . 'inc/metabox.php';
 require_once IB_CORE_PATH . 'inc/importer.php';
 require_once IB_CORE_PATH . 'inc/setup.php';
 require_once IB_CORE_PATH . 'inc/admin.php';
+require_once IB_CORE_PATH . 'inc/effects.php';
+require_once IB_CORE_PATH . 'inc/admin-api.php';
+require_once IB_CORE_PATH . 'inc/admin-page.php';
 
 register_activation_hook(__FILE__, function () {
-    ib_install_table();
+    ib_install_cms_tables();
     if (get_option('ib_email', '') === '') update_option('ib_email', 'info@imperialblowork.com');
     flush_rewrite_rules();
-});
-
-add_action('plugins_loaded', function () {
-    if (get_option('ib_db_v') !== '1') ib_install_table();
 });

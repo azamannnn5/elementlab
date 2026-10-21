@@ -41,7 +41,7 @@ function ib_category_list() {
 /** Full catalog (cached). Keys starting with "_" are private (server use only). */
 function ib_catalog() {
     $cached = get_transient('ib_catalog_v2');
-    if (is_array($cached) && $cached) return $cached;
+    if (is_array($cached)) return $cached;
     $items = array();
     if (!function_exists('wc_get_product')) return $items;
     $ids = get_posts(array(
@@ -58,14 +58,15 @@ function ib_catalog() {
             if ($t->slug !== 'uncategorized') { $cat = $t->slug; break; }
         }
         $price = 0; $kit = null; $single_id = $pid; $kit_id = 0;
+        $in_single = $p->is_in_stock(); $in_kit = $in_single;
         if ($p->is_type('variable')) {
             foreach ($p->get_children() as $vid) {
                 $v = wc_get_product($vid);
                 if (!$v || !$v->is_purchasable()) continue;
                 $attrs = array_map('strtolower', array_values($v->get_attributes()));
                 $val = (float) $v->get_price();
-                if (in_array('10-pack', $attrs, true)) { $kit = $val; $kit_id = $vid; }
-                else { $price = $val; $single_id = $vid; }
+                if (in_array('10-pack', $attrs, true)) { $kit = $val; $kit_id = $vid; $in_kit = $v->is_in_stock() && $p->is_in_stock(); }
+                else { $price = $val; $single_id = $vid; $in_single = $v->is_in_stock() && $p->is_in_stock(); }
             }
         } else {
             $price = (float) $p->get_price();
@@ -94,10 +95,16 @@ function ib_catalog() {
         $item['recs'] = array_map('strval', ib_lines_to_array(get_post_meta($pid, '_ib_recs', true)));
         $item['short'] = trim(wp_strip_all_tags($p->get_short_description()));
         $item['related'] = array_map('strval', ib_lines_to_array(get_post_meta($pid, '_ib_related', true)));
+        $max = (int) get_post_meta($pid, '_ib_max', true);
+        if ($max > 0) $item['max'] = $max;
+        if (!$in_single || ($kit !== null && !$in_kit)) $item['stock'] = array('single' => $in_single ? 1 : 0, 'kit' => $in_kit ? 1 : 0);
+        $disc = get_post_meta($pid, '_ib_disc', true);
+        if ($disc === 'none') $item['disc'] = 'none';
+        elseif (is_array($disc) && $disc) $item['disc'] = $disc;
         $item['_pid'] = $pid; $item['_single_id'] = $single_id; $item['_kit_id'] = $kit_id;
         $items[] = $item;
     }
-    if ($items) set_transient('ib_catalog_v2', $items, 12 * HOUR_IN_SECONDS);
+    set_transient('ib_catalog_v2', $items, 12 * HOUR_IN_SECONDS);
     return $items;
 }
 
@@ -131,4 +138,4 @@ add_action('init', function () {
     echo 'const PRODUCTS = ' . wp_json_encode(ib_public_catalog(), $flags) . ";\n";
     echo 'const MIN_ORDER = ' . ib_num(ib_min_order()) . ";\n";
     exit;
-}, 20);
+}, 1);

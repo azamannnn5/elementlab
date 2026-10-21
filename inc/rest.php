@@ -3,6 +3,7 @@ if (!defined('ABSPATH')) exit;
 
 add_action('rest_api_init', function () {
     register_rest_route('ib/v1', '/checkout', array('methods' => 'POST', 'callback' => 'ib_rest_checkout', 'permission_callback' => '__return_true'));
+    register_rest_route('ib/v1', '/promo', array('methods' => 'POST', 'callback' => 'ib_rest_promo', 'permission_callback' => '__return_true'));
     register_rest_route('ib/v1', '/contact', array('methods' => 'POST', 'callback' => 'ib_rest_contact', 'permission_callback' => '__return_true'));
 });
 
@@ -45,6 +46,7 @@ function ib_rest_checkout(WP_REST_Request $req) {
 
     // Honeypot: pretend success.
     if (!empty($d['bot_field'])) return ib_reply(true, 'ok');
+    if (function_exists('ib_maintenance_blocked') && ib_maintenance_blocked()) return ib_reply(false, 'The site is being updated. Please try again soon.', 503);
     if (ib_rate_limited()) return ib_reply(false, 'Too many requests. Please try again in a few minutes.', 429);
 
     $name = ib_clean_line($d['name'] ?? '', 120);
@@ -63,29 +65,14 @@ function ib_rest_checkout(WP_REST_Request $req) {
     if (!$agree) return ib_reply(false, 'Please agree to the Terms of Service, Privacy Policy and Refunds & Returns Policy.', 400);
 
     // Recompute everything from WooCommerce prices. Never trust browser totals.
-    $cat = ib_catalog_by_id();
-    $lines = array(); $subtotal = 0.0; $count = 0;
-    foreach (array_slice((array) ($d['cart'] ?? array()), 0, 60) as $l) {
-        if (!is_array($l)) continue;
-        $id = (string) ($l['id'] ?? '');
-        $qty = max(1, min(99, (int) ($l['qty'] ?? 1)));
-        $opt = (($l['opt'] ?? '') === 'kit') ? 'kit' : 'single';
-        if (!isset($cat[$id])) continue;
-        $p = $cat[$id];
-        if ($opt === 'kit' && !isset($p['kit'])) $opt = 'single';
-        $unit = $opt === 'kit' ? (float) $p['kit'] : (float) $p['price'];
-        $wc_id = $opt === 'kit' ? (int) $p['_kit_id'] : (int) $p['_single_id'];
-        $lines[] = array('id' => $id, 'name' => $p['name'], 'opt' => $opt, 'qty' => $qty, 'unit' => $unit, 'total' => $unit * $qty, 'wc_id' => $wc_id);
-        $subtotal += $unit * $qty;
-        $count += $qty;
-    }
-    if (!$lines) return ib_reply(false, 'Your cart is empty.', 400);
-    $min = ib_min_order();
-    if ($subtotal < $min) return ib_reply(false, 'Minimum order is ' . ib_money($min) . '. Add ' . ib_money($min - $subtotal) . ' more to check out.', 400);
+    $promo = ib_clean_line($d['promo'] ?? '', 40);
+    $priced = ib_price_cart($d['cart'] ?? array(), $promo);
+    if (!$priced['ok']) return ib_reply(false, $priced['error'], 400);
+    $lines = $priced['lines']; $subtotal = $priced['subtotal']; $count = $priced['count'];
 
     $log_id = ib_log_request('checkout', array(
         'name' => $name, 'email' => $email, 'phone' => $phone, 'address' => $address, 'payment_options' => $pay,
-        'lines' => $lines, 'subtotal' => $subtotal, 'ip' => ib_client_ip(),
+        'lines' => $lines, 'subtotal' => $subtotal, 'discount' => $priced['discount'], 'shipping' => $priced['shipping'], 'promo' => $priced['promo'] ? $priced['promo']['code'] : '', 'total' => $priced['total'], 'ip' => ib_client_ip(),
     ));
     $ref = 'IB-' . $log_id;
 
@@ -96,7 +83,13 @@ function ib_rest_checkout(WP_REST_Request $req) {
             $order = wc_create_order(array('status' => 'pending'));
             foreach ($lines as $l) {
                 $prod = wc_get_product($l['wc_id']);
-                if ($prod) $order->add_product($prod, $l['qty']);
+                if ($prod) $order->add_product($prod, $l['qty'], array('subtotal' => $l['total'], 'total' => $l['total']));
+            }
+            if ($priced['discount'] > 0) {
+                $fee = new WC_Order_Item_Fee(); $fee->set_name('Promo ' . $priced['promo']['code']); $fee->set_total(-$priced['discount']); $fee->set_tax_status('none'); $order->add_item($fee);
+            }
+            if ($priced['shipping'] > 0) {
+                $fee = new WC_Order_Item_Fee(); $fee->set_name(ib_cms_settings()['shipping']['label'] ?: 'Shipping'); $fee->set_total($priced['shipping']); $fee->set_tax_status('none'); $order->add_item($fee);
             }
             $parts = explode(' ', $name, 2);
             $addr = array('first_name' => $parts[0], 'last_name' => $parts[1] ?? '', 'email' => $email, 'phone' => $phone, 'address_1' => $address, 'country' => 'US');
@@ -114,6 +107,7 @@ function ib_rest_checkout(WP_REST_Request $req) {
         $order_id = 0;
     }
     if ($order_id) ib_log_update($log_id, array('order_id' => $order_id));
+    if ($priced['promo']) { global $wpdb; $wpdb->query($wpdb->prepare('UPDATE ' . $wpdb->prefix . 'ib_coupons SET used = used + 1 WHERE id = %d', $priced['promo']['id'])); }
 
     // Emails
     $rows = '';
@@ -123,17 +117,22 @@ function ib_rest_checkout(WP_REST_Request $req) {
             . '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right">' . esc_html(ib_money($l['unit'])) . '</td>'
             . '<td style="padding:6px 0 6px 10px;border-bottom:1px solid #eee;text-align:right">' . esc_html(ib_money($l['total'])) . '</td></tr>';
     }
+    $extra = '';
+    if ($priced['discount'] > 0) $extra .= '<tr><td colspan="3" style="padding:4px 10px 0 0;text-align:right">Promo ' . esc_html($priced['promo']['code']) . '</td><td style="padding:4px 0 0 10px;text-align:right">-' . esc_html(ib_money($priced['discount'])) . '</td></tr>';
+    if ($priced['shipping'] > 0) $extra .= '<tr><td colspan="3" style="padding:4px 10px 0 0;text-align:right">' . esc_html(ib_cms_settings()['shipping']['label']) . '</td><td style="padding:4px 0 0 10px;text-align:right">' . esc_html(ib_money($priced['shipping'])) . '</td></tr>';
+    if ($priced['promo'] && $priced['free_shipping']) $extra .= '<tr><td colspan="3" style="padding:4px 10px 0 0;text-align:right">Promo ' . esc_html($priced['promo']['code']) . '</td><td style="padding:4px 0 0 10px;text-align:right">free shipping</td></tr>';
     $items = '<table style="border-collapse:collapse;width:100%;margin:10px 0"><tr style="text-align:left;color:#666"><th style="padding:4px 10px 4px 0">Item</th><th style="padding:4px 10px;text-align:center">Qty</th><th style="padding:4px 10px;text-align:right">Each</th><th style="padding:4px 0 4px 10px;text-align:right">Total</th></tr>'
-        . $rows . '<tr><td colspan="3" style="padding:8px 10px 0 0;text-align:right"><strong>Subtotal</strong></td><td style="padding:8px 0 0 10px;text-align:right"><strong>' . esc_html(ib_money($subtotal)) . '</strong></td></tr></table>';
+        . $rows . '<tr><td colspan="3" style="padding:8px 10px 0 0;text-align:right">Subtotal</td><td style="padding:8px 0 0 10px;text-align:right">' . esc_html(ib_money($subtotal)) . '</td></tr>' . $extra
+        . '<tr><td colspan="3" style="padding:8px 10px 0 0;text-align:right"><strong>Total</strong></td><td style="padding:8px 0 0 10px;text-align:right"><strong>' . esc_html(ib_money($priced['total'])) . '</strong></td></tr></table>';
 
-    $admin = '<h2 style="margin:0 0 6px">New cart ' . esc_html($ref) . '</h2><p style="margin:0 0 10px">' . (int) $count . ' item(s), subtotal ' . esc_html(ib_money($subtotal)) . '. Reply to this email to answer the customer.</p>'
+    $admin = '<h2 style="margin:0 0 6px">New cart ' . esc_html($ref) . '</h2><p style="margin:0 0 10px">' . (int) $count . ' item(s), total ' . esc_html(ib_money($priced['total'])) . '. Reply to this email to answer the customer.</p>'
         . '<table style="border-collapse:collapse">'
         . ib_row('Name', esc_html($name)) . ib_row('Email', '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>')
         . ib_row('Phone', $phone !== '' ? esc_html($phone) : '-') . ib_row('Address', nl2br(esc_html($address)))
         . ib_row('Payment options', esc_html(implode(', ', $pay)))
         . ($order_id ? ib_row('Order', '#' . (int) $order_id . ' (on hold in WooCommerce)') : '')
         . '</table>' . $items;
-    $sent = ib_send(ib_email(), 'New cart ' . $ref . ' from ' . ib_header_name($name) . ' (' . ib_money($subtotal) . ')', $admin, $email, $name);
+    $sent = ib_send(ib_email(), 'New cart ' . $ref . ' from ' . ib_header_name($name) . ' (' . ib_money($priced['total']) . ')', $admin, $email, $name);
     $err = $sent ? '' : $GLOBALS['ib_mail_error'];
 
     $cust = '<h2 style="margin:0 0 6px">We received your cart</h2><p>Hi ' . esc_html($name) . ', thank you. Your cart reference is <strong>' . esc_html($ref) . '</strong>.</p>'
@@ -153,6 +152,7 @@ function ib_rest_contact(WP_REST_Request $req) {
     $d = $req->get_json_params();
     if (!is_array($d)) $d = $req->get_params();
     if (!empty($d['bot_field'])) return ib_reply(true, 'ok');
+    if (function_exists('ib_maintenance_blocked') && ib_maintenance_blocked()) return ib_reply(false, 'The site is being updated. Please try again soon.', 503);
     if (ib_rate_limited()) return ib_reply(false, 'Too many requests. Please try again in a few minutes.', 429);
 
     $name = ib_clean_line($d['name'] ?? '', 120);
@@ -170,4 +170,23 @@ function ib_rest_contact(WP_REST_Request $req) {
     $sent = ib_send(ib_email(), 'Website message from ' . ib_header_name($name), $body, $email, $name);
     ib_log_update($log_id, array('mail_sent' => $sent ? 1 : 0, 'mail_error' => $sent ? '' : $GLOBALS['ib_mail_error']));
     return ib_reply(true, 'ok');
+}
+
+/* ---------------- Promo code check (never lists codes) ---------------- */
+function ib_rest_promo(WP_REST_Request $req) {
+    $d = $req->get_json_params();
+    $key = 'ib_rlp_' . md5(ib_client_ip());
+    $n = (int) get_transient($key);
+    if ($n >= 30) return ib_reply(false, 'Too many tries. Please wait a few minutes.', 429);
+    set_transient($key, $n + 1, 10 * MINUTE_IN_SECONDS);
+    $code = ib_clean_line($d['code'] ?? '', 40);
+    $cart = is_array($d['cart'] ?? null) ? $d['cart'] : array();
+    // Price without the promo first, so a minimum-order message does not hide a bad code.
+    $base = ib_price_cart($cart, '');
+    $subtotal = 0;
+    if (!empty($base['subtotal'])) $subtotal = $base['subtotal'];
+    $c = ib_coupon_find($code);
+    $err = ib_coupon_check($c, $subtotal);
+    if ($err) return ib_reply(false, $err, 200);
+    return ib_reply(true, 'Code applied.', 200, array('code' => $c->code, 'type' => $c->type, 'amount' => (float) $c->amount));
 }
