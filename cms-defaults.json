@@ -1321,6 +1321,26 @@
 "tag": "h1"
 },
 {
+"key": "cart.content.a-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "← Back to products",
+"value": "← Back to products",
+"tag": "a"
+},
+{
+"key": "cart.content.a-1.href",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "link",
+"label": "Link of: ← Back to products",
+"value": "products.html?c=all",
+"tag": "a"
+},
+{
 "key": "cart.content.p-2",
 "page": "cart",
 "section": "cart.content",
@@ -1469,6 +1489,36 @@
 "label": "Check out",
 "value": "Check out",
 "tag": "button"
+},
+{
+"key": "cart.content.li-1",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Clearly labeled and sealed",
+"value": "Clearly labeled and sealed",
+"tag": "li"
+},
+{
+"key": "cart.content.li-2",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "Nothing charged until we confirm",
+"value": "Nothing charged until we confirm",
+"tag": "li"
+},
+{
+"key": "cart.content.li-3",
+"page": "cart",
+"section": "cart.content",
+"section_label": "Content: Review and check out.",
+"kind": "text",
+"label": "We reply by email",
+"value": "We reply by email",
+"tag": "li"
 },
 {
 "key": "contact.content.p-1",
