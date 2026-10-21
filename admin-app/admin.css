@@ -38,8 +38,8 @@ h3{font-size:.95rem;margin:0 0 4px}
 .crumbs a{color:var(--mute);text-decoration:none}
 .crumbs b{color:var(--ink);font-weight:600}
 .gsearch{position:relative;flex:1;max-width:520px;margin-left:auto}
-.gsearch input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line2);border-radius:9px;background:#fff}
-.gsearch:before{content:"\2315";position:absolute;left:12px;top:7px;color:var(--mute);font-size:1.05rem}
+.gsearch input{-webkit-appearance:none;appearance:none;width:100%;padding:9px 40px 9px 14px;border:1px solid var(--line2);border-radius:9px;background:#fff}
+.gsearch input::-webkit-search-decoration,.gsearch input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
 .gsearch kbd{position:absolute;right:9px;top:8px;border:1px solid var(--line2);border-radius:5px;padding:0 6px;font-size:.75rem;color:var(--mute);background:var(--bg)}
 .results{position:absolute;left:0;right:0;top:44px;background:#fff;border:1px solid var(--line2);border-radius:10px;box-shadow:0 14px 40px rgba(16,24,40,.14);max-height:70vh;overflow:auto;z-index:50}
 .res-group{padding:6px 0;border-bottom:1px solid var(--line)}
@@ -201,6 +201,10 @@ details.sec>.body{padding:0 18px 8px;border-top:1px solid var(--line)}
   .userbox span{display:none}
 }
 @media (max-width:620px){
+  .top{flex-wrap:wrap}
+  .gsearch{order:5;flex:1 1 100%;max-width:none;margin-left:0}
+  .gsearch kbd{display:none}
+  .userbox{margin-left:auto}
   .g2,.g3,.g4,.diff{grid-template-columns:1fr}
   .pricegrid{grid-template-columns:1fr 1fr}
   .pricegrid.head{display:none}
@@ -209,3 +213,7 @@ details.sec>.body{padding:0 18px 8px;border-top:1px solid var(--line)}
   .crumbs{display:none}
   .page-head{flex-direction:column}
 }
+
+.pc .l{display:none}
+@media (max-width:620px){.pc{display:flex;align-items:center;gap:8px}.pc .l{display:inline;font-size:.8rem;color:var(--mute);min-width:90px}.pc input[type=number]{flex:1}.pricegrid{grid-template-columns:1fr!important}}
+@media (max-width:620px){.pc-none{display:none}}

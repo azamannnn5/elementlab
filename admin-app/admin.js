@@ -627,10 +627,11 @@
       + '<div class="list"><div class="pricegrid head"><span>Product</span><span>Price</span><span>10-pack</span><span>In stock</span><span>10-pack stock</span></div>'
       + rows.map((r) => { const p = pget(r), a = 'data-pid="' + r.pid + '"';
         const s1 = p.variable ? p.stock_single : p.stock_all;
-        return '<div class="pricegrid"><span><b>' + esc(p.name) + '</b></span><input type="number" min="0" step="0.01" data-pf="price" ' + a + ' value="' + esc(p.price) + '"' + dis('products') + '>'
-          + (p.has_kit ? '<input type="number" min="0" step="0.01" data-pf="kit" ' + a + ' value="' + esc(p.kit) + '"' + dis('products') + '>' : '<span class="muted">-</span>')
-          + '<label class="checkline"><input type="checkbox" data-pf="' + (p.variable ? 'stock_single' : 'stock_all') + '" ' + a + (s1 ? ' checked' : '') + dis('products') + '></label>'
-          + (p.has_kit ? '<label class="checkline"><input type="checkbox" data-pf="stock_kit" ' + a + (p.stock_kit ? ' checked' : '') + dis('products') + '></label>' : '<span class="muted">-</span>') + '</div>'; }).join('') + '</div>';
+        const lb = (t, inner) => '<label class="pc"><span class="l">' + t + '</span>' + inner + '</label>';
+        return '<div class="pricegrid"><span><b>' + esc(p.name) + '</b></span>' + lb('Price', '<input type="number" min="0" step="0.01" data-pf="price" ' + a + ' value="' + esc(p.price) + '"' + dis('products') + '>')
+          + (p.has_kit ? lb('10-pack price', '<input type="number" min="0" step="0.01" data-pf="kit" ' + a + ' value="' + esc(p.kit) + '"' + dis('products') + '>') : '<span class="muted pc-none">-</span>')
+          + lb('In stock', '<input type="checkbox" data-pf="' + (p.variable ? 'stock_single' : 'stock_all') + '" ' + a + (s1 ? ' checked' : '') + dis('products') + '>')
+          + (p.has_kit ? lb('10-pack in stock', '<input type="checkbox" data-pf="stock_kit" ' + a + (p.stock_kit ? ' checked' : '') + dis('products') + '>') : '<span class="muted pc-none">-</span>') + '</div>'; }).join('') + '</div>';
   };
 
   V.collections = () => {
