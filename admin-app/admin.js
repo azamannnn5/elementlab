@@ -549,9 +549,9 @@
     const draw = async () => {
       try {
         const out = await api('media', { query: { s: ($('#ms') || {}).value || '' } });
-        $('#mgrid').innerHTML = out.items.length ? '<div class="mgrid">' + out.items.map((i) => '<div class="mitem" data-id="' + i.id + '"><img src="' + esc(i.thumb) + '" alt=""><div class="meta"><b>' + esc(i.name) + '</b><span class="muted">' + i.w + ' x ' + i.h + '</span>'
+        if (!$('#mgrid')) return; $('#mgrid').innerHTML = out.items.length ? '<div class="mgrid">' + out.items.map((i) => '<div class="mitem" data-id="' + i.id + '"><img src="' + esc(i.thumb) + '" alt=""><div class="meta"><b>' + esc(i.name) + '</b><span class="muted">' + i.w + ' x ' + i.h + '</span>'
           + '<input type="text" data-malt placeholder="Image description" value="' + esc(i.alt) + '"><div class="row"><button class="btn ghost sm" data-act="copy-url" data-url="' + esc(i.url) + '">Copy address</button><button class="btn danger sm" data-act="del-media" data-id="' + i.id + '">Delete</button></div></div></div>').join('') + '</div>' : '<p class="muted">No images yet.</p>';
-      } catch (e) { $('#mgrid').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
+      } catch (e) { if (!$('#mgrid')) return; $('#mgrid').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
     };
     $('#ms').addEventListener('input', () => { clearTimeout(V.media.t); V.media.t = setTimeout(draw, 300); });
     $('#mu').addEventListener('change', async (e) => {
@@ -725,7 +725,7 @@
       try {
         const out = await api('inbox', { query: { type: $('#ib-type').value, status: $('#ib-status').value } });
         S.tmp.inbox = out.rows;
-        $('#ib-list').innerHTML = out.rows.length ? '<div class="list">' + out.rows.map((r) => {
+        if (!$('#ib-list')) return; $('#ib-list').innerHTML = out.rows.length ? '<div class="list">' + out.rows.map((r) => {
           const p = r.payload || {}; const isC = r.type === 'checkout';
           const lines = isC ? (p.lines || []).map((l) => esc((l.qty || l.q || 1) + ' x ' + (l.name || l.id || '') + (l.option ? ' (' + l.option + ')' : '') + (l.line != null ? ' = ' + money(l.line) : ''))).join('<br>') : '';
           return '<details class="li msg" data-id="' + r.id + '"><summary><b>' + esc(p.name || 'Unknown') + '</b> ' + pill(isC ? 'Cart' : 'Message', isC ? 'on' : 'off') + ' ' + pill(r.status, r.status === 'new' ? 'red' : 'off') + '<small>' + esc(r.created) + ' UTC' + (isC ? ' &middot; ' + money(p.total) : '') + '</small></summary><div class="body">'
@@ -733,7 +733,7 @@
             + (isC ? '<p>' + lines + '</p><p class="muted">Subtotal ' + money(p.subtotal) + (Number(p.discount) ? ', discount -' + money(p.discount) : '') + (Number(p.shipping) ? ', shipping ' + money(p.shipping) : '') + ', total ' + money(p.total) + (p.promo ? ', code ' + esc(p.promo) : '') + '</p>' + (p.address ? '<p>' + esc(typeof p.address === 'string' ? p.address : JSON.stringify(p.address)) + '</p>' : '') + (p.payment_options ? '<p class="muted">Payment: ' + esc(Array.isArray(p.payment_options) ? p.payment_options.join(', ') : p.payment_options) + '</p>' : '') : '<p>' + esc(p.message).replace(/\n/g, '<br>') + '</p>' + (p.order_reference ? '<p class="muted">Order: ' + esc(p.order_reference) + '</p>' : ''))
             + '<div class="actions"><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="read"' + dis('inbox') + '>Mark read</button><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="done"' + dis('inbox') + '>Mark done</button><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="spam"' + dis('inbox') + '>Spam</button><button class="btn sm" data-act="msg-reply" data-id="' + r.id + '"' + dis('inbox') + '>Reply</button><button class="btn danger sm" data-act="msg-del" data-id="' + r.id + '"' + dis('inbox') + '>Delete</button></div></div></details>';
         }).join('') + '</div>' : '<p class="muted">Nothing here yet.</p>';
-      } catch (e) { $('#ib-list').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
+      } catch (e) { if (!$('#ib-list')) return; $('#ib-list').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
     };
     V.inbox.draw = draw;
     $('#ib-type').addEventListener('change', draw); $('#ib-status').addEventListener('change', draw);
@@ -750,11 +750,11 @@
     const draw = async () => {
       try {
         const out = await api('history', { query: { kind: $('#h-kind').value } }); S.tmp.hist = out.rows;
-        $('#h-list').innerHTML = out.rows.length ? '<div class="list">' + out.rows.map((h, i) => {
+        if (!$('#h-list')) return; $('#h-list').innerHTML = out.rows.length ? '<div class="list">' + out.rows.map((h, i) => {
           const undoable = ['content', 'setting', 'page'].indexOf(h.kind) >= 0 || (h.kind === 'product' && h.old_value && typeof h.old_value === 'object' && h.new_value);
           return '<div class="li"><div class="grow"><b>' + esc(h.label || h.ref) + '</b><small>' + esc(h.user_name) + ' &middot; ' + esc(h.created) + ' UTC &middot; ' + esc(h.kind) + '</small></div>' + (undoable ? '<button class="btn ghost sm" data-act="undo" data-i="' + i + '"' + dis('content') + '>Restore the older value</button>' : '') + '</div>';
         }).join('') + '</div>' : '<p class="muted">No activity yet.</p>';
-      } catch (e) { $('#h-list').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
+      } catch (e) { if (!$('#h-list')) return; $('#h-list').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
     };
     $('#h-kind').addEventListener('change', draw); draw();
   };
@@ -809,7 +809,7 @@
   V.team.after = async () => {
     const roles = ['owner', 'admin', 'editor', 'viewer'];
     const paint = (team) => {
-      $('#tm').innerHTML = '<div class="list">' + team.map((u) => '<div class="li"><div class="grow"><b>' + esc(u.name) + '</b><small>' + esc(u.email) + '</small></div><select data-tmrole="' + u.id + '"' + (u.id === B().user.id ? ' disabled' : '') + '>' + roles.map((r) => '<option' + (r === u.role ? ' selected' : '') + '>' + r + '</option>').join('') + '</select><button class="btn danger sm" data-act="tm-del" data-id="' + u.id + '"' + (u.id === B().user.id ? ' disabled' : '') + '>Remove</button></div>').join('') + '</div>'
+      if (!$('#tm')) return; $('#tm').innerHTML = '<div class="list">' + team.map((u) => '<div class="li"><div class="grow"><b>' + esc(u.name) + '</b><small>' + esc(u.email) + '</small></div><select data-tmrole="' + u.id + '"' + (u.id === B().user.id ? ' disabled' : '') + '>' + roles.map((r) => '<option' + (r === u.role ? ' selected' : '') + '>' + r + '</option>').join('') + '</select><button class="btn danger sm" data-act="tm-del" data-id="' + u.id + '"' + (u.id === B().user.id ? ' disabled' : '') + '>Remove</button></div>').join('') + '</div>'
         + '<div class="card" style="margin-top:16px"><h2>Add a person</h2><div class="grid g3"><label>Name<input type="text" id="tm-name"></label><label>Email<input type="email" id="tm-email"></label><label>Role<select id="tm-role">' + roles.map((r) => '<option' + (r === 'editor' ? ' selected' : '') + '>' + r + '</option>').join('') + '</select></label></div><button class="btn" style="margin-top:12px" data-act="tm-add">Add and send invite</button></div>';
     };
     V.team.paint = paint;
