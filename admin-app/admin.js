@@ -15,7 +15,8 @@
   async function api(path, opt) {
     opt = opt || {};
     let url = CFG.api + '/' + path + (opt.query ? '&' + new URLSearchParams(opt.query).toString() : '');
-    const init = { method: opt.method || (opt.body || opt.form ? 'POST' : 'GET'), credentials: 'same-origin', headers: { 'X-WP-Nonce': CFG.nonce, 'Accept': 'application/json' } };
+    const init = { method: opt.method || (opt.body || opt.form ? 'POST' : 'GET'), credentials: 'same-origin', headers: { 'Accept': 'application/json' } };
+    if (CFG.nonce) init.headers['X-WP-Nonce'] = CFG.nonce;
     if (opt.form) init.body = opt.form;
     else if (opt.body) { init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(opt.body); }
     let res;
