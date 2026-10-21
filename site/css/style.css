@@ -375,6 +375,8 @@ a.board-row{color:var(--white)}
 .foot-mail{margin-top:10px;font-size:.9rem;color:var(--mute)}
 .foot-mail a{color:var(--silver);text-decoration:underline;text-underline-offset:3px}
 .foot-mail a:hover{color:var(--red)}
+.search input{-webkit-appearance:none;appearance:none}
+.search input::-webkit-search-decoration,.search input::-webkit-search-cancel-button,.search input::-webkit-search-results-button,.search input::-webkit-search-results-decoration{-webkit-appearance:none;display:none}
 .cart-extra{max-width:420px;margin:12px auto 0;font-size:.95rem;color:var(--mute)}
 .cart-extra .cx{display:flex;justify-content:space-between;gap:12px;padding:4px 0}
 .cart-extra .cx.tot{border-top:1px solid var(--line,rgba(255,255,255,.12));margin-top:6px;padding-top:8px;color:var(--white);font-weight:600}
