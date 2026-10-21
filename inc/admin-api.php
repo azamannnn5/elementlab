@@ -21,6 +21,7 @@ add_action('rest_api_init', function () {
     $r('inbox/status', 'POST', 'ib_api_inbox_status', 'inbox');
     $r('inbox/reply', 'POST', 'ib_api_inbox_reply', 'inbox');
     $r('inbox/delete', 'POST', 'ib_api_inbox_delete', 'inbox');
+    $r('inbox/order', 'POST', 'ib_api_inbox_order', 'inbox');
     $r('media', 'GET', 'ib_api_media_list', 'media');
     $r('media/upload', 'POST', 'ib_api_media_upload', 'media');
     $r('media/alt', 'POST', 'ib_api_media_alt', 'media');
@@ -125,6 +126,7 @@ function ib_api_bootstrap() {
         'history' => $hist,
         'site_images' => ib_admin_site_images(),
         'fonts' => ib_fonts(),
+        'page_meta' => (object) (json_decode((string) @file_get_contents(get_template_directory() . '/page-meta.json'), true) ?: array()),
         'site' => array('url' => home_url('/'), 'name' => get_bloginfo('name'), 'wp_admin' => admin_url(), 'woo_orders' => admin_url('admin.php?page=wc-orders'), 'seo_plugin' => ib_seo_plugin_active(), 'theme_url' => $theme),
     ));
 }
@@ -255,7 +257,12 @@ function ib_api_inbox(WP_REST_Request $req) {
     if ($status) { $where[] = 'status = %s'; $args[] = $status; }
     $sql = 'SELECT * FROM ' . ib_table() . ' WHERE ' . implode(' AND ', $where) . ' ORDER BY id DESC LIMIT 300';
     $rows = $args ? $wpdb->get_results($wpdb->prepare($sql, $args), ARRAY_A) : $wpdb->get_results($sql, ARRAY_A);
-    foreach ($rows as &$r) { $r['payload'] = json_decode($r['payload'], true); }
+    foreach ($rows as &$r) {
+        $r['payload'] = json_decode($r['payload'], true);
+        $r['order_status'] = '';
+        if (!empty($r['order_id']) && function_exists('wc_get_order')) { $o = wc_get_order((int) $r['order_id']); if ($o) $r['order_status'] = $o->get_status(); }
+    }
+    unset($r);
     return ib_ok(array('rows' => $rows ?: array()));
 }
 function ib_api_inbox_status(WP_REST_Request $req) {
@@ -281,6 +288,32 @@ function ib_api_inbox_reply(WP_REST_Request $req) {
     $wpdb->update(ib_table(), array('status' => 'done'), array('id' => $row['id']));
     ib_history('reply', 'msg-' . $row['id'], 'Reply sent to ' . $to, null, $body);
     return ib_ok();
+}
+function ib_api_inbox_order(WP_REST_Request $req) {
+    global $wpdb;
+    $d = $req->get_json_params();
+    $labels = array('on-hold' => 'Awaiting payment', 'processing' => 'Paid', 'completed' => 'Shipped', 'cancelled' => 'Cancelled');
+    $st = (string) ($d['status'] ?? '');
+    if (!isset($labels[$st])) return ib_fail('Choose a status.');
+    $row = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . ib_table() . ' WHERE id = %d', (int) ($d['id'] ?? 0)), ARRAY_A);
+    if (!$row || empty($row['order_id']) || !function_exists('wc_get_order')) return ib_fail('This cart has no order to update.', 404);
+    $o = wc_get_order((int) $row['order_id']);
+    if (!$o) return ib_fail('The order was not found.', 404);
+    $old = $o->get_status();
+    if ($old !== $st) $o->update_status($st, 'Status changed in the admin panel. ');
+    $wpdb->update(ib_table(), array('status' => $st === 'on-hold' ? 'new' : 'done'), array('id' => $row['id']));
+    $p = json_decode($row['payload'], true);
+    $sent = false;
+    if (!empty($d['notify']) && is_email($p['email'] ?? '')) {
+        $ref = 'IB-' . $row['id'];
+        $msg = array('processing' => 'We have received your payment. We are preparing your order.', 'completed' => 'Your order has been shipped.', 'cancelled' => 'Your order has been cancelled. Reply to this email if you have questions.', 'on-hold' => 'Your order is waiting for payment.');
+        $note = ib_clean_text($d['note'] ?? '', 1000);
+        $body = '<h2 style="margin:0 0 6px">Order ' . esc_html($ref) . ': ' . esc_html($labels[$st]) . '</h2><p>Hi ' . esc_html($p['name'] ?? '') . ', ' . esc_html($msg[$st]) . '</p>' . ($note !== '' ? '<p>' . nl2br(esc_html($note)) . '</p>' : '')
+            . '<p style="color:#666">Questions? Reply to this email or write to ' . esc_html(ib_email()) . '.</p>';
+        $sent = ib_send($p['email'], 'Order ' . $ref . ': ' . $labels[$st], $body, ib_email(), 'Imperial Blowork');
+    }
+    ib_history('order', 'IB-' . $row['id'], 'Order IB-' . $row['id'] . ': ' . $labels[$st], $old, $st);
+    return ib_ok(array('sent' => $sent));
 }
 function ib_api_inbox_delete(WP_REST_Request $req) {
     global $wpdb;

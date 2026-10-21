@@ -130,7 +130,7 @@ function ib_rest_checkout(WP_REST_Request $req) {
         . ib_row('Name', esc_html($name)) . ib_row('Email', '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>')
         . ib_row('Phone', $phone !== '' ? esc_html($phone) : '-') . ib_row('Address', nl2br(esc_html($address)))
         . ib_row('Payment options', esc_html(implode(', ', $pay)))
-        . ($order_id ? ib_row('Order', '#' . (int) $order_id . ' (on hold in WooCommerce)') : '')
+        . ($order_id ? ib_row('Order', '#' . (int) $order_id) : '')
         . '</table>' . $items;
     $sent = ib_send(ib_email(), 'New cart ' . $ref . ' from ' . ib_header_name($name) . ' (' . ib_money($priced['total']) . ')', $admin, $email, $name);
     $err = $sent ? '' : $GLOBALS['ib_mail_error'];

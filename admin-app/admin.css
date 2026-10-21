@@ -217,3 +217,6 @@ details.sec>.body{padding:0 18px 8px;border-top:1px solid var(--line)}
 .pc .l{display:none}
 @media (max-width:620px){.pc{display:flex;align-items:center;gap:8px}.pc .l{display:inline;font-size:.8rem;color:var(--mute);min-width:90px}.pc input[type=number]{flex:1}.pricegrid{grid-template-columns:1fr!important}}
 @media (max-width:620px){.pc-none{display:none}}
+
+.orderbox{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;margin:8px 0;border:1px solid var(--line2);border-radius:10px;background:var(--bg)}
+.orderbox select{width:auto}

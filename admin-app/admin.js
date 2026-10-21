@@ -324,7 +324,7 @@
       { k: 'phone', t: 'text', label: 'Phone number', help: 'Shown on the site only when filled in.' },
       { k: 'smtp_host', t: 'text', label: 'Mail server (SMTP host)', perm: 'code_js' }, { k: 'smtp_port', t: 'int', label: 'Mail server port', help: '465 or 587.', perm: 'code_js' },
       { k: 'smtp_user', t: 'text', label: 'Mail login', help: 'Usually the same as the email address.', perm: 'code_js' },
-      { k: 'smtp_pass', t: 'secret', label: 'Mail password', help: 'Saved privately. It is never shown again.', perm: 'code_js' }] },
+      { k: 'smtp_pass', t: 'secret', label: 'Mail password', help: 'The password of the mailbox info@imperialblowork.com (the one you use to open that inbox in Hostinger Email). Saved privately, never shown again.', perm: 'code_js' }] },
   };
 
   /* ---------- rich text editor ---------- */
@@ -698,11 +698,21 @@
     return head('Contact details and email', 'The address that shows on the site and receives carts and messages.', '<button class="btn ghost" data-act="test-email">Send a test email</button>')
       + locked('settings', 'contact details') + note('The phone number shows on the site only when you fill it in. Save first, then send the test email.') + settingsCard('contact');
   };
+  function seoPages() {
+    const cur = sget('seo').pages; const pg = (cur && !Array.isArray(cur)) ? cur : {}; const meta = B().page_meta || {};
+    const rows = PAGE_DEFS.map((p) => { const m = meta[p.file] || {}; const v = pg[p.file] || {}; const a = 'data-sp="' + p.file + '"';
+      return '<div class="field" data-search="' + esc((p.name + ' ' + (m.title || '') + ' ' + (m.desc || '')).toLowerCase()) + '"><div class="f-head">' + chip('setting', 'Setting') + '<span class="f-label">' + esc(p.name) + '</span></div>'
+        + '<label>Title shown in Google<input type="text" ' + a + ' data-spf="title" value="' + esc(v.title || '') + '" placeholder="' + esc(m.title || '') + '"' + dis('seo') + '></label>'
+        + '<label style="display:block;margin-top:8px">Description<textarea rows="2" ' + a + ' data-spf="description" placeholder="' + esc(m.desc || '') + '"' + dis('seo') + '>' + esc(v.description || '') + '</textarea></label>'
+        + '<label class="checkline" style="margin-top:6px"><input type="checkbox" ' + a + ' data-spf="noindex"' + (v.noindex ? ' checked' : '') + dis('seo') + '> Hide this page from search engines</label>'
+        + (p.file === 'product' ? '<div class="help">Each product page uses its own product name as the title.</div>' : '') + '</div>'; }).join('');
+    return '<div class="card"><h2>Title and description for each page</h2><div class="help">Leave a box empty to keep the original shown in grey.</div>' + rows + '</div>';
+  }
   V.seo = () => {
     crumbs([['Site'], ['Search and sharing']]);
     return head('Search and sharing', 'How the site looks in Google and when shared in chats.') + locked('seo', 'search settings')
       + (B().site.seo_plugin ? note('An SEO plugin is active, so it controls page titles and descriptions. Only the items it does not cover apply here.', 'warn') : '')
-      + note('Page titles and descriptions come from the originals. Tell me if you want to edit them for each page.') + settingsCard('seo');
+      + settingsCard('seo') + seoPages();
   };
 
   /* ---------- redirects ---------- */
@@ -730,9 +740,10 @@
         if (!$('#ib-list')) return; $('#ib-list').innerHTML = out.rows.length ? '<div class="list">' + out.rows.map((r) => {
           const p = r.payload || {}; const isC = r.type === 'checkout';
           const lines = isC ? (p.lines || []).map((l) => esc((l.qty || l.q || 1) + ' x ' + (l.name || l.id || '') + (l.option ? ' (' + l.option + ')' : '') + (l.line != null ? ' = ' + money(l.line) : ''))).join('<br>') : '';
-          return '<details class="li msg" data-id="' + r.id + '"><summary><b>' + esc(p.name || 'Unknown') + '</b> ' + pill(isC ? 'Cart' : 'Message', isC ? 'on' : 'off') + ' ' + pill(r.status, r.status === 'new' ? 'red' : 'off') + '<small>' + esc(r.created) + ' UTC' + (isC ? ' &middot; ' + money(p.total) : '') + '</small></summary><div class="body">'
+          return '<details class="li msg" data-id="' + r.id + '"><summary><b>' + esc(p.name || 'Unknown') + '</b> ' + pill(isC ? 'Cart' : 'Message', isC ? 'on' : 'off') + (isC && r.order_status ? ' ' + pill({ 'on-hold': 'Awaiting payment', pending: 'Awaiting payment', processing: 'Paid', completed: 'Shipped', cancelled: 'Cancelled' }[r.order_status] || r.order_status, r.order_status === 'completed' || r.order_status === 'processing' ? 'on' : 'warn') : '') + ' ' + pill(r.status, r.status === 'new' ? 'red' : 'off') + '<small>' + esc(r.created) + ' UTC' + (isC ? ' &middot; ' + money(p.total) : '') + '</small></summary><div class="body">'
             + '<p><a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a>' + (p.phone ? ' &middot; ' + esc(p.phone) : '') + '</p>'
             + (isC ? '<p>' + lines + '</p><p class="muted">Subtotal ' + money(p.subtotal) + (Number(p.discount) ? ', discount -' + money(p.discount) : '') + (Number(p.shipping) ? ', shipping ' + money(p.shipping) : '') + ', total ' + money(p.total) + (p.promo ? ', code ' + esc(p.promo) : '') + '</p>' + (p.address ? '<p>' + esc(typeof p.address === 'string' ? p.address : JSON.stringify(p.address)) + '</p>' : '') + (p.payment_options ? '<p class="muted">Payment: ' + esc(Array.isArray(p.payment_options) ? p.payment_options.join(', ') : p.payment_options) + '</p>' : '') : '<p>' + esc(p.message).replace(/\n/g, '<br>') + '</p>' + (p.order_reference ? '<p class="muted">Order: ' + esc(p.order_reference) + '</p>' : ''))
+            + (isC && r.order_id ? '<div class="orderbox"><b>Order #' + esc(r.order_id) + '</b><select data-ordsel>' + [['on-hold', 'Awaiting payment'], ['processing', 'Paid'], ['completed', 'Shipped'], ['cancelled', 'Cancelled']].map((o) => '<option value="' + o[0] + '"' + ((r.order_status === o[0] || (r.order_status === 'pending' && o[0] === 'on-hold')) ? ' selected' : '') + '>' + o[1] + '</option>').join('') + '</select><label class="checkline"><input type="checkbox" data-ordnotify> Email the customer</label><button class="btn sm" data-act="ord-set" data-id="' + r.id + '"' + dis('inbox') + '>Update order</button></div>' : '')
             + '<div class="actions"><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="read"' + dis('inbox') + '>Mark read</button><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="done"' + dis('inbox') + '>Mark done</button><button class="btn ghost sm" data-act="msg-status" data-id="' + r.id + '" data-s="spam"' + dis('inbox') + '>Spam</button><button class="btn sm" data-act="msg-reply" data-id="' + r.id + '"' + dis('inbox') + '>Reply</button><button class="btn danger sm" data-act="msg-del" data-id="' + r.id + '"' + dis('inbox') + '>Delete</button></div></div></details>';
         }).join('') + '</div>' : '<p class="muted">Nothing here yet.</p>';
       } catch (e) { if (!$('#ib-list')) return; $('#ib-list').innerHTML = '<p class="muted">' + esc(e.message) + '</p>'; }
@@ -884,6 +895,13 @@
       const p = pget(B().products.find((x) => String(x.pid) === t.dataset.pid) || { pid: t.dataset.pid, recs: [] }); const r = clone(p.recs || []); r[Number(t.dataset.rec)] = t.value; pset(t.dataset.pid, 'recs', r); return;
     }
     if (t.dataset.rel !== undefined) { pset(t.dataset.pid, 'related', t.value.split(',').map((x) => x.trim()).filter(Boolean)); return; }
+    if (t.dataset.sp) {
+      const cur = sget('seo').pages; const pg = clone((cur && !Array.isArray(cur)) ? cur : {}); const f = t.dataset.spf;
+      pg[t.dataset.sp] = Object.assign({ title: '', description: '', noindex: 0 }, pg[t.dataset.sp] || {});
+      pg[t.dataset.sp][f] = f === 'noindex' ? (t.checked ? 1 : 0) : t.value;
+      const e = pg[t.dataset.sp]; if (!e.title && !e.description && !e.noindex) delete pg[t.dataset.sp];
+      const base = B().settings.seo.pages; sset('seo', 'pages', (Object.keys(pg).length || (base && !Array.isArray(base) && Object.keys(base).length)) ? pg : (Array.isArray(base) ? [] : {})); return;
+    }
     if (t.dataset.dm) { if (!t.checked) return; const m = t.dataset.dm; pset(t.dataset.pid, 'disc', m === 'custom' ? [{ min: 10, pct: 5 }] : m); render(); return; }
     if (t.dataset.cat) {
       const k = t.dataset.cat; const base = B().categories.find((c) => String(c.term_id) === k) || { term_id: 0, name: '', blurb: '', order: 99 };
@@ -963,6 +981,7 @@
     'coupon-save': async () => { try { const o = await api('coupon', { body: S.tmp.coupon }); B().coupons = o.coupons; S.tmp.coupon = null; SIDX = null; toast('Promo code saved.'); render(); } catch (e) { toast(e.message, true); } },
     'coupon-del': async (b) => { if (!(await ask('Delete this promo code?', 'Delete', true))) return; try { const o = await api('coupon/delete', { body: { id: Number(b.dataset.id) } }); B().coupons = o.coupons; SIDX = null; render(); toast('Deleted.'); } catch (e) { toast(e.message, true); } },
     'msg-status': async (b) => { try { await api('inbox/status', { body: { id: Number(b.dataset.id), status: b.dataset.s } }); V.inbox.draw(); refreshCounts(); } catch (e) { toast(e.message, true); } },
+    'ord-set': async (b) => { const box = b.closest('.orderbox'); try { const o = await api('inbox/order', { body: { id: Number(b.dataset.id), status: $('[data-ordsel]', box).value, notify: $('[data-ordnotify]', box).checked ? 1 : 0 } }); toast(o.sent ? 'Order updated and customer emailed.' : 'Order updated.'); V.inbox.draw(); refreshCounts(); } catch (e) { toast(e.message, true); } },
     'msg-del': async (b) => { if (!(await ask('Delete this for good?', 'Delete', true))) return; try { await api('inbox/delete', { body: { id: Number(b.dataset.id) } }); V.inbox.draw(); refreshCounts(); } catch (e) { toast(e.message, true); } },
     'msg-reply': (b) => {
       const r = (S.tmp.inbox || []).find((x) => String(x.id) === b.dataset.id); const p = r.payload || {};
