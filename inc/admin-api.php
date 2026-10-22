@@ -176,6 +176,7 @@ function ib_api_save(WP_REST_Request $req) {
                 if ($g === 'contact') {
                     update_option('ib_email', $clean['email'] ?: ib_email());
                     update_option('ib_phone', $clean['phone']);
+                    update_option('ib_whatsapp', $clean['whatsapp']);
                     if (ib_can('code_js')) {
                         update_option('ib_smtp_host', $clean['smtp_host'] ?: 'smtp.hostinger.com');
                         update_option('ib_smtp_port', $clean['smtp_port'] ?: 465);

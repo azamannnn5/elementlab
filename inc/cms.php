@@ -111,7 +111,7 @@ function ib_cms_defaults() {
             'min_note' => 'Minimum order is {min}. Add {more} more to check out.',
             'out_of_stock' => 'Out of stock',
         ),
-        'contact' => array('email' => 'info@imperialblowork.com', 'phone' => '', 'smtp_host' => 'smtp.hostinger.com', 'smtp_port' => 465, 'smtp_user' => '', 'smtp_pass' => ''),
+        'contact' => array('email' => 'info@imperialblowork.com', 'phone' => '', 'whatsapp' => '', 'smtp_host' => 'smtp.hostinger.com', 'smtp_port' => 465, 'smtp_user' => '', 'smtp_pass' => ''),
     );
 }
 
@@ -130,7 +130,7 @@ function ib_cms_schema() {
         'redirects' => array('list' => 'redirects'),
         'maintenance' => array('on' => 'bool', 'title' => 'text', 'message' => 'rich', 'bypass' => 'text'),
         'messages' => $msg,
-        'contact' => array('email' => 'email', 'phone' => 'text', 'smtp_host' => 'text', 'smtp_port' => 'int', 'smtp_user' => 'text', 'smtp_pass' => 'secret'),
+        'contact' => array('email' => 'email', 'phone' => 'text', 'whatsapp' => 'text', 'smtp_host' => 'text', 'smtp_port' => 'int', 'smtp_user' => 'text', 'smtp_pass' => 'secret'),
     );
 }
 
@@ -144,6 +144,7 @@ function ib_cms_settings() {
     // contact lives in its own options (older code and the Settings page use them)
     $out['contact']['email'] = ib_email();
     $out['contact']['phone'] = (string) get_option('ib_phone', '');
+    $out['contact']['whatsapp'] = (string) get_option('ib_whatsapp', '');
     $out['contact']['smtp_host'] = (string) get_option('ib_smtp_host', 'smtp.hostinger.com');
     $out['contact']['smtp_port'] = (int) get_option('ib_smtp_port', 465);
     $out['contact']['smtp_user'] = (string) get_option('ib_smtp_user', '');

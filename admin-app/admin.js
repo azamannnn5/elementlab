@@ -322,6 +322,7 @@
     contact: { title: 'Contact details and email', route: 'contact', fields: [
       { k: 'email', t: 'text', label: 'Email address', help: 'Shown on the site. Carts and messages are sent here.' },
       { k: 'phone', t: 'text', label: 'Phone number', help: 'Shown on the site only when filled in.' },
+      { k: 'whatsapp', t: 'text', label: 'WhatsApp number', help: 'Shows a WhatsApp link next to the phone number. Use the full number with country code, for example +1 689 282 7251.' },
       { k: 'smtp_host', t: 'text', label: 'Mail server (SMTP host)', perm: 'code_js' }, { k: 'smtp_port', t: 'int', label: 'Mail server port', help: '465 or 587.', perm: 'code_js' },
       { k: 'smtp_user', t: 'text', label: 'Mail login', help: 'Usually the same as the email address.', perm: 'code_js' },
       { k: 'smtp_pass', t: 'secret', label: 'Mail password', help: 'The password of the mailbox info@imperialblowork.com (the one you use to open that inbox in Hostinger Email). Saved privately, never shown again.', perm: 'code_js' }] },
