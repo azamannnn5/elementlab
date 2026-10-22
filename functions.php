@@ -196,8 +196,14 @@ function ib_render() {
     $email = ib_opt('ib_email', 'info@imperialblowork.com');
     $phone = trim((string) get_option('ib_phone', ''));
     $tel = preg_replace('~[^\d+]~', '', $phone);
+    $wa = trim((string) get_option('ib_whatsapp', ''));
+    $wad = preg_replace('~\D~', '', $wa);
     $phoneHtml = $phone !== '' ? ' &middot; <a href="tel:' . esc_attr($tel) . '">' . esc_html($phone) . '</a>' : '';
     $phoneSentence = $phone !== '' ? ' or call <a class="ulink" href="tel:' . esc_attr($tel) . '">' . esc_html($phone) . '</a>' : '';
+    if ($wad !== '') {
+        $phoneHtml .= ' &middot; <a href="https://wa.me/' . esc_attr($wad) . '" target="_blank" rel="noopener">WhatsApp</a>';
+        $phoneSentence .= ($phone !== '' ? ' or message us on ' : ' or message us on ') . '<a class="ulink" href="https://wa.me/' . esc_attr($wad) . '" target="_blank" rel="noopener">WhatsApp</a>';
+    }
     $html = str_replace(
         array('%%PHONE_SENTENCE%%', '%%PHONE%%', '%%EMAIL%%'),
         array($phoneSentence, $phoneHtml, esc_html($email)),
