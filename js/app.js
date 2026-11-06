@@ -1,4 +1,4 @@
-/* Imperial Blowork storefront logic: products, product page, cart, checkout, carousel, scroll text. */
+/* Swollen Forge Labs storefront logic: products, product page, cart, checkout, carousel, scroll text. */
 (function () {
   'use strict';
   const $ = (s, r) => (r || document).querySelector(s);
@@ -73,6 +73,11 @@
     if (add) addToCart(add.dataset.add, 'single', 1);
   });
 
+  /* ---------- home: counts + featured rail ---------- */
+  $$('[data-count]').forEach((el) => { const n = PRODUCTS.filter((p) => p.cat === el.dataset.count).length; el.textContent = n + (n === 1 ? ' product' : ' products'); });
+  const featRail = $('#feat-rail');
+  if (featRail) featRail.innerHTML = ['p2', 'p6', 'p8', 'p24', 'p21', 'p62', 'p14', 'p58'].map(byId).filter(Boolean).map(cardHtml).join('');
+
   /* ---------- products page ---------- */
   const grid = $('#grid');
   if (grid && document.body.classList.contains('p-products')) {
@@ -92,7 +97,7 @@
       const c = CATEGORIES.find((x) => x.id === activeCat);
       title.textContent = q ? 'Search results' : (c ? c.name : 'All products');
       blurb.textContent = q ? `${list.length} result${list.length === 1 ? '' : 's'} for "${search.value.trim()}"` : (c ? c.blurb : 'Every product in one place.');
-      document.title = (q ? 'Search' : (c ? c.name : 'All products')) + ' | Imperial Blowork';
+      document.title = (q ? 'Search' : (c ? c.name : 'All products')) + ' | Swollen Forge Labs';
     };
     chips.addEventListener('click', (e) => {
       const b = e.target.closest('.chip'); if (!b) return;
@@ -104,20 +109,6 @@
     renderChips(); render();
   }
 
-  /* ---------- price board ---------- */
-  const boardEl = $('#board');
-  if (boardEl) {
-    const peps = PRODUCTS.filter((p) => p.cat === 'peptides');
-    const order = ['rt10', 'rt20', 'rt30', '|', 'klow', 'ghk', 'ipa-cjc10', 'bpc10', '|', 'mots-c-10', 'nad', 'tesa20', 'glutathione-750', 'bac-water'];
-    let html = '<div class="board-head"><span>Peptides</span><span>Single</span><span>10 pack</span></div>';
-    order.forEach((id) => {
-      if (id === '|') { html += '<div class="board-sep"></div>'; return; }
-      const p = peps.find((x) => x.id === id); if (!p) return;
-      html += `<a class="board-row" href="product.html?id=${p.id}"><span class="nm">${esc(p.name)}</span><span class="p">${money(p.price)}</span><span class="p ${p.kit ? '' : 'none'}">${p.kit ? money(p.kit) : '-'}</span></a>`;
-    });
-    boardEl.innerHTML = html;
-  }
-
   /* ---------- product page ---------- */
   if (document.body.classList.contains('p-product')) {
     const cur = byId(params.get('id') || '');
@@ -125,7 +116,7 @@
     else {
       let curOpt = 'single', curQty = 1;
       const cat = CATEGORIES.find((c) => c.id === cur.cat);
-      document.title = cur.name + ' | Imperial Blowork';
+      document.title = cur.name + ' | Swollen Forge Labs';
       const md = document.querySelector('meta[name=description]'); if (md) md.content = cur.short;
       $('#pdp').hidden = false;
       $('#pd-img').src = cur.img; $('#pd-img').alt = cur.name;

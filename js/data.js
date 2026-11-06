@@ -1,10 +1,5 @@
-// Imperial Blowork product list data. Edit prices, names and descriptions here.
+// Swollen Forge Labs product list data. Edit prices, names and descriptions here.
 const CATEGORIES = [
- {
-  "id": "peptides",
-  "name": "Peptides",
-  "blurb": "Lyophilized peptides by the vial or in 10-vial packs."
- },
  {
   "id": "injectables",
   "name": "Injectables",
@@ -38,578 +33,11 @@ const CATEGORIES = [
 ];
 const PRODUCTS = [
  {
-  "id": "rt10",
-  "name": "RT10",
-  "cat": "peptides",
-  "price": 40,
-  "kit": 300,
-  "img": "assets/img/products/pep-rt10.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Retatrutide"
-   ],
-   [
-    "Strength",
-    "10 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-  "related": [
-   "rt20",
-   "rt30",
-   "bac-water"
-  ]
- },
- {
-  "id": "rt20",
-  "name": "RT20",
-  "cat": "peptides",
-  "price": 50,
-  "kit": 400,
-  "img": "assets/img/products/pep-rt20.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Retatrutide"
-   ],
-   [
-    "Strength",
-    "20 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-  "related": [
-   "rt10",
-   "rt30",
-   "bac-water"
-  ]
- },
- {
-  "id": "rt30",
-  "name": "RT30",
-  "cat": "peptides",
-  "price": 60,
-  "kit": 450,
-  "img": "assets/img/products/pep-rt30.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Retatrutide"
-   ],
-   [
-    "Strength",
-    "30 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "Retatrutide is an investigational triple agonist of the GIP, GLP-1 and glucagon receptors.",
-  "related": [
-   "rt20",
-   "klow",
-   "bac-water"
-  ]
- },
- {
-  "id": "klow",
-  "name": "KLOW",
-  "cat": "peptides",
-  "price": 65,
-  "kit": 550,
-  "img": "assets/img/products/pep-klow.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Peptide blend"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "KLOW is a multi-peptide research blend supplied together in a single vial.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "KLOW is a multi-peptide research blend supplied together in a single vial.",
-  "related": [
-   "rt30",
-   "ghk",
-   "bac-water"
-  ]
- },
- {
-  "id": "ghk",
-  "name": "GHK",
-  "cat": "peptides",
-  "price": 35,
-  "kit": 275,
-  "img": "assets/img/products/pep-ghk.jpg",
-  "specs": [
-   [
-    "Compound",
-    "GHK-Cu"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "GHK is the copper-binding tripeptide GHK-Cu, widely studied in skin and tissue research.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "GHK is the copper-binding tripeptide GHK-Cu, widely studied in skin and tissue research.",
-  "related": [
-   "klow",
-   "ipa-cjc10",
-   "bac-water"
-  ]
- },
- {
-  "id": "ipa-cjc10",
-  "name": "IPA/CJC10",
-  "cat": "peptides",
-  "price": 40,
-  "kit": 350,
-  "img": "assets/img/products/pep-ipa-cjc10.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Ipamorelin / CJC-1295"
-   ],
-   [
-    "Strength",
-    "10 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "This vial combines ipamorelin, a ghrelin receptor agonist, with CJC-1295, a growth hormone releasing hormone analog.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "This vial combines ipamorelin, a ghrelin receptor agonist, with CJC-1295, a growth hormone releasing hormone analog.",
-  "related": [
-   "ghk",
-   "bpc10",
-   "bac-water"
-  ]
- },
- {
-  "id": "bpc10",
-  "name": "BPC10",
-  "cat": "peptides",
-  "price": 40,
-  "kit": 300,
-  "img": "assets/img/products/pep-bpc10.jpg",
-  "specs": [
-   [
-    "Compound",
-    "BPC-157"
-   ],
-   [
-    "Strength",
-    "10 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "BPC-157 is a synthetic pentadecapeptide derived from a protein found in gastric juice.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "BPC-157 is a synthetic pentadecapeptide derived from a protein found in gastric juice.",
-  "related": [
-   "ipa-cjc10",
-   "mots-c-10",
-   "bac-water"
-  ]
- },
- {
-  "id": "mots-c-10",
-  "name": "MOTS-C 10",
-  "cat": "peptides",
-  "price": 30,
-  "kit": null,
-  "img": "assets/img/products/pep-mots-c-10.jpg",
-  "specs": [
-   [
-    "Compound",
-    "MOTS-c"
-   ],
-   [
-    "Strength",
-    "10 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "MOTS-c is a mitochondrial-derived peptide studied in metabolic research.",
-   "It arrives as a single lyophilized vial.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "MOTS-c is a mitochondrial-derived peptide studied in metabolic research.",
-  "related": [
-   "bpc10",
-   "nad",
-   "bac-water"
-  ]
- },
- {
-  "id": "nad",
-  "name": "NAD+",
-  "cat": "peptides",
-  "price": 50,
-  "kit": 400,
-  "img": "assets/img/products/pep-nad.jpg",
-  "specs": [
-   [
-    "Compound",
-    "NAD+"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "NAD+ is a coenzyme found in every living cell and central to cellular energy metabolism.",
-   "It arrives as a single lyophilized vial, and is also offered as a 10-vial pack.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "NAD+ is a coenzyme found in every living cell and central to cellular energy metabolism.",
-  "related": [
-   "mots-c-10",
-   "tesa20",
-   "bac-water"
-  ]
- },
- {
-  "id": "tesa20",
-  "name": "TESA20",
-  "cat": "peptides",
-  "price": 75,
-  "kit": null,
-  "img": "assets/img/products/pep-tesa20.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Tesamorelin"
-   ],
-   [
-    "Strength",
-    "20 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "Tesamorelin is a synthetic growth hormone releasing hormone (GHRH) analog.",
-   "It arrives as a single lyophilized vial.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "Tesamorelin is a synthetic growth hormone releasing hormone (GHRH) analog.",
-  "related": [
-   "nad",
-   "glutathione-750",
-   "bac-water"
-  ]
- },
- {
-  "id": "glutathione-750",
-  "name": "Glutathione 750",
-  "cat": "peptides",
-  "price": 40,
-  "kit": null,
-  "img": "assets/img/products/pep-glutathione-750.jpg",
-  "specs": [
-   [
-    "Compound",
-    "Glutathione"
-   ],
-   [
-    "Strength",
-    "750 mg per vial"
-   ],
-   [
-    "Format",
-    "Lyophilized powder, single vial"
-   ],
-   [
-    "Appearance",
-    "White lyophilized powder"
-   ],
-   [
-    "Storage",
-    "Freezer, -20°C to -80°C, before reconstituting"
-   ]
-  ],
-  "form": "Lyophilized powder",
-  "strength": "",
-  "desc": [
-   "Glutathione is a tripeptide antioxidant made of glutamate, cysteine and glycine.",
-   "It arrives as a single lyophilized vial.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Before reconstituting, keep the lyophilized vial in the freezer, between -20°C and -80°C.",
-   "After reconstituting, store it in the refrigerator, between 2°C and 8°C.",
-   "Keep away from direct light and never freeze reconstituted solution.",
-   "Bacteriostatic water is sold separately in the Peptides collection."
-  ],
-  "short": "Glutathione is a tripeptide antioxidant made of glutamate, cysteine and glycine.",
-  "related": [
-   "nad",
-   "tesa20",
-   "bac-water"
-  ]
- },
- {
-  "id": "bac-water",
-  "name": "BAC Water",
-  "cat": "peptides",
-  "price": 15,
-  "kit": null,
-  "img": "assets/img/products/pep-bac-water.jpg",
-  "specs": [
-   [
-    "Contents",
-    "Bacteriostatic water, 0.9% benzyl alcohol"
-   ],
-   [
-    "Format",
-    "10 mL multi-dose vial"
-   ],
-   [
-    "Appearance",
-    "Clear liquid"
-   ]
-  ],
-  "form": "10 mL vial",
-  "strength": "",
-  "desc": [
-   "Bacteriostatic water is sterile water with 0.9% benzyl alcohol, used to reconstitute lyophilized peptides.",
-   "It arrives as a 10 mL multi-dose vial.",
-   "Please check the label for compound, strength and format before handling. Sold for research use only."
-  ],
-  "recs": [
-   "Store at room temperature, away from direct light.",
-   "Once a vial has been opened, discard it after 28 days.",
-   "Order it with your peptides so reconstitution supplies arrive together."
-  ],
-  "short": "Bacteriostatic water is sterile water with 0.9% benzyl alcohol, used to reconstitute lyophilized peptides.",
-  "related": [
-   "nad",
-   "tesa20",
-   "glutathione-750"
-  ]
- },
- {
   "id": "p1",
   "name": "Test Propionate 100",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-1-test-propionate-100.jpg",
+  "img": "assets/img/products/sf-p1.jpg",
   "specs": [
    [
     "Compound",
@@ -652,7 +80,7 @@ const PRODUCTS = [
   "name": "Testosterone Enanthate 250",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-2-testosterone-enanthate-250.jpg",
+  "img": "assets/img/products/sf-p2.jpg",
   "specs": [
    [
     "Compound",
@@ -695,7 +123,7 @@ const PRODUCTS = [
   "name": "Testosterone Enanthate 300",
   "cat": "injectables",
   "price": 60,
-  "img": "assets/img/products/product-3-testosterone-enanthate-300.jpg",
+  "img": "assets/img/products/sf-p3.jpg",
   "specs": [
    [
     "Compound",
@@ -738,7 +166,7 @@ const PRODUCTS = [
   "name": "Testosterone Enanthate 500",
   "cat": "injectables",
   "price": 65,
-  "img": "assets/img/products/product-4-testosterone-enanthate-500.jpg",
+  "img": "assets/img/products/sf-p4.jpg",
   "specs": [
    [
     "Compound",
@@ -781,7 +209,7 @@ const PRODUCTS = [
   "name": "Testosterone Cypionate 250",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-5-testosterone-cypionate-250.jpg",
+  "img": "assets/img/products/sf-p5.jpg",
   "specs": [
    [
     "Compound",
@@ -824,7 +252,7 @@ const PRODUCTS = [
   "name": "Sustanon 250",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-6-sustanon-250.jpg",
+  "img": "assets/img/products/sf-p6.jpg",
   "specs": [
    [
     "Compound",
@@ -867,7 +295,7 @@ const PRODUCTS = [
   "name": "T400",
   "cat": "injectables",
   "price": 60,
-  "img": "assets/img/products/product-7-t400.jpg",
+  "img": "assets/img/products/sf-p7.jpg",
   "specs": [
    [
     "Compound",
@@ -910,7 +338,7 @@ const PRODUCTS = [
   "name": "Deca 300",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-8-deca-300.jpg",
+  "img": "assets/img/products/sf-p8.jpg",
   "specs": [
    [
     "Compound",
@@ -953,7 +381,7 @@ const PRODUCTS = [
   "name": "NPP 150",
   "cat": "injectables",
   "price": 60,
-  "img": "assets/img/products/product-9-npp-150.jpg",
+  "img": "assets/img/products/sf-p9.jpg",
   "specs": [
    [
     "Compound",
@@ -996,7 +424,7 @@ const PRODUCTS = [
   "name": "Equipoise (EQ) 300",
   "cat": "injectables",
   "price": 60,
-  "img": "assets/img/products/product-10-equipoise-eq-300.jpg",
+  "img": "assets/img/products/sf-p10.jpg",
   "specs": [
    [
     "Compound",
@@ -1039,7 +467,7 @@ const PRODUCTS = [
   "name": "Trenbolone Enanthate 200",
   "cat": "injectables",
   "price": 70,
-  "img": "assets/img/products/product-11-trenbolone-enanthate-200.jpg",
+  "img": "assets/img/products/sf-p11.jpg",
   "specs": [
    [
     "Compound",
@@ -1082,7 +510,7 @@ const PRODUCTS = [
   "name": "Trenbolone Acetate 100",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-12-trenbolone-acetate-100.jpg",
+  "img": "assets/img/products/sf-p12.jpg",
   "specs": [
    [
     "Compound",
@@ -1125,7 +553,7 @@ const PRODUCTS = [
   "name": "TNT Blend 400",
   "cat": "injectables",
   "price": 60,
-  "img": "assets/img/products/product-13-tnt-blend-400.jpg",
+  "img": "assets/img/products/sf-p13.jpg",
   "specs": [
    [
     "Compound",
@@ -1168,7 +596,7 @@ const PRODUCTS = [
   "name": "Masteron Propionate 150",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-14-masteron-propionate-150.jpg",
+  "img": "assets/img/products/sf-p14.jpg",
   "specs": [
    [
     "Compound",
@@ -1211,7 +639,7 @@ const PRODUCTS = [
   "name": "Masteron Enanthate 200",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-15-masteron-enanthate-200.jpg",
+  "img": "assets/img/products/sf-p15.jpg",
   "specs": [
    [
     "Compound",
@@ -1254,7 +682,7 @@ const PRODUCTS = [
   "name": "Primobolan 100",
   "cat": "injectables",
   "price": 70,
-  "img": "assets/img/products/product-16-primobolan-100.jpg",
+  "img": "assets/img/products/sf-p16.jpg",
   "specs": [
    [
     "Compound",
@@ -1297,7 +725,7 @@ const PRODUCTS = [
   "name": "Primobolan 200",
   "cat": "injectables",
   "price": 120,
-  "img": "assets/img/products/product-17-primobolan-200.jpg",
+  "img": "assets/img/products/sf-p17.jpg",
   "specs": [
    [
     "Compound",
@@ -1340,7 +768,7 @@ const PRODUCTS = [
   "name": "Winstrol 50 (Injectable)",
   "cat": "injectables",
   "price": 81,
-  "img": "assets/img/products/product-18-winstrol-50-injectable.jpg",
+  "img": "assets/img/products/sf-p18.jpg",
   "specs": [
    [
     "Compound",
@@ -1383,7 +811,7 @@ const PRODUCTS = [
   "name": "Superdrol 40 (Injectable)",
   "cat": "injectables",
   "price": 81,
-  "img": "assets/img/products/product-19-superdrol-40-injectable.jpg",
+  "img": "assets/img/products/sf-p19.jpg",
   "specs": [
    [
     "Compound",
@@ -1426,7 +854,7 @@ const PRODUCTS = [
   "name": "Anavar 5",
   "cat": "orals",
   "price": 60,
-  "img": "assets/img/products/product-20-anavar-5.jpg",
+  "img": "assets/img/products/sf-p20.jpg",
   "specs": [
    [
     "Compound",
@@ -1469,7 +897,7 @@ const PRODUCTS = [
   "name": "Anavar 10",
   "cat": "orals",
   "price": 50,
-  "img": "assets/img/products/product-21-anavar-10.jpg",
+  "img": "assets/img/products/sf-p21.jpg",
   "specs": [
    [
     "Compound",
@@ -1512,7 +940,7 @@ const PRODUCTS = [
   "name": "Turinabol 10",
   "cat": "orals",
   "price": 70,
-  "img": "assets/img/products/product-22-turinabol-10.jpg",
+  "img": "assets/img/products/sf-p22.jpg",
   "specs": [
    [
     "Compound",
@@ -1555,7 +983,7 @@ const PRODUCTS = [
   "name": "Superdrol 10",
   "cat": "orals",
   "price": 70,
-  "img": "assets/img/products/product-23-superdrol-10.jpg",
+  "img": "assets/img/products/sf-p23.jpg",
   "specs": [
    [
     "Compound",
@@ -1598,7 +1026,7 @@ const PRODUCTS = [
   "name": "Dianabol 25",
   "cat": "orals",
   "price": 55,
-  "img": "assets/img/products/product-24-dianabol-25.jpg",
+  "img": "assets/img/products/sf-p24.jpg",
   "specs": [
    [
     "Compound",
@@ -1641,7 +1069,7 @@ const PRODUCTS = [
   "name": "Anadrol 25",
   "cat": "orals",
   "price": 86,
-  "img": "assets/img/products/product-25-anadrol-25.jpg",
+  "img": "assets/img/products/sf-p25.jpg",
   "specs": [
    [
     "Compound",
@@ -1684,7 +1112,7 @@ const PRODUCTS = [
   "name": "Winstrol 25",
   "cat": "orals",
   "price": 81,
-  "img": "assets/img/products/product-26-winstrol-25.jpg",
+  "img": "assets/img/products/sf-p26.jpg",
   "specs": [
    [
     "Compound",
@@ -1727,7 +1155,7 @@ const PRODUCTS = [
   "name": "Anavar 50",
   "cat": "orals",
   "price": 181,
-  "img": "assets/img/products/product-27-anavar-50.jpg",
+  "img": "assets/img/products/sf-p27.jpg",
   "specs": [
    [
     "Compound",
@@ -1770,7 +1198,7 @@ const PRODUCTS = [
   "name": "Halotestin 10",
   "cat": "orals",
   "price": 70,
-  "img": "assets/img/products/product-28-halotestin-10.jpg",
+  "img": "assets/img/products/sf-p28.jpg",
   "specs": [
    [
     "Compound",
@@ -1813,7 +1241,7 @@ const PRODUCTS = [
   "name": "Proviron 25",
   "cat": "orals",
   "price": 70,
-  "img": "assets/img/products/product-29-proviron-25.jpg",
+  "img": "assets/img/products/sf-p29.jpg",
   "specs": [
    [
     "Compound",
@@ -1856,7 +1284,7 @@ const PRODUCTS = [
   "name": "Clomid 50",
   "cat": "pct",
   "price": 50,
-  "img": "assets/img/products/product-30-clomid-50.jpg",
+  "img": "assets/img/products/sf-p30.jpg",
   "specs": [
    [
     "Compound",
@@ -1897,7 +1325,7 @@ const PRODUCTS = [
   "name": "Nolvadex 25",
   "cat": "pct",
   "price": 50,
-  "img": "assets/img/products/product-31-nolvadex-25.jpg",
+  "img": "assets/img/products/sf-p31.jpg",
   "specs": [
    [
     "Compound",
@@ -1938,7 +1366,7 @@ const PRODUCTS = [
   "name": "Gonasi 5000 IU",
   "cat": "hcg",
   "price": 81,
-  "img": "assets/img/products/product-32-gonasi-5000-iu.jpg",
+  "img": "assets/img/products/sf-p32.jpg",
   "specs": [
    [
     "Compound",
@@ -1977,7 +1405,7 @@ const PRODUCTS = [
   "name": "Letrozole 2.5",
   "cat": "support",
   "price": 60,
-  "img": "assets/img/products/product-33-letrozole-2-5.jpg",
+  "img": "assets/img/products/sf-p33.jpg",
   "specs": [
    [
     "Compound",
@@ -2020,7 +1448,7 @@ const PRODUCTS = [
   "name": "Arimidex 1",
   "cat": "support",
   "price": 50,
-  "img": "assets/img/products/product-34-arimidex-1.jpg",
+  "img": "assets/img/products/sf-p34.jpg",
   "specs": [
    [
     "Compound",
@@ -2063,7 +1491,7 @@ const PRODUCTS = [
   "name": "Aromasin 25",
   "cat": "support",
   "price": 50,
-  "img": "assets/img/products/product-35-aromasin-25.jpg",
+  "img": "assets/img/products/sf-p35.jpg",
   "specs": [
    [
     "Compound",
@@ -2106,7 +1534,7 @@ const PRODUCTS = [
   "name": "Viagra 25",
   "cat": "support",
   "price": 60,
-  "img": "assets/img/products/product-37-viagra-25.jpg",
+  "img": "assets/img/products/sf-p37.jpg",
   "specs": [
    [
     "Compound",
@@ -2149,7 +1577,7 @@ const PRODUCTS = [
   "name": "Cialis 25",
   "cat": "support",
   "price": 60,
-  "img": "assets/img/products/product-38-cialis-25.jpg",
+  "img": "assets/img/products/sf-p38.jpg",
   "specs": [
    [
     "Compound",
@@ -2192,7 +1620,7 @@ const PRODUCTS = [
   "name": "Superman 50",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-39-superman-50.jpg",
+  "img": "assets/img/products/sf-p39.jpg",
   "specs": [
    [
     "Compound",
@@ -2235,7 +1663,7 @@ const PRODUCTS = [
   "name": "Lipo X 125",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-40-lipo-x-125.jpg",
+  "img": "assets/img/products/sf-p40.jpg",
   "specs": [
    [
     "Compound",
@@ -2278,7 +1706,7 @@ const PRODUCTS = [
   "name": "Cytomel T3 25",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-41-cytomel-t3-25.jpg",
+  "img": "assets/img/products/sf-p41.jpg",
   "specs": [
    [
     "Compound",
@@ -2321,7 +1749,7 @@ const PRODUCTS = [
   "name": "Clenbuterol 50",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-42-clenbuterol-50.jpg",
+  "img": "assets/img/products/sf-p42.jpg",
   "specs": [
    [
     "Compound",
@@ -2364,7 +1792,7 @@ const PRODUCTS = [
   "name": "Clenbuterol 200",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-43-clenbuterol-200.jpg",
+  "img": "assets/img/products/sf-p43.jpg",
   "specs": [
    [
     "Compound",
@@ -2406,7 +1834,7 @@ const PRODUCTS = [
   "name": "5-Amino-1MQ 50",
   "cat": "support",
   "price": 220,
-  "img": "assets/img/products/product-44-5-amino-1mq-50.jpg",
+  "img": "assets/img/products/sf-p44.jpg",
   "specs": [
    [
     "Compound",
@@ -2449,7 +1877,7 @@ const PRODUCTS = [
   "name": "Ibutamoren (MK-677) 10",
   "cat": "support",
   "price": 70,
-  "img": "assets/img/products/product-45-ibutamoren-mk-677-10.jpg",
+  "img": "assets/img/products/sf-p45.jpg",
   "specs": [
    [
     "Compound",
@@ -2492,7 +1920,7 @@ const PRODUCTS = [
   "name": "Metabol (SR-9011) 10",
   "cat": "support",
   "price": 91,
-  "img": "assets/img/products/product-46-metabol-sr-9011-10.jpg",
+  "img": "assets/img/products/sf-p46.jpg",
   "specs": [
    [
     "Compound",
@@ -2535,7 +1963,7 @@ const PRODUCTS = [
   "name": "Stenabolic (SR-9009) 10",
   "cat": "support",
   "price": 81,
-  "img": "assets/img/products/product-47-stenabolic-sr-9009-10.jpg",
+  "img": "assets/img/products/sf-p47.jpg",
   "specs": [
    [
     "Compound",
@@ -2578,7 +2006,7 @@ const PRODUCTS = [
   "name": "Lipoline (GW-0742) 10",
   "cat": "support",
   "price": 81,
-  "img": "assets/img/products/product-48-lipoline-gw-0742-10.jpg",
+  "img": "assets/img/products/sf-p48.jpg",
   "specs": [
    [
     "Compound",
@@ -2621,7 +2049,7 @@ const PRODUCTS = [
   "name": "Cardarine (GW-501516) 10",
   "cat": "support",
   "price": 81,
-  "img": "assets/img/products/product-49-cardarine-gw-501516-10.jpg",
+  "img": "assets/img/products/sf-p49.jpg",
   "specs": [
    [
     "Compound",
@@ -2664,7 +2092,7 @@ const PRODUCTS = [
   "name": "S23 (Ultrabolic) 25",
   "cat": "sarms",
   "price": 86,
-  "img": "assets/img/products/product-56-s23-ultrabolic-25.jpg",
+  "img": "assets/img/products/sf-p56.jpg",
   "specs": [
    [
     "Compound",
@@ -2707,7 +2135,7 @@ const PRODUCTS = [
   "name": "Andarine (S4) 25",
   "cat": "sarms",
   "price": 86,
-  "img": "assets/img/products/product-57-andarine-s4-25.jpg",
+  "img": "assets/img/products/sf-p57.jpg",
   "specs": [
    [
     "Compound",
@@ -2750,7 +2178,7 @@ const PRODUCTS = [
   "name": "Ligandrol (LGD-4033) 10",
   "cat": "sarms",
   "price": 81,
-  "img": "assets/img/products/product-58-ligandrol-lgd-4033-10.jpg",
+  "img": "assets/img/products/sf-p58.jpg",
   "specs": [
    [
     "Compound",
@@ -2793,7 +2221,7 @@ const PRODUCTS = [
   "name": "Megabolic (LGD-3033) 10",
   "cat": "sarms",
   "price": 86,
-  "img": "assets/img/products/product-59-megabolic-lgd-3033-10.jpg",
+  "img": "assets/img/products/sf-p59.jpg",
   "specs": [
    [
     "Compound",
@@ -2836,7 +2264,7 @@ const PRODUCTS = [
   "name": "Sustalone (RAD-150) 10",
   "cat": "sarms",
   "price": 91,
-  "img": "assets/img/products/product-60-sustalone-rad-150-10.jpg",
+  "img": "assets/img/products/sf-p60.jpg",
   "specs": [
    [
     "Compound",
@@ -2879,7 +2307,7 @@ const PRODUCTS = [
   "name": "Myobol (YK-11) 5",
   "cat": "sarms",
   "price": 86,
-  "img": "assets/img/products/product-61-myobol-yk-11-5.jpg",
+  "img": "assets/img/products/sf-p61.jpg",
   "specs": [
    [
     "Compound",
@@ -2922,7 +2350,7 @@ const PRODUCTS = [
   "name": "Ostarine (MK-2866) 10",
   "cat": "sarms",
   "price": 81,
-  "img": "assets/img/products/product-62-ostarine-mk-2866-10.jpg",
+  "img": "assets/img/products/sf-p62.jpg",
   "specs": [
    [
     "Compound",
@@ -2965,7 +2393,7 @@ const PRODUCTS = [
   "name": "Testolone (RAD-140) 10",
   "cat": "sarms",
   "price": 91,
-  "img": "assets/img/products/product-63-testolone-rad-140-10.jpg",
+  "img": "assets/img/products/sf-p63.jpg",
   "specs": [
    [
     "Compound",
@@ -3008,7 +2436,7 @@ const PRODUCTS = [
   "name": "Testosterone Suspension 100",
   "cat": "injectables",
   "price": 55,
-  "img": "assets/img/products/product-64-testosterone-suspension-100.jpg",
+  "img": "assets/img/products/sf-p64.jpg",
   "specs": [
    [
     "Compound",
